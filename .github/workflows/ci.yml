@@ -6,20 +6,71 @@ on:
   pull_request:
     branches: ["main"]
 
+env:
+  PACKAGE_NAME: InventoryKit
+
 jobs:
-  build:
+  build-ubuntu:
+    name: Build on Ubuntu
+    runs-on: ubuntu-latest
+    container: ${{ matrix.swift.nightly && format('swiftlang/swift:nightly-{0}-{1}', matrix.swift.version, matrix.os) || format('swift:{0}-{1}', matrix.swift.version, matrix.os) }}
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
     strategy:
       matrix:
-        os: [macos-15, ubuntu-22.04]
-    runs-on: ${{ matrix.os }}
+        os: [noble, jammy]
+        swift:
+          - version: "6.0"
+          - version: "6.1"
+          - version: "6.1"
+            nightly: true
+          - version: "6.2"
+            nightly: true
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: brightdigit/swift-build@v1.3.0
 
-      - name: Install Swift
-        uses: swift-actions/setup-swift@v1
-        with:
-          swift-version: "6.0"
+  build-macos:
+    name: Build on macOS
+    env:
+      PACKAGE_NAME: InventoryKit
+    runs-on: ${{ matrix.runs-on }}    
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # SPM Build Matrix
+          - runs-on: macos-15
+            xcode: "/Applications/Xcode_26.0.app"
+          - runs-on: macos-15
+            xcode: "/Applications/Xcode_16.4.app"
+          
+          # macOS Build Matrix
+          - type: macos
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_26.0.app"
 
-      - name: Build and test
-        run: swift test --parallel
+          - type: macos
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_16.4.app"
+          
+          # iOS Build Matrix
+          - type: ios
+            runs-on: macos-15
+            xcode: "/Applications/Xcode_26.0.app"
+            deviceName: "iPhone 17 Pro"
+            osVersion: "26.0"
+            download-platform: true
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build and Test
+      uses: brightdigit/swift-build@v1.3.0
+      with:
+        scheme: ${{ env.PACKAGE_NAME }}
+        type: ${{ matrix.type }}
+        xcode: ${{ matrix.xcode }}
+        deviceName: ${{ matrix.deviceName }}
+        osVersion: ${{ matrix.osVersion }}
+        download-platform: ${{ matrix.download-platform }}
