@@ -9,6 +9,7 @@ InventoryKit is a Swift Package Manager (SPM) library for modeling, validating, 
 - **Storage Abstractions**: Use `InventoryStorageProvider` to plug in any backend (text files, CloudKit, databases). InventoryKit ships with a thread-safe text-file provider for local/test scenarios.
 - **Transformers**: Default YAML/JSON transformers built on Yams + JSONEncoder with hooks for custom encodings.
 - **High-Volume Catalog**: `InventoryCatalog` actor indexes assets, supports identifier lookup, component traversal, and paginated queries.
+- **Tag Registry System**: Domain-based tag registration with code execution support. Register custom tags that execute handlers when encountered, enabling domain-specific tag resolution (e.g., RetroboxFS mapping tags to disk image types).
 - **SDK Entry Point**: `InventoryService` bootstraps provider + catalog with configurable logging, giving consumers a single initialization path.
 - **CI + Tests**: `swift test` coverage plus GitHub Actions on macOS and Linux to guarantee builds on push/PR.
 
@@ -78,6 +79,100 @@ struct CloudKitInventoryProvider: InventoryStorageProvider {
 ```
 
 Pass your provider into `InventoryConfiguration` to bootstrap `InventoryService`.
+
+## Tag Registry System
+
+InventoryKit provides a tag registry system that enables domain-specific tag resolution through code execution handlers. This allows clients to register custom tags that execute code when encountered, enabling powerful tag-based processing workflows.
+
+### Basic Usage
+
+```swift
+import InventoryKit
+
+// Create a service (tag registry is automatically created if not provided)
+let service = try await InventoryService.bootstrap(configuration: configuration)
+
+// Access the tag registry
+let registry = service.tagRegistry
+
+// Register a tag with a code execution handler
+try await registry.register(tag: "dsk", domain: "retroboxfs") { tag in
+    return "AppleDiskImage" // Returns type identifier
+}
+
+// Check if a tag is registered
+let isRegistered = try await registry.isRegistered(tag: "dsk", domain: "retroboxfs")
+print(isRegistered) // true
+
+// Execute handler when tag is encountered
+if let result = try await registry.execute(tag: "dsk", domain: "retroboxfs") {
+    print("Resolved type: \(result)") // "AppleDiskImage"
+}
+
+// Get all tags for a domain
+let tags = try await registry.tags(for: "retroboxfs")
+print(tags) // ["dsk", "woz", "a2r", ...]
+
+// Resolve tag to domain
+if let domain = try await registry.domain(for: "dsk") {
+    print("Domain: \(domain)") // "retroboxfs"
+}
+```
+
+### Domain Organization
+
+Tags are organized by domain, allowing multiple clients to register tags without conflicts:
+
+```swift
+// Register tags for different domains
+try await registry.register(tag: "dsk", domain: "retroboxfs") { _ in "AppleDiskImage" }
+try await registry.register(tag: "verified", domain: "acme") { _ in "true" }
+
+// Tags with the same name can exist in different domains
+let retroboxfsTags = try await registry.tags(for: "retroboxfs")
+let acmeTags = try await registry.tags(for: "acme")
+```
+
+### Custom Tag Registry
+
+You can provide a custom tag registry implementation:
+
+```swift
+struct CustomTagRegistry: InventoryTagRegistry {
+    // Implement protocol methods
+    // ...
+}
+
+let customRegistry = CustomTagRegistry()
+let configuration = InventoryConfiguration(
+    provider: provider,
+    tagRegistry: customRegistry
+)
+let service = try await InventoryService.bootstrap(configuration: configuration)
+```
+
+### Integration with RetroboxFS
+
+The tag registry system is designed to work with RetroboxFS for disk image type resolution:
+
+```swift
+// RetroboxFS registers tags during disk image processing
+// Tags are stored in InventoryAsset.tags
+
+// Later, RetroboxFS can resolve tags to internal types
+let asset = await service.asset(identifierType: .uuid, value: assetID)
+if let asset = asset {
+    for tag in asset.tags {
+        if let resolvedType = try await registry.execute(tag: tag, domain: "retroboxfs") {
+            print("Tag \(tag) resolved to: \(resolvedType)")
+        }
+    }
+}
+```
+
+### Thread Safety
+
+The default `DefaultTagRegistry` implementation uses Swift actors for thread-safe operations. All tag registry operations are safe for concurrent access.
 
 ## Testing
 

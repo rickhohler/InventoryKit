@@ -4,13 +4,17 @@ import Foundation
 public actor InventoryService {
     public let configuration: InventoryConfiguration
     public let catalog: InventoryCatalog
+    /// Tag registry for tag-based code execution.
+    /// Defaults to `DefaultTagRegistry` if none provided in configuration.
+    public let tagRegistry: any InventoryTagRegistry
 
     private let logger: InventoryLogger
 
-    private init(configuration: InventoryConfiguration, catalog: InventoryCatalog, logger: InventoryLogger) {
+    private init(configuration: InventoryConfiguration, catalog: InventoryCatalog, logger: InventoryLogger, tagRegistry: any InventoryTagRegistry) {
         self.configuration = configuration
         self.catalog = catalog
         self.logger = logger
+        self.tagRegistry = tagRegistry
     }
 
     public static func bootstrap(configuration: InventoryConfiguration) async throws -> InventoryService {
@@ -19,7 +23,11 @@ public actor InventoryService {
         let document = try await configuration.provider.loadInventory(validatingAgainst: configuration.schemaVersion)
         logger.debug("Loaded \(document.assets.count) assets")
         let catalog = InventoryCatalog(document: document)
-        return InventoryService(configuration: configuration, catalog: catalog, logger: logger)
+        
+        // Initialize tag registry: use provided one or create default
+        let tagRegistry: any InventoryTagRegistry = configuration.tagRegistry ?? DefaultTagRegistry()
+        
+        return InventoryService(configuration: configuration, catalog: catalog, logger: logger, tagRegistry: tagRegistry)
     }
 
     public func refreshFromProvider() async throws {

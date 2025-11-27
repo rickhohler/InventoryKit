@@ -26,14 +26,19 @@ public struct InventoryConfiguration: Sendable {
     public var provider: InventoryStorageProvider
     public var schemaVersion: InventorySchemaVersion
     public var logLevel: InventoryLogLevel
+    /// Optional tag registry for tag-based code execution.
+    /// If nil, a default `DefaultTagRegistry` will be created automatically.
+    public var tagRegistry: (any InventoryTagRegistry)?
 
     public init(
         provider: InventoryStorageProvider,
         schemaVersion: InventorySchemaVersion = .current,
-        logLevel: InventoryLogLevel = .warning
+        logLevel: InventoryLogLevel = .warning,
+        tagRegistry: (any InventoryTagRegistry)? = nil
     ) {
         self.provider = provider
         self.schemaVersion = schemaVersion
         self.logLevel = logLevel
+        self.tagRegistry = tagRegistry
     }
 }
