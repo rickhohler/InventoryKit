@@ -1,6 +1,28 @@
 import Foundation
 
 /// Convenience namespace that surfaces common helpers for consumers that prefer static access.
+///
+/// `InventoryKit` provides static methods for common operations like decoding/encoding
+/// inventory documents, creating catalogs, and bootstrapping services. This namespace
+/// is ideal for consumers who prefer functional-style APIs over instance-based APIs.
+///
+/// ## Usage
+///
+/// ```swift
+/// // Decode from data
+/// let document = try InventoryKit.decodeInventory(from: data, format: .yaml)
+///
+/// // Create catalog from data
+/// let catalog = try InventoryKit.catalog(from: data, format: .yaml)
+///
+/// // Bootstrap service
+/// let service = try await InventoryKit.service(configuration: configuration)
+/// ```
+///
+/// - SeeAlso: ``InventoryService`` for instance-based service operations
+/// - SeeAlso: ``InventoryCatalog`` for catalog operations
+/// - SeeAlso: ``InventoryDataTransformer`` for custom serialization
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public enum InventoryKit {
     private static let yamlTransformer = AnyInventoryDataTransformer(YAMLInventoryTransformer())
     private static let jsonTransformer = AnyInventoryDataTransformer(JSONInventoryTransformer())
@@ -33,16 +55,6 @@ public enum InventoryKit {
         return try decodeInventory(from: data, format: format, validatingAgainst: version)
     }
 
-    public static func decodeInventory(
-        contentsOf url: URL,
-        format: InventoryDataFormat = .yaml,
-        validatingAgainst version: InventorySchemaVersion = .current
-    ) throws -> InventoryDocument {
-        guard let data = FileManager.default.contents(atPath: url.path) else {
-            throw InventoryError.unreadableFile(url)
-        }
-        return try decodeInventory(from: data, format: format, validatingAgainst: version)
-    }
 
     public static func encodeInventory(
         _ document: InventoryDocument,
@@ -73,16 +85,6 @@ public enum InventoryKit {
         return InventoryCatalog(document: document)
     }
 
-    public static func catalog(
-        contentsOf url: URL,
-        format: InventoryDataFormat = .yaml,
-        validatingAgainst version: InventorySchemaVersion = .current
-    ) throws -> InventoryCatalog {
-        guard let data = FileManager.default.contents(atPath: url.path) else {
-            throw InventoryError.unreadableFile(url)
-        }
-        return try catalog(from: data, format: format, validatingAgainst: version)
-    }
 
     public static func encodeCatalog(
         _ catalog: InventoryCatalog,

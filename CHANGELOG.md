@@ -5,7 +5,27 @@ All notable changes to InventoryKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] - 2025-12-02
+
+### Added
+- **Copyright and Vendor Support**: Added copyright and vendor information to inventory assets
+  - `CopyrightInfo` model for structured copyright information
+  - `VendorProtocol` for vendor identification
+  - `AnyInventoryAsset` type-erased wrapper for inventory assets
+  - `InventoryAssetProtocol` protocol for asset abstraction
+- **Enhanced Storage Provider**: Improved storage provider capabilities
+  - Enhanced `InventoryStorageProvider` with additional methods
+  - Removed `TextFileInventoryStorageProvider` (consolidated functionality)
+- **Documentation**: Added vendor protocol documentation
+  - VENDOR_PROTOCOL.md: Vendor protocol design
+  - VENDOR_CLIENT_IMPLEMENTATION.md: Client implementation guide
+  - VENDOR_USAGE_EXAMPLES.md: Usage examples
+
+### Changed
+- Enhanced `InventoryService` with improved initialization and configuration
+- Enhanced `InventoryCatalog` with improved pagination and query capabilities
+- Enhanced `InventoryDocument` with copyright and vendor support
+- Enhanced transformers with improved error handling
 
 ### Added
 - **Tag Registry System**: Domain-based tag registration with code execution support

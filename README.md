@@ -6,7 +6,7 @@ InventoryKit is a Swift Package Manager (SPM) library for modeling, validating, 
 
 - **Rich Models**: Schema-versioned `InventoryDocument` with assets, lifecycle, MRO, health, embedded components, and relationship requirements.
 - **Relationship + Compatibility Checks**: Define relationship types, link assets, and evaluate compliance (e.g., peripherals required for a computer).
-- **Storage Abstractions**: Use `InventoryStorageProvider` to plug in any backend (text files, CloudKit, databases). InventoryKit ships with a thread-safe text-file provider for local/test scenarios.
+- **Storage Abstractions**: Use `InventoryStorageProvider` to plug in any backend (CloudKit, databases, FileSystemKit, etc.). File and binary data management is handled by FileSystemKit.
 - **Transformers**: Default YAML/JSON transformers built on Yams + JSONEncoder with hooks for custom encodings.
 - **High-Volume Catalog**: `InventoryCatalog` actor indexes assets, supports identifier lookup, component traversal, and paginated queries.
 - **Tag Registry System**: Domain-based tag registration with code execution support. Register custom tags that execute handlers when encountered, enabling domain-specific tag resolution (e.g., RetroboxFS mapping tags to disk image types).
@@ -27,12 +27,25 @@ Because the package only depends on Foundation and Yams, it can be embedded in s
 ```swift
 import InventoryKit
 
-let provider = TextFileInventoryStorageProvider(
-    url: FileManager.default
-        .urls(for: .documentDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("inventory.yaml")
-)
+// Implement a storage provider (e.g., using FileSystemKit for file operations)
+struct MyStorageProvider: InventoryStorageProvider {
+    let identifier = "my-provider"
+    let transformer = InventoryKit.transformer(for: .yaml)
+    
+    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> InventoryDocument {
+        // Use FileSystemKit to read file data
+        let data = try await FileSystemKit.readData(from: url)
+        return try transformer.decode(data, validatingAgainst: version)
+    }
+    
+    func saveInventory(_ document: InventoryDocument) async throws {
+        // Use FileSystemKit to write file data
+        let data = try transformer.encode(document)
+        try await FileSystemKit.writeData(data, to: url)
+    }
+}
 
+let provider = MyStorageProvider()
 let configuration = InventoryConfiguration(
     provider: provider,
     schemaVersion: .current,

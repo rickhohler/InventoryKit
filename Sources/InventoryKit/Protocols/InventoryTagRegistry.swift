@@ -1,21 +1,19 @@
 import Foundation
 
-/// Protocol for tag registry that enables code execution when tags are encountered
+/// Protocol for tag registry that enables code execution when tags are encountered.
 ///
-/// InventoryKit provides this registry - clients can define custom tags that execute code.
-/// This enables domain-specific tag resolution (e.g., RetroboxFS mapping tags to disk image types).
+/// `InventoryTagRegistry` enables domain-specific tag resolution through code execution handlers.
+/// Clients can register custom tags that execute code when encountered, enabling powerful
+/// tag-based processing workflows (e.g., RetroboxFS mapping tags to disk image types).
 ///
-/// ## Current State
-/// InventoryKit stores tags in `InventoryAsset.tags: [String]` but doesn't have a tag registry.
+/// ## Key Features
 ///
-/// ## Target State
-/// InventoryKit provides `InventoryTagRegistry` protocol that allows clients to:
-/// - Register tags for domains
-/// - Attach code execution handlers to tags
-/// - Execute handlers when tags are encountered
-/// - Query registered tags by domain
+/// - **Domain Organization**: Tags are organized by domain, preventing conflicts
+/// - **Code Execution**: Attach handlers that execute when tags are encountered
+/// - **Thread Safety**: All operations are safe for concurrent access
 ///
 /// ## Usage Example
+///
 /// ```swift
 /// let registry: InventoryTagRegistry = DefaultTagRegistry()
 ///
@@ -29,6 +27,10 @@ import Foundation
 ///     print("Resolved type: \(result)") // "AppleDiskImage"
 /// }
 /// ```
+///
+/// - SeeAlso: ``DefaultTagRegistry`` for default implementation
+/// - SeeAlso: ``InventoryService`` for service integration
+/// - SeeAlso: ``InventoryAsset`` for asset tags
 public protocol InventoryTagRegistry: Sendable {
     /// Register a tag for a domain with optional code execution handler
     ///

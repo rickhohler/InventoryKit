@@ -22,6 +22,7 @@ public enum InventoryLogLevel: Int, Sendable {
 }
 
 /// Shared configuration used to bootstrap InventoryKit services.
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public struct InventoryConfiguration: Sendable {
     public var provider: InventoryStorageProvider
     public var schemaVersion: InventorySchemaVersion

@@ -7,6 +7,8 @@ public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable 
     case schemaIncompatible(expected: InventorySchemaVersion, actual: InventorySchemaVersion)
     case yamlDecodingFailed(String)
     case yamlEncodingFailed(String)
+    case storageError(String)
+    case vendorOperationNotSupported(String)
 
     public var description: String {
         switch self {
@@ -20,6 +22,10 @@ public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable 
             return "Failed to decode inventory YAML: \(message)"
         case let .yamlEncodingFailed(message):
             return "Failed to encode inventory YAML: \(message)"
+        case let .storageError(message):
+            return "Storage error: \(message)"
+        case let .vendorOperationNotSupported(message):
+            return "Vendor operation not supported: \(message)"
         }
     }
 }

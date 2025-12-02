@@ -1,17 +1,54 @@
 import Foundation
 
 /// Facade + repository actor that indexes large inventories for fast lookup, relationship checks, and identifier resolution.
+///
+/// `InventoryCatalog` provides high-performance indexing and querying capabilities for large inventories.
+/// It maintains in-memory indexes for fast lookups by ID, identifier, tags, and relationships.
+/// All operations are thread-safe through Swift actor isolation.
+///
+/// ## Key Features
+///
+/// - **Fast Lookups**: O(1) lookups by UUID, identifier, or tag
+/// - **Relationship Evaluation**: Check compliance with relationship requirements
+/// - **Pagination**: Efficient pagination for large result sets
+/// - **Component Traversal**: Navigate embedded component hierarchies
+///
+/// ## Usage
+///
+/// ```swift
+/// let catalog = InventoryCatalog(document: document)
+///
+/// // Upsert an asset
+/// await catalog.upsert(asset)
+///
+/// // Query by identifier
+/// let asset = await catalog.asset(identifierType: .serialNumber, value: "SN12345")
+///
+/// // Evaluate relationships
+/// let evaluations = await catalog.evaluateRelationships(forAssetID: assetID)
+/// ```
+///
+/// ## Thread Safety
+///
+/// `InventoryCatalog` is an actor, ensuring thread-safe access to all operations.
+/// All methods are safe to call from any concurrency context.
+///
+/// - SeeAlso: ``InventoryService`` for high-level service operations
+/// - SeeAlso: ``InventoryAsset`` for asset model
+/// - SeeAlso: ``InventoryRelationshipRequirement`` for relationship modeling
+/// - SeeAlso: [Apple Swift Concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public actor InventoryCatalog {
     private var schemaVersion: InventorySchemaVersion
     private var info: InventoryDocumentInfo?
     private var metadata: [String: String]
 
-    private var assetsByID: [UUID: InventoryAsset]
+    private var assetsByID: [UUID: AnyInventoryAsset]
     private var tagIndex: [String: Set<UUID>]
     private var identifierIndex: [IdentifierKey: UUID]
     private var relationshipTypesByID: [String: InventoryRelationshipType]
 
-    public init(document: InventoryDocument = InventoryDocument(schemaVersion: .current, assets: [])) {
+    public init(document: InventoryDocument = InventoryDocument(schemaVersion: .current, info: nil, metadata: [:], relationshipTypes: [], assets: [])) {
         self.schemaVersion = document.schemaVersion
         self.info = document.info
         self.metadata = document.metadata
@@ -24,18 +61,48 @@ public actor InventoryCatalog {
 
     // MARK: - CRUD
 
+    /// Upserts an asset conforming to `InventoryAssetProtocol`.
+    ///
+    /// This method accepts any protocol-conforming type, enabling CloudKit/CoreData integration.
+    ///
+    /// - Parameter asset: The asset to upsert (can be CloudKit/CoreData managed object)
+    /// - Returns: Type-erased wrapper of the upserted asset
     @discardableResult
-    public func upsert(_ asset: InventoryAsset) -> InventoryAsset {
-        if let existing = assetsByID[asset.id] {
+    public func upsert(_ asset: any InventoryAssetProtocol) -> AnyInventoryAsset {
+        let wrapped = AnyInventoryAsset(asset)
+        if let existing = assetsByID[wrapped.id] {
             deindex(asset: existing)
         }
-        assetsByID[asset.id] = asset
-        index(asset: asset)
-        return asset
+        assetsByID[wrapped.id] = wrapped
+        index(asset: wrapped)
+        return wrapped
+    }
+    
+    /// Convenience method for concrete `InventoryAsset` types.
+    @discardableResult
+    public func upsert(_ asset: InventoryAsset) -> InventoryAsset {
+        let wrapped = upsert(asset as any InventoryAssetProtocol)
+        // Convert back to concrete type for return
+        return InventoryAsset(
+            id: wrapped.id,
+            name: wrapped.name,
+            type: wrapped.type,
+            location: wrapped.location,
+            source: wrapped.source,
+            lifecycle: wrapped.lifecycle,
+            mro: wrapped.mro,
+            health: wrapped.health,
+            components: wrapped.components,
+            relationshipRequirements: wrapped.relationshipRequirements,
+            linkedAssets: wrapped.linkedAssets,
+            identifiers: wrapped.identifiers,
+            tags: wrapped.tags,
+            metadata: wrapped.metadata
+        )
     }
 
     @discardableResult
-    public func deleteAsset(id: UUID) -> InventoryAsset? {
+    public func deleteAsset(id: UUID) -> AnyInventoryAsset? {
         guard let removed = assetsByID.removeValue(forKey: id) else {
             return nil
         }
@@ -60,37 +127,59 @@ public actor InventoryCatalog {
         assetsByID.count
     }
 
-    public func allAssets(sorted: Bool = true) -> [InventoryAsset] {
+    /// Returns all assets as protocol-conforming types.
+    public func allAssets(sorted: Bool = true) -> [any InventoryAssetProtocol] {
         let values = Array(assetsByID.values)
         return sorted ? values.sorted(by: { $0.id.uuidString < $1.id.uuidString }) : values
     }
+    
+    /// Convenience method returning concrete `InventoryAsset` types.
+    public func allConcreteAssets(sorted: Bool = true) -> [InventoryAsset] {
+        allAssets(sorted: sorted).map { convertToConcrete($0) }
+    }
 
-    public func paginatedAssets(page: InventoryPageRequest) -> InventoryPage<InventoryAsset> {
+    public func paginatedAssets(page: InventoryPageRequest) -> InventoryPage<any InventoryAssetProtocol> {
         let sortedAssets = allAssets()
         return paginate(items: sortedAssets, request: page)
     }
+    
+    /// Convenience method returning concrete `InventoryAsset` types.
+    public func paginatedConcreteAssets(page: InventoryPageRequest) -> InventoryPage<InventoryAsset> {
+        let protocolPage = paginatedAssets(page: page)
+        return InventoryPage(
+            items: protocolPage.items.map { convertToConcrete($0) },
+            nextOffset: protocolPage.nextOffset,
+            total: protocolPage.total
+        )
+    }
 
-    public func paginatedAssets(taggedWith tags: Set<String>, page: InventoryPageRequest) -> InventoryPage<InventoryAsset> {
+    public func paginatedAssets(taggedWith tags: Set<String>, page: InventoryPageRequest) -> InventoryPage<any InventoryAssetProtocol> {
         let filtered = assets(taggedWith: tags)
         return paginate(items: filtered, request: page)
     }
 
-    public func paginatedAssets(inLifecycle stage: InventoryLifecycleStage, page: InventoryPageRequest) -> InventoryPage<InventoryAsset> {
+    public func paginatedAssets(inLifecycle stage: InventoryLifecycleStage, page: InventoryPageRequest) -> InventoryPage<any InventoryAssetProtocol> {
         let filtered = assets(inLifecycle: stage)
         return paginate(items: filtered, request: page)
     }
 
-    public func asset(withID id: UUID) -> InventoryAsset? {
+    public func asset(withID id: UUID) -> (any InventoryAssetProtocol)? {
         assetsByID[id]
     }
+    
+    /// Convenience method returning concrete `InventoryAsset` type.
+    public func concreteAsset(withID id: UUID) -> InventoryAsset? {
+        guard let asset = asset(withID: id) else { return nil }
+        return convertToConcrete(asset)
+    }
 
-    public func asset(identifierType: InventoryIdentifierType, value: String) -> InventoryAsset? {
+    public func asset(identifierType: InventoryIdentifierType, value: String) -> (any InventoryAssetProtocol)? {
         let key = IdentifierKey(type: identifierType, value: InventoryCatalog.normalizedIdentifierValue(value))
         guard let id = identifierIndex[key] else { return nil }
         return assetsByID[id]
     }
 
-    public func assets(taggedWith tags: Set<String>) -> [InventoryAsset] {
+    public func assets(taggedWith tags: Set<String>) -> [any InventoryAssetProtocol] {
         guard !tags.isEmpty else { return allAssets() }
         var intersection: Set<UUID>?
         for tag in tags {
@@ -109,30 +198,30 @@ public actor InventoryCatalog {
         return matches.compactMap { assetsByID[$0] }.sorted(by: { $0.id.uuidString < $1.id.uuidString })
     }
 
-    public func assets(sourceOrigin origin: String) -> [InventoryAsset] {
+    public func assets(sourceOrigin origin: String) -> [any InventoryAssetProtocol] {
         assetsByID.values
             .filter { $0.source?.origin == origin }
             .sorted(by: { $0.id.uuidString < $1.id.uuidString })
     }
 
-    public func assets(inLifecycle stage: InventoryLifecycleStage) -> [InventoryAsset] {
+    public func assets(inLifecycle stage: InventoryLifecycleStage) -> [any InventoryAssetProtocol] {
         assetsByID.values
             .filter { $0.lifecycle?.stage == stage }
             .sorted(by: { $0.id.uuidString < $1.id.uuidString })
     }
 
-    public func search(where predicate: @Sendable (InventoryAsset) -> Bool) -> [InventoryAsset] {
+    public func search(where predicate: @Sendable (any InventoryAssetProtocol) -> Bool) -> [any InventoryAssetProtocol] {
         assetsByID.values.filter(predicate)
     }
 
-    public func embeddedComponents(for assetID: UUID) -> [InventoryAsset] {
+    public func embeddedComponents(for assetID: UUID) -> [any InventoryAssetProtocol] {
         guard let asset = assetsByID[assetID] else { return [] }
         return asset.components.compactMap { link in
             assetsByID[link.assetID]
         }
     }
 
-    public func relatedAssets(for assetID: UUID, typeID: String? = nil) -> [InventoryAsset] {
+    public func relatedAssets(for assetID: UUID, typeID: String? = nil) -> [any InventoryAssetProtocol] {
         guard let asset = assetsByID[assetID] else { return [] }
         let links = asset.linkedAssets.filter { link in
             guard let typeID else { return true }
@@ -206,19 +295,41 @@ public actor InventoryCatalog {
     // MARK: - Document Interaction
 
     public func snapshotDocument(sortedByID: Bool = true) -> InventoryDocument {
-        let assets = allAssets(sorted: sortedByID)
+        let protocolAssets = allAssets(sorted: sortedByID)
+        // Convert protocol assets to concrete types for document serialization
+        let concreteAssets = protocolAssets.map { convertToConcrete($0) }
         return InventoryDocument(
             schemaVersion: schemaVersion,
             info: info,
             metadata: metadata,
             relationshipTypes: relationshipTypes(),
-            assets: assets
+            assets: concreteAssets
+        )
+    }
+    
+    /// Helper to convert protocol asset to concrete InventoryAsset.
+    private func convertToConcrete(_ asset: any InventoryAssetProtocol) -> InventoryAsset {
+        InventoryAsset(
+            id: asset.id,
+            name: asset.name,
+            type: asset.type,
+            location: asset.location,
+            source: asset.source,
+            lifecycle: asset.lifecycle,
+            mro: asset.mro,
+            health: asset.health,
+            components: asset.components,
+            relationshipRequirements: asset.relationshipRequirements,
+            linkedAssets: asset.linkedAssets,
+            identifiers: asset.identifiers,
+            tags: asset.tags,
+            metadata: asset.metadata
         )
     }
 
     // MARK: - Indexing
 
-    private func index(asset: InventoryAsset) {
+    private func index(asset: any InventoryAssetProtocol) {
         asset.tags.forEach { tag in
             tagIndex[tag, default: []].insert(asset.id)
         }
@@ -228,14 +339,15 @@ public actor InventoryCatalog {
         }
     }
 
-    private func deindex(asset: InventoryAsset) {
+    private func deindex(asset: any InventoryAssetProtocol) {
         asset.tags.forEach { tag in
-            guard var set = tagIndex[tag] else { return }
-            set.remove(asset.id)
-            if set.isEmpty {
-                tagIndex.removeValue(forKey: tag)
-            } else {
-                tagIndex[tag] = set
+            if var set = tagIndex[tag] {
+                set.remove(asset.id)
+                if set.isEmpty {
+                    tagIndex.removeValue(forKey: tag)
+                } else {
+                    tagIndex[tag] = set
+                }
             }
         }
         asset.identifiers.forEach { identifier in
@@ -251,21 +363,24 @@ public actor InventoryCatalog {
     }
 }
 
+
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 private extension InventoryCatalog {
     struct InitialState {
-        var assetsByID: [UUID: InventoryAsset]
+        var assetsByID: [UUID: AnyInventoryAsset]
         var tagIndex: [String: Set<UUID>]
         var identifierIndex: [IdentifierKey: UUID]
         var relationshipTypesByID: [String: InventoryRelationshipType]
     }
 
     static func buildInitialState(from document: InventoryDocument) -> InitialState {
-        var assets: [UUID: InventoryAsset] = [:]
+        var assets: [UUID: AnyInventoryAsset] = [:]
         var tags: [String: Set<UUID>] = [:]
         var identifiers: [IdentifierKey: UUID] = [:]
 
         document.assets.forEach { asset in
-            assets[asset.id] = asset
+            let wrapped = AnyInventoryAsset(asset)
+            assets[asset.id] = wrapped
             asset.tags.forEach { tag in
                 tags[tag, default: []].insert(asset.id)
             }
@@ -288,3 +403,4 @@ private struct IdentifierKey: Hashable {
     let type: InventoryIdentifierType
     let value: String
 }
+

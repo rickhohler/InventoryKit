@@ -1,7 +1,41 @@
 import Foundation
 
-/// Represents a single asset that is tracked in the YAML inventory.
-public struct InventoryAsset: Codable, Equatable, Hashable, Sendable, Identifiable {
+/// Represents a single asset that is tracked in the inventory.
+///
+/// `InventoryAsset` is the core model type representing any item tracked in an inventory.
+/// It supports rich metadata including identifiers, lifecycle information, health status,
+/// relationships, components, and custom tags.
+///
+/// ## Key Properties
+///
+/// - **Identifiers**: Multiple identifier types (UUID, ULID, serial number, etc.)
+/// - **Lifecycle**: Track acquisition, ownership, and disposal
+/// - **Health**: Physical condition and operational status
+/// - **Relationships**: Link to related assets with requirements
+/// - **Components**: Embed child assets (e.g., computer with installed cards)
+/// - **Tags**: Domain-specific tags for categorization and processing
+///
+/// ## Usage
+///
+/// ```swift
+/// let asset = InventoryAsset(
+///     name: "Apple IIe",
+///     type: "computer",
+///     identifiers: [
+///         InventoryIdentifier(type: .serialNumber, value: "A2S123456")
+///     ],
+///     tags: ["apple", "vintage", "computer"]
+/// )
+/// ```
+///
+/// - SeeAlso: ``InventoryDocument`` for document structure
+/// - SeeAlso: ``InventoryIdentifier`` for identifier types
+/// - SeeAlso: ``InventoryLifecycle`` for lifecycle tracking
+/// - SeeAlso: ``InventoryHealth`` for health status
+/// - SeeAlso: ``InventoryRelationshipRequirement`` for relationship modeling
+/// - SeeAlso: ``InventoryAssetProtocol`` for protocol definition
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public struct InventoryAsset: InventoryAssetProtocol, Codable, Equatable, Hashable, Sendable, Identifiable {
     public let id: UUID
     public var identifiers: [InventoryIdentifier]
     public var name: String
@@ -15,6 +49,7 @@ public struct InventoryAsset: Codable, Equatable, Hashable, Sendable, Identifiab
     public var relationshipRequirements: [InventoryRelationshipRequirement]
     public var linkedAssets: [InventoryLinkedAsset]
     public var tags: [String]
+    public var copyright: CopyrightInfo?
     public var metadata: [String: String]
 
     public init(
@@ -31,6 +66,7 @@ public struct InventoryAsset: Codable, Equatable, Hashable, Sendable, Identifiab
         linkedAssets: [InventoryLinkedAsset] = [],
         identifiers: [InventoryIdentifier] = [],
         tags: [String] = [],
+        copyright: CopyrightInfo? = nil,
         metadata: [String: String] = [:]
     ) {
         self.id = id
@@ -46,6 +82,7 @@ public struct InventoryAsset: Codable, Equatable, Hashable, Sendable, Identifiab
         self.relationshipRequirements = relationshipRequirements
         self.linkedAssets = linkedAssets
         self.tags = tags
+        self.copyright = copyright
         self.metadata = metadata
     }
 
@@ -58,6 +95,7 @@ public struct InventoryAsset: Codable, Equatable, Hashable, Sendable, Identifiab
     }
 }
 
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension InventoryAsset {
     private enum CodingKeys: String, CodingKey {
         case id
@@ -73,6 +111,7 @@ extension InventoryAsset {
         case relationshipRequirements
         case linkedAssets
         case tags
+        case copyright
         case metadata
     }
 
@@ -91,6 +130,7 @@ extension InventoryAsset {
         let relationshipRequirements = try container.decodeIfPresent([InventoryRelationshipRequirement].self, forKey: .relationshipRequirements) ?? []
         let linkedAssets = try container.decodeIfPresent([InventoryLinkedAsset].self, forKey: .linkedAssets) ?? []
         let tags = try container.decodeIfPresent([String].self, forKey: .tags) ?? []
+        let copyright = try container.decodeIfPresent(CopyrightInfo.self, forKey: .copyright)
         let metadata = try container.decodeIfPresent([String: String].self, forKey: .metadata) ?? [:]
 
         self.init(
@@ -107,6 +147,7 @@ extension InventoryAsset {
             linkedAssets: linkedAssets,
             identifiers: identifiers,
             tags: tags,
+            copyright: copyright,
             metadata: metadata
         )
     }
@@ -135,6 +176,9 @@ extension InventoryAsset {
         }
         if !tags.isEmpty {
             try container.encode(tags, forKey: .tags)
+        }
+        if let copyright = copyright {
+            try container.encode(copyright, forKey: .copyright)
         }
         if !metadata.isEmpty {
             try container.encode(metadata, forKey: .metadata)

@@ -1,12 +1,46 @@
 import Foundation
 
 /// Supported inventory serialization formats.
+///
+/// InventoryKit supports YAML and JSON formats for serialization. YAML is the default
+/// format and provides better readability for human-edited files. JSON is useful for
+/// programmatic APIs and web services.
+///
+/// - SeeAlso: ``InventoryDataTransformer`` for transformer implementations
 public enum InventoryDataFormat: String, Codable, Sendable {
     case yaml
     case json
 }
 
 /// Abstraction over encoding and decoding inventory documents.
+///
+/// `InventoryDataTransformer` defines the protocol for serializing and deserializing
+/// inventory documents. Implementations handle format-specific encoding/decoding logic.
+///
+/// InventoryKit provides default implementations:
+/// - ``YAMLInventoryTransformer`` for YAML format
+/// - ``JSONInventoryTransformer`` for JSON format
+///
+/// ## Custom Transformers
+///
+/// Implement this protocol to add support for custom formats:
+///
+/// ```swift
+/// struct CustomTransformer: InventoryDataTransformer {
+///     var format: InventoryDataFormat { .custom }
+///     func decode(_ data: Data, validatingAgainst version: InventorySchemaVersion) throws -> InventoryDocument {
+///         // Custom decoding logic
+///     }
+///     func encode(_ document: InventoryDocument) throws -> Data {
+///         // Custom encoding logic
+///     }
+/// }
+/// ```
+///
+/// - SeeAlso: ``YAMLInventoryTransformer``
+/// - SeeAlso: ``JSONInventoryTransformer``
+/// - SeeAlso: ``InventoryDocument`` for document structure
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol InventoryDataTransformer: Sendable {
     var format: InventoryDataFormat { get }
     func decode(_ data: Data, validatingAgainst version: InventorySchemaVersion) throws -> InventoryDocument
@@ -14,6 +48,7 @@ public protocol InventoryDataTransformer: Sendable {
 }
 
 /// Type-erased wrapper so call-sites can keep collections of transformers.
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public struct AnyInventoryDataTransformer: InventoryDataTransformer {
     public let format: InventoryDataFormat
 

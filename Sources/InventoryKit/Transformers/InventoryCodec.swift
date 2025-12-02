@@ -1,7 +1,13 @@
 import Foundation
 import Yams
 
-/// Provides helpers to decode and encode YAML inventory documents.
+/// Internal codec for YAML serialization.
+///
+/// `InventoryCodec` provides low-level YAML encoding/decoding using the Yams library.
+/// This is an internal implementation detail used by ``YAMLInventoryTransformer``.
+///
+/// - SeeAlso: ``YAMLInventoryTransformer`` for public YAML transformer
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public struct InventoryCodec: Sendable {
     public init() {}
 
@@ -31,15 +37,6 @@ public struct InventoryCodec: Sendable {
         }
     }
 
-    public func decode(
-        contentsOf url: URL,
-        validatingAgainst version: InventorySchemaVersion = .current
-    ) throws -> InventoryDocument {
-        guard let data = FileManager.default.contents(atPath: url.path) else {
-            throw InventoryError.unreadableFile(url)
-        }
-        return try decode(from: data, validatingAgainst: version)
-    }
 
     public func encode(_ document: InventoryDocument) throws -> String {
         let encoder = YAMLEncoder()
