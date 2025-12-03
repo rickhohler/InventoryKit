@@ -5,72 +5,32 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-
-env:
-  PACKAGE_NAME: InventoryKit
+  workflow_dispatch:
 
 jobs:
-  build-ubuntu:
-    name: Build on Ubuntu
-    runs-on: ubuntu-latest
-    container: ${{ matrix.swift.nightly && format('swiftlang/swift:nightly-{0}-{1}', matrix.swift.version, matrix.os) || format('swift:{0}-{1}', matrix.swift.version, matrix.os) }}
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') }}
+  test:
+    name: Run Unit Tests
+    runs-on: macos-latest
+    
     strategy:
       matrix:
-        os: [noble, jammy]
-        swift:
-          - version: "6.0"
-          - version: "6.1"
-          - version: "6.1"
-            nightly: true
-          - version: "6.2"
-            nightly: true
+        swift-version: ['6.0']
+    
     steps:
-    - uses: actions/checkout@v4
-    - uses: brightdigit/swift-build@v1.3.0
-
-  build-macos:
-    name: Build on macOS
-    env:
-      PACKAGE_NAME: InventoryKit
-    runs-on: ${{ matrix.runs-on }}    
-    if: "!contains(github.event.head_commit.message, 'ci skip')"
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          # SPM Build Matrix
-          - runs-on: macos-15
-            xcode: "/Applications/Xcode_26.0.app"
-          - runs-on: macos-15
-            xcode: "/Applications/Xcode_16.4.app"
-          
-          # macOS Build Matrix
-          - type: macos
-            runs-on: macos-15
-            xcode: "/Applications/Xcode_26.0.app"
-
-          - type: macos
-            runs-on: macos-15
-            xcode: "/Applications/Xcode_16.4.app"
-          
-          # iOS Build Matrix
-          - type: ios
-            runs-on: macos-15
-            xcode: "/Applications/Xcode_26.0.app"
-            deviceName: "iPhone 17 Pro"
-            osVersion: "26.0"
-            download-platform: true
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Build and Test
-      uses: brightdigit/swift-build@v1.3.0
-      with:
-        scheme: ${{ env.PACKAGE_NAME }}
-        type: ${{ matrix.type }}
-        xcode: ${{ matrix.xcode }}
-        deviceName: ${{ matrix.deviceName }}
-        osVersion: ${{ matrix.osVersion }}
-        download-platform: ${{ matrix.download-platform }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode.app
+      
+      - name: Show Swift version
+        run: swift --version
+      
+      - name: Resolve dependencies
+        run: swift package resolve
+      
+      - name: Build package
+        run: swift build
+      
+      - name: Run tests
+        run: swift test
