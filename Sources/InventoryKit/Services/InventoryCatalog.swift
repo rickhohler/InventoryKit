@@ -97,6 +97,7 @@ public actor InventoryCatalog {
             linkedAssets: wrapped.linkedAssets,
             identifiers: wrapped.identifiers,
             tags: wrapped.tags,
+            copyright: wrapped.copyright,
             metadata: wrapped.metadata
         )
     }
@@ -323,6 +324,7 @@ public actor InventoryCatalog {
             linkedAssets: asset.linkedAssets,
             identifiers: asset.identifiers,
             tags: asset.tags,
+            copyright: asset.copyright,
             metadata: asset.metadata
         )
     }
