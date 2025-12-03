@@ -1,0 +1,319 @@
+{
+  "" : {
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit-primary.dia",
+    "emit-module-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit-primary-emit-module.dia",
+    "pch" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit-primary.swiftdeps"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/InventoryConfiguration.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryConfiguration~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/InventoryError.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryError~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/InventoryKit.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryKit~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/InventoryLogger.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLogger~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/InventoryService.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryService~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryAsset.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAsset~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryComponentLink.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryComponentLink~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryDocument.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocument~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryDocumentInfo.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDocumentInfo~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryHealth.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryHealth~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryIdentifier.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryIdentifier~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryLifecycle.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLifecycle~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryLinkedAsset.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryLinkedAsset~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryMROInfo.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryMROInfo~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryPage.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryPage~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryRelationshipRequirement.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipRequirement~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryRelationshipType.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryRelationshipType~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventorySchemaVersion.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySchemaVersion~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventorySource.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventorySource~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Models/InventoryULID.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryULID~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Protocols/AnyInventoryAsset.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/AnyInventoryAsset~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Protocols/InventoryAssetProtocol.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryAssetProtocol~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Protocols/InventoryTagRegistry.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryTagRegistry~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Services/DefaultTagRegistry.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/DefaultTagRegistry~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Services/InventoryCatalog+Pagination.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog+Pagination~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Services/InventoryCatalog.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCatalog~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Storage/InventoryStorageProvider.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryStorageProvider~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Transformers/InventoryCodec.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryCodec~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Transformers/InventoryDataTransformer.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/InventoryDataTransformer~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Transformers/JSONInventoryTransformer.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/JSONInventoryTransformer~partial.swiftmodule"
+  },
+  "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/Sources/InventoryKit/Transformers/YAMLInventoryTransformer.swift" : {
+    "const-values" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.swiftconstvalues",
+    "dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.d",
+    "diagnostics" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.dia",
+    "index-unit-output-path" : "/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.o",
+    "llvm-bc" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.bc",
+    "object" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.o",
+    "swift-dependencies" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer.swiftdeps",
+    "swiftmodule" : "/Users/rickhohler/CODE/GITHUB/VINTAGE/RetroboxShell/InventoryKit/build/InventoryKit.build/Debug/InventoryKit.build/Objects-normal/arm64/YAMLInventoryTransformer~partial.swiftmodule"
+  }
+}
