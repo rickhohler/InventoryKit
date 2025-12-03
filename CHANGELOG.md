@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Future changes will be documented here
 
+## [1.1.1] - 2025-12-03
+
+### Fixed
+- **CI Compatibility**: Lowered Swift tools version from 6.2 to 6.0 for GitHub Actions compatibility
+  - Updated Package.swift to use `swift-tools-version: 6.0`
+  - Compatible with GitHub Actions macos-latest runner (Swift 6.1.0)
+  - Simplified CI workflow to use latest Xcode only
+
 ## [1.1.0] - 2025-12-03
 
 ### Added
