@@ -1,3 +1,5 @@
+import Foundation
+
 /// Represents an entire inventory document that contains a schema version, optional metadata, and the tracked assets.
 ///
 /// `InventoryDocument` is the top-level container for an inventory. It includes:
@@ -20,12 +22,6 @@
 ///     info: InventoryDocumentInfo(title: "My Collection"),
 ///     assets: [asset1, asset2, asset3]
 /// )
-///
-/// // Validate compatibility
-/// try document.ensureCompatibility(expected: .current)
-///
-/// // Encode to YAML/JSON
-/// let data = try InventoryKit.encodeInventory(document, format: .yaml)
 /// ```
 ///
 /// - SeeAlso: ``InventorySchemaVersion`` for schema versioning

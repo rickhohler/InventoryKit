@@ -17,5 +17,6 @@ public enum InventoryIdentifierType: String, Codable, Sendable {
     case serialNumber
     case assetTag
     case sku
+    case upc
     case custom
 }

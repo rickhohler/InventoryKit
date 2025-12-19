@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import InventoryCore
 @testable import InventoryKit
 
 @Test func schemaVersionParsing() async throws {

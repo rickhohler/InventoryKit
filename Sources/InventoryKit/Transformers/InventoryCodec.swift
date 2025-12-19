@@ -1,5 +1,6 @@
 import Foundation
 import Yams
+import InventoryCore
 
 /// Internal codec for YAML serialization.
 ///

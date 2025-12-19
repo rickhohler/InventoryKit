@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// Facade + repository actor that indexes large inventories for fast lookup, relationship checks, and identifier resolution.
 ///

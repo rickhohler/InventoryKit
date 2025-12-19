@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// Convenience namespace that surfaces common helpers for consumers that prefer static access.
 ///

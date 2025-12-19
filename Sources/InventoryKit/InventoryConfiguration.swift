@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// Logging verbosity for InventoryKit services.
 public enum InventoryLogLevel: Int, Sendable {

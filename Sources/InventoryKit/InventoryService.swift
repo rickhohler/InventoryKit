@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// High-level SDK entry point that wires a storage provider, catalog, and logging together.
 ///

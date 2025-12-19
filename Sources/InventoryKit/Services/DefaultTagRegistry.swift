@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// Default implementation of `InventoryTagRegistry` protocol
 ///
