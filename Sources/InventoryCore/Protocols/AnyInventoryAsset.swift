@@ -21,6 +21,7 @@ public struct AnyInventoryAsset: InventoryAssetProtocol, Identifiable, Sendable 
     public let tags: [String]
     public let copyright: CopyrightInfo?
     public let metadata: [String: String]
+    public let productID: UUID?
     
     /// Creates a type-erased wrapper from any `InventoryAssetProtocol`.
     public init(_ asset: any InventoryAssetProtocol) {
@@ -39,26 +40,9 @@ public struct AnyInventoryAsset: InventoryAssetProtocol, Identifiable, Sendable 
         self.tags = asset.tags
         self.copyright = asset.copyright
         self.metadata = asset.metadata
+        self.productID = asset.productID
     }
     
-    /// Creates a type-erased wrapper from a concrete `InventoryAsset`.
-    public init(_ asset: InventoryAsset) {
-        self.id = asset.id
-        self.identifiers = asset.identifiers
-        self.name = asset.name
-        self.type = asset.type
-        self.location = asset.location
-        self.source = asset.source
-        self.lifecycle = asset.lifecycle
-        self.mro = asset.mro
-        self.health = asset.health
-        self.components = asset.components
-        self.relationshipRequirements = asset.relationshipRequirements
-        self.linkedAssets = asset.linkedAssets
-        self.tags = asset.tags
-        self.copyright = asset.copyright
-        self.metadata = asset.metadata
-    }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -78,7 +62,8 @@ extension AnyInventoryAsset: Equatable {
         lhs.linkedAssets == rhs.linkedAssets &&
         lhs.tags == rhs.tags &&
         lhs.copyright == rhs.copyright &&
-        lhs.metadata == rhs.metadata
+        lhs.metadata == rhs.metadata &&
+        lhs.productID == rhs.productID
     }
 }
 
@@ -100,6 +85,7 @@ extension AnyInventoryAsset: Hashable {
         hasher.combine(tags)
         hasher.combine(copyright)
         hasher.combine(metadata)
+        hasher.combine(productID)
     }
 }
 

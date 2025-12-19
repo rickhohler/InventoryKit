@@ -65,6 +65,10 @@ public protocol InventoryAssetProtocol: Identifiable, Sendable where ID == UUID 
     
     /// Custom metadata dictionary.
     var metadata: [String: String] { get }
+    
+    /// Reference to a Product (catalog entry) via UUID.
+    /// Assets can reference Products in the catalog via this field.
+    var productID: UUID? { get }
 }
 
 /// Protocol defining the contract for inventory documents.

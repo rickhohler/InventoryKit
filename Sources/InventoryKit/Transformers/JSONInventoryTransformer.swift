@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// JSON format transformer for inventory documents.
 ///

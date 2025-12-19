@@ -51,6 +51,7 @@ public struct InventoryAsset: InventoryAssetProtocol, Codable, Equatable, Hashab
     public var tags: [String]
     public var copyright: CopyrightInfo?
     public var metadata: [String: String]
+    public var productID: UUID?
 
     public init(
         id: UUID = UUID(),
@@ -67,7 +68,8 @@ public struct InventoryAsset: InventoryAssetProtocol, Codable, Equatable, Hashab
         identifiers: [InventoryIdentifier] = [],
         tags: [String] = [],
         copyright: CopyrightInfo? = nil,
-        metadata: [String: String] = [:]
+        metadata: [String: String] = [:],
+        productID: UUID? = nil
     ) {
         self.id = id
         self.identifiers = identifiers.isEmpty ? InventoryAsset.defaultIdentifiers(for: id) : identifiers
@@ -84,6 +86,7 @@ public struct InventoryAsset: InventoryAssetProtocol, Codable, Equatable, Hashab
         self.tags = tags
         self.copyright = copyright
         self.metadata = metadata
+        self.productID = productID
     }
 
     private static func defaultIdentifiers(for id: UUID) -> [InventoryIdentifier] {
@@ -96,6 +99,13 @@ public struct InventoryAsset: InventoryAssetProtocol, Codable, Equatable, Hashab
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+extension AnyInventoryAsset {
+    /// Creates a type-erased wrapper from a concrete `InventoryAsset`.
+    public init(_ asset: InventoryAsset) {
+        self.init(asset as any InventoryAssetProtocol)
+    }
+}
+
 extension InventoryAsset {
     private enum CodingKeys: String, CodingKey {
         case id
@@ -113,6 +123,7 @@ extension InventoryAsset {
         case tags
         case copyright
         case metadata
+        case productID
     }
 
     public init(from decoder: Decoder) throws {
@@ -132,6 +143,7 @@ extension InventoryAsset {
         let tags = try container.decodeIfPresent([String].self, forKey: .tags) ?? []
         let copyright = try container.decodeIfPresent(CopyrightInfo.self, forKey: .copyright)
         let metadata = try container.decodeIfPresent([String: String].self, forKey: .metadata) ?? [:]
+        let productID = try container.decodeIfPresent(UUID.self, forKey: .productID)
 
         self.init(
             id: id,
@@ -148,7 +160,8 @@ extension InventoryAsset {
             identifiers: identifiers,
             tags: tags,
             copyright: copyright,
-            metadata: metadata
+            metadata: metadata,
+            productID: productID
         )
     }
 
@@ -183,5 +196,6 @@ extension InventoryAsset {
         if !metadata.isEmpty {
             try container.encode(metadata, forKey: .metadata)
         }
+        try container.encodeIfPresent(productID, forKey: .productID)
     }
 }

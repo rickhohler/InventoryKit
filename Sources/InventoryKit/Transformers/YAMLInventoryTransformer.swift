@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 /// YAML format transformer for inventory documents.
 ///

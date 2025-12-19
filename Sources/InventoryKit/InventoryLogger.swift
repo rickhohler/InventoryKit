@@ -1,4 +1,5 @@
 import Foundation
+import InventoryCore
 
 struct InventoryLogger: Sendable {
     private let level: InventoryLogLevel

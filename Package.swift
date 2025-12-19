@@ -6,12 +6,13 @@ import PackageDescription
 let package = Package(
     name: "InventoryKit",
     platforms: [
-        .macOS(.v10_15),
-        .iOS(.v13),
-        .tvOS(.v13),
-        .watchOS(.v6)
+        .macOS(.v12), .iOS(.v15), .tvOS(.v15), .watchOS(.v8)
     ],
     products: [
+        .library(
+            name: "InventoryCore",
+            targets: ["InventoryCore"]
+        ),
         .library(
             name: "InventoryKit",
             targets: ["InventoryKit"]
@@ -23,15 +24,20 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "InventoryCore",
+            dependencies: []
+        ),
+        .target(
             name: "InventoryKit",
             dependencies: [
+                "InventoryCore",
                 .product(name: "Yams", package: "Yams"),
                 .product(name: "DesignAlgorithmsKit", package: "DesignAlgorithmsKit"),
             ]
         ),
         .testTarget(
             name: "InventoryKitTests",
-            dependencies: ["InventoryKit"]
+            dependencies: ["InventoryKit", "InventoryCore"]
         ),
     ]
 )
