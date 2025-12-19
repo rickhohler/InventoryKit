@@ -16,6 +16,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Future changes will be documented here
 
+## [1.2.0] - 2025-12-18
+
+### Added
+- **InventoryCore Target**: New library target for shared primitives and models to improve modularity.
+- **New Product Models**: 
+  - `InventoryProduct`: Rich representation of hardware and software products.
+  - `InventoryCatalogVendor`: Structured vendor identification for cataloging.
+  - `InventoryProductCatalog`: Comprehensive catalog for product-level data and specifications.
+- **Implementation Guidelines**: Added `docs/IMPLEMENTATION_GUIDELINES.md` to formalize project standards.
+
+### Changed
+- **Modularity & Reorganization**: 
+  - Extracted shared protocols and models from `InventoryKit` to `InventoryCore`.
+  - Reorganized project structure: `Sources/InventoryCore` for primitives, `Sources/InventoryKit` for high-level services and features.
+  - `InventoryKit` now depends on `InventoryCore`.
+  - Refactored `InventoryAssetProtocol` and `AnyInventoryAsset` to support broader product metadata.
+- **Improved Performance**: Internal optimizations for catalog resolution, identifier management, and relationship checks.
+
 ## [1.1.1] - 2025-12-03
 
 ### Fixed
