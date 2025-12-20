@@ -16,7 +16,7 @@ import Foundation
 ///
 /// Clients implement concrete types conforming to these protocols.
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public enum InventoryCore {
+public enum InventoryCoreInfo {
     /// Core module version
     public static let version = "1.0.0"
 }

@@ -9,6 +9,7 @@ public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable 
     case yamlEncodingFailed(String)
     case storageError(String)
     case vendorOperationNotSupported(String)
+    case notImplemented(String)
 
     public var description: String {
         switch self {
@@ -26,6 +27,8 @@ public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable 
             return "Storage error: \(message)"
         case let .vendorOperationNotSupported(message):
             return "Vendor operation not supported: \(message)"
+        case let .notImplemented(message):
+            return "Not implemented: \(message)"
         }
     }
 }

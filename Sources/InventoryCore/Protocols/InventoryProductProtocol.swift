@@ -1,53 +1,71 @@
-//
-//  InventoryProductProtocol.swift
-//  InventoryKit
-//
-//  Main product protocol (composition of focused protocols)
-//
-
 import Foundation
 
-/// Main protocol for products (Authority Records).
-///
-/// Composes all focused product protocols following the Interface Segregation Principle (ISP).
-/// Products represent catalog entries for software titles or hardware products.
-///
-/// ## Protocol Composition
-///
-/// This protocol composes:
-/// - `InventoryProductIdentificationProtocol` - Core identification
-/// - `InventoryProductMetadataProtocol` - Basic metadata
-/// - `InventoryProductCreatorProtocol` - Creator/publisher information
-/// - `InventoryProductSpecificationProtocol` - Specifications (hardware/software)
-///
-/// ## Usage
-///
-/// ```swift
-/// struct MyProduct: InventoryProductProtocol {
-///     // Implement all composed protocol requirements
-///     var id: UUID { ... }
-///     var title: String { ... }
-///     // ... etc
-/// }
-/// ```
-///
-/// - SeeAlso: ``InventoryProductIdentificationProtocol``
-/// - SeeAlso: ``InventoryProductMetadataProtocol``
-/// - SeeAlso: ``InventoryProductCreatorProtocol``
-/// - SeeAlso: ``InventoryProductSpecificationProtocol``
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol InventoryProductProtocol: InventoryProductIdentificationProtocol
-    & InventoryProductMetadataProtocol
-    & InventoryProductCreatorProtocol
-    & InventoryProductSpecificationProtocol {
+// MARK: - Inventory Product Protocol
+
+/// Main protocol for an Inventory Product.
+/// Represents the abstract "Authority Record" for a software title or hardware model.
+public protocol InventoryProductProtocol: Sendable,
+                                        InventoryProductIdentificationProtocol,
+                                        InventoryProductMetadataProtocol,
+                                        InventoryProductCreatorProtocol,
+                                        InventoryProductTemporalProtocol,
+                                        InventoryProductSpecificationProtocol,
+                                        InventoryProductRelationshipProtocol,
+                                        InventoryProductReferenceProtocol {
     
-    /// Release date.
-    var releaseDate: Date? { get }
-    
-    /// Production date.
-    var productionDate: Date? { get }
-    
-    /// Product identifiers (UPC, etc.) using InventoryIdentifier.
-    var identifiers: [InventoryIdentifier] { get }
+    /// Extended metadata definitions.
+    var metadata: [String: String] { get }
 }
 
+// MARK: - Base Protocols
+
+public protocol InventoryProductIdentificationProtocol {
+    var id: UUID { get }
+    var sku: String? { get }
+    var identifiers: [any InventoryIdentifierProtocol] { get }
+}
+
+public protocol InventoryProductMetadataProtocol {
+    var title: String { get }
+    var description: String? { get }
+    // Note: ProductType is usually an enum (Software/Hardware)
+    var productType: String? { get }
+    var classification: String? { get }
+    var genre: String? { get }
+}
+
+public protocol InventoryProductCreatorProtocol {
+    /// The primary creator/manufacturer.
+    var manufacturer: (any InventoryManufacturerProtocol)? { get }
+    
+    /// Additional credit fields.
+    var publisher: String? { get }
+    var developer: String? { get }
+    var creator: String? { get }
+}
+
+public protocol InventoryProductTemporalProtocol {
+    var releaseDate: Date? { get }
+    var productionDate: Date? { get }
+}
+
+public protocol InventoryProductSpecificationProtocol {
+    var platform: String? { get }
+    var systemRequirements: String? { get }
+    var version: String? { get }
+}
+
+public protocol InventoryProductRelationshipProtocol {
+    // Linked resources
+    var instanceIDs: [UUID] { get }
+    var artworkIDs: [UUID] { get }
+    var screenshotIDs: [UUID] { get }
+    var instructionIDs: [UUID] { get }
+    var collectionIDs: [UUID] { get }
+}
+
+public protocol InventoryProductReferenceProtocol {
+    // External IDs (MobyGames ID, etc)
+    // Using string dictionaries or custom struct arrays
+    var references: [String: String] { get }
+}

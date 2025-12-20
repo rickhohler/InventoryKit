@@ -79,29 +79,7 @@ public actor InventoryCatalog {
         return wrapped
     }
     
-    /// Convenience method for concrete `InventoryAsset` types.
-    @discardableResult
-    public func upsert(_ asset: InventoryAsset) -> InventoryAsset {
-        let wrapped = upsert(asset as any InventoryAssetProtocol)
-        // Convert back to concrete type for return
-        return InventoryAsset(
-            id: wrapped.id,
-            name: wrapped.name,
-            type: wrapped.type,
-            location: wrapped.location,
-            source: wrapped.source,
-            lifecycle: wrapped.lifecycle,
-            mro: wrapped.mro,
-            health: wrapped.health,
-            components: wrapped.components,
-            relationshipRequirements: wrapped.relationshipRequirements,
-            linkedAssets: wrapped.linkedAssets,
-            identifiers: wrapped.identifiers,
-            tags: wrapped.tags,
-            copyright: wrapped.copyright,
-            metadata: wrapped.metadata
-        )
-    }
+
 
     @discardableResult
     public func deleteAsset(id: UUID) -> AnyInventoryAsset? {
@@ -135,25 +113,14 @@ public actor InventoryCatalog {
         return sorted ? values.sorted(by: { $0.id.uuidString < $1.id.uuidString }) : values
     }
     
-    /// Convenience method returning concrete `InventoryAsset` types.
-    public func allConcreteAssets(sorted: Bool = true) -> [InventoryAsset] {
-        allAssets(sorted: sorted).map { convertToConcrete($0) }
-    }
+
 
     public func paginatedAssets(page: InventoryPageRequest) -> InventoryPage<any InventoryAssetProtocol> {
         let sortedAssets = allAssets()
         return paginate(items: sortedAssets, request: page)
     }
     
-    /// Convenience method returning concrete `InventoryAsset` types.
-    public func paginatedConcreteAssets(page: InventoryPageRequest) -> InventoryPage<InventoryAsset> {
-        let protocolPage = paginatedAssets(page: page)
-        return InventoryPage(
-            items: protocolPage.items.map { convertToConcrete($0) },
-            nextOffset: protocolPage.nextOffset,
-            total: protocolPage.total
-        )
-    }
+
 
     public func paginatedAssets(taggedWith tags: Set<String>, page: InventoryPageRequest) -> InventoryPage<any InventoryAssetProtocol> {
         let filtered = assets(taggedWith: tags)
@@ -169,11 +136,7 @@ public actor InventoryCatalog {
         assetsByID[id]
     }
     
-    /// Convenience method returning concrete `InventoryAsset` type.
-    public func concreteAsset(withID id: UUID) -> InventoryAsset? {
-        guard let asset = asset(withID: id) else { return nil }
-        return convertToConcrete(asset)
-    }
+
 
     public func asset(identifierType: InventoryIdentifierType, value: String) -> (any InventoryAssetProtocol)? {
         let key = IdentifierKey(type: identifierType, value: InventoryCatalog.normalizedIdentifierValue(value))
@@ -299,36 +262,17 @@ public actor InventoryCatalog {
     public func snapshotDocument(sortedByID: Bool = true) -> InventoryDocument {
         let protocolAssets = allAssets(sorted: sortedByID)
         // Convert protocol assets to concrete types for document serialization
-        let concreteAssets = protocolAssets.map { convertToConcrete($0) }
         return InventoryDocument(
             schemaVersion: schemaVersion,
             info: info,
             metadata: metadata,
             relationshipTypes: relationshipTypes(),
-            assets: concreteAssets
+            assets: protocolAssets.map { AnyInventoryAsset($0) }
         )
     }
+
     
-    /// Helper to convert protocol asset to concrete InventoryAsset.
-    private func convertToConcrete(_ asset: any InventoryAssetProtocol) -> InventoryAsset {
-        InventoryAsset(
-            id: asset.id,
-            name: asset.name,
-            type: asset.type,
-            location: asset.location,
-            source: asset.source,
-            lifecycle: asset.lifecycle,
-            mro: asset.mro,
-            health: asset.health,
-            components: asset.components,
-            relationshipRequirements: asset.relationshipRequirements,
-            linkedAssets: asset.linkedAssets,
-            identifiers: asset.identifiers,
-            tags: asset.tags,
-            copyright: asset.copyright,
-            metadata: asset.metadata
-        )
-    }
+
 
     // MARK: - Indexing
 
