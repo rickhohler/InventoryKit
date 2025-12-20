@@ -20,7 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.1.2"),
-        .package(path: "../DesignAlgorithmsKit"),
+        .package(url: "https://github.com/rickhohler/DesignAlgorithmsKit.git", from: "1.6.0"),
     ],
     targets: [
         .target(
