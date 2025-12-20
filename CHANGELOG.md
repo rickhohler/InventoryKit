@@ -16,6 +16,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Future changes will be documented here
 
+## [2.0.0] - 2025-12-20
+
+### Changed
+- **Protocol-First Architecture**:
+  - `InventoryCore` is now a pure protocol definition layer.
+  - Concrete model implementations (`InventoryAsset`, `InventoryDocument`, etc.) moved to `InventoryKit`.
+  - Introduced `InventoryRelationshipRequirementProtocol`, `InventoryCollectionProtocol`, and others to formalize interfaces.
+- **Project Structure**:
+  - Massive cleanup of unused source files and documentation (`VENDOR_*.md`).
+  - Added architectural documentation:
+    - `docs/INVENTORY_KIT_ARCHITECTURE.md`
+    - `docs/INVENTORY_TERMINOLOGY.md`
+    - `docs/INVENTORY_KIT_MIGRATION_PLAN.md`
+
+### Fixed
+- **Build Quality**: Resolved all "initialization of immutable value was never used" and "no async operations" warnings.
+- **Clean Build**: Project now builds cleanly with 0 errors and significantly reduced warnings.
+
 ## [1.2.0] - 2025-12-18
 
 ### Added
