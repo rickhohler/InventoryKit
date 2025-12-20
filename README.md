@@ -32,16 +32,18 @@ struct MyStorageProvider: InventoryStorageProvider {
     let identifier = "my-provider"
     let transformer = InventoryKit.transformer(for: .yaml)
     
-    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> InventoryDocument {
+    // Vendor support is optional, defaults to nil/unsupported
+    
+    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> any InventoryDocumentProtocol {
         // Use FileSystemKit to read file data
-        let data = try await FileSystemKit.readData(from: url)
+        let data = try await FileSystemKit.readData(from: self.url)
         return try transformer.decode(data, validatingAgainst: version)
     }
     
-    func saveInventory(_ document: InventoryDocument) async throws {
+    func saveInventory(_ document: any InventoryDocumentProtocol) async throws {
         // Use FileSystemKit to write file data
         let data = try transformer.encode(document)
-        try await FileSystemKit.writeData(data, to: url)
+        try await FileSystemKit.writeData(data, to: self.url)
     }
 }
 
@@ -52,9 +54,9 @@ let configuration = InventoryConfiguration(
     logLevel: .info
 )
 
-let service = try await InventoryKit.service(configuration: configuration)
+let service = try await InventoryService.bootstrap(configuration: configuration)
 
-let newAsset = InventoryAsset(name: "IBM PC/AT")
+let newAsset = AnyInventoryAsset(name: "IBM PC/AT")
 await service.catalog.upsert(newAsset)
 try await service.persistChanges()
 
@@ -75,17 +77,17 @@ struct CloudKitInventoryProvider: InventoryStorageProvider {
     let identifier = "cloudkit-provider"
     let transformer = InventoryKit.transformer(for: .json)
 
-    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> InventoryDocument {
+    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> any InventoryDocumentProtocol {
         let data = try await fetchDataFromCloudKit()
         return try transformer.decode(data, validatingAgainst: version)
     }
 
-    func saveInventory(_ document: InventoryDocument) async throws {
+    func saveInventory(_ document: any InventoryDocumentProtocol) async throws {
         let data = try transformer.encode(document)
         try await saveDataToCloudKit(data)
     }
 
-    func replaceInventory(with document: InventoryDocument) async throws {
+    func replaceInventory(with document: any InventoryDocumentProtocol) async throws {
         try await saveInventory(document)
     }
 }

@@ -28,12 +28,18 @@ public struct YAMLInventoryTransformer: InventoryDataTransformer {
 
     public var format: InventoryDataFormat { .yaml }
 
-    public func decode(_ data: Data, validatingAgainst version: InventorySchemaVersion) throws -> InventoryDocument {
+    public func decode(_ data: Data, validatingAgainst version: InventorySchemaVersion) throws -> any InventoryDocumentProtocol {
         try codec.decode(from: data, validatingAgainst: version)
     }
 
-    public func encode(_ document: InventoryDocument) throws -> Data {
-        let string = try codec.encode(document)
+    public func encode(_ document: any InventoryDocumentProtocol) throws -> Data {
+        // Codec expects concrete InventoryDocument
+        let concrete = document as? InventoryDocument ?? InventoryDocument(
+            schemaVersion: document.schemaVersion,
+            info: document.info,
+            protocolAssets: document.assets
+        )
+        let string = try codec.encode(concrete)
         return Data(string.utf8)
     }
 }

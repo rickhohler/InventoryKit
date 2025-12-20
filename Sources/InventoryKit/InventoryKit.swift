@@ -1,5 +1,5 @@
 import Foundation
-import InventoryCore
+@_exported import InventoryCore
 
 /// Convenience namespace that surfaces common helpers for consumers that prefer static access.
 ///
@@ -24,7 +24,7 @@ import InventoryCore
 /// - SeeAlso: ``InventoryCatalog`` for catalog operations
 /// - SeeAlso: ``InventoryDataTransformer`` for custom serialization
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public enum InventoryKit {
+public enum InventoryKitInfo {
     private static let yamlTransformer = AnyInventoryDataTransformer(YAMLInventoryTransformer())
     private static let jsonTransformer = AnyInventoryDataTransformer(JSONInventoryTransformer())
 
@@ -42,7 +42,16 @@ public enum InventoryKit {
         format: InventoryDataFormat = .yaml,
         validatingAgainst version: InventorySchemaVersion = .current
     ) throws -> InventoryDocument {
-        try transformer(for: format).decode(data, validatingAgainst: version)
+        let doc = try transformer(for: format).decode(data, validatingAgainst: version)
+        guard let concrete = doc as? InventoryDocument else {
+             // Fallback: Attempt to construct concrete from protocol (lossy?)
+             return InventoryDocument(
+                 schemaVersion: doc.schemaVersion,
+                 info: doc.info,
+                 protocolAssets: doc.assets
+             )
+        }
+        return concrete
     }
 
     public static func decodeInventory(
@@ -106,7 +115,15 @@ public enum InventoryKit {
         return string
     }
     public static func catalog(from provider: InventoryStorageProvider, validatingAgainst version: InventorySchemaVersion = .current) async throws -> InventoryCatalog {
-        let document = try await provider.loadInventory(validatingAgainst: version)
+        let doc = try await provider.loadInventory(validatingAgainst: version)
+        guard let document = doc as? InventoryDocument else {
+             // Fallback construct
+             return InventoryCatalog(document: InventoryDocument(
+                 schemaVersion: doc.schemaVersion,
+                 info: doc.info,
+                 protocolAssets: doc.assets
+             ))
+        }
         return InventoryCatalog(document: document)
     }
 
