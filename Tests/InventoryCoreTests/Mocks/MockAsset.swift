@@ -1,24 +1,24 @@
 import Foundation
 import InventoryCore
 
-public struct MockAsset: InventoryAssetProtocol, Sendable {
+public struct MockAsset: InventoryAsset, Sendable {
     public let id: UUID
 
     public let name: String
     public let type: String?
-    public let identifiers: [any InventoryIdentifierProtocol]
+    public let identifiers: [any InventoryIdentifier]
     public let tags: [String]
     public let metadata: [String: String]
     
     // Rich Data
-    public let source: (any InventorySourceProtocol)?
-    public let lifecycle: (any InventoryLifecycleProtocol)?
-    public let health: (any InventoryHealthProtocol)?
-    public let mro: (any InventoryMROInfoProtocol)?
-    public let copyright: (any CopyrightInfoProtocol)?
-    public let components: [any InventoryComponentLinkProtocol]
-    public let relationshipRequirements: [any InventoryRelationshipRequirementProtocol]
-    public let linkedAssets: [any InventoryLinkedAssetProtocol]
+    public let source: (any InventorySource)?
+    public let lifecycle: (any InventoryLifecycle)?
+    public let health: (any InventoryHealth)?
+    public let mro: (any InventoryMROInfo)?
+    public let copyright: (any CopyrightInfo)?
+    public let components: [any InventoryComponentLink]
+    public let relationshipRequirements: [any InventoryRelationshipRequirement]
+    public let linkedAssets: [any InventoryLinkedAsset]
     
     // Flat properties
     public var provenance: String? { _provenance }
@@ -37,7 +37,7 @@ public struct MockAsset: InventoryAssetProtocol, Sendable {
         id: UUID = UUID(),
         name: String,
         type: String? = nil,
-        identifiers: [any InventoryIdentifierProtocol] = [],
+        identifiers: [any InventoryIdentifier] = [],
         tags: [String] = [],
         metadata: [String: String] = [:],
         provenance: String? = nil,
@@ -46,14 +46,14 @@ public struct MockAsset: InventoryAssetProtocol, Sendable {
         custodyLocation: String? = nil,
         productID: UUID? = nil,
         relationshipType: AssetRelationshipType? = nil,
-        source: (any InventorySourceProtocol)? = nil,
-        lifecycle: (any InventoryLifecycleProtocol)? = nil,
-        health: (any InventoryHealthProtocol)? = nil,
-        mro: (any InventoryMROInfoProtocol)? = nil,
-        copyright: (any CopyrightInfoProtocol)? = nil,
-        components: [any InventoryComponentLinkProtocol] = [],
-        relationshipRequirements: [any InventoryRelationshipRequirementProtocol] = [],
-        linkedAssets: [any InventoryLinkedAssetProtocol] = []
+        source: (any InventorySource)? = nil,
+        lifecycle: (any InventoryLifecycle)? = nil,
+        health: (any InventoryHealth)? = nil,
+        mro: (any InventoryMROInfo)? = nil,
+        copyright: (any CopyrightInfo)? = nil,
+        components: [any InventoryComponentLink] = [],
+        relationshipRequirements: [any InventoryRelationshipRequirement] = [],
+        linkedAssets: [any InventoryLinkedAsset] = []
     ) {
         self.id = id
         self.name = name
@@ -80,7 +80,7 @@ public struct MockAsset: InventoryAssetProtocol, Sendable {
 }
 
 // Minimal Mocks for Core Tests
-public struct MockIdentifier: InventoryIdentifierProtocol, Sendable {
+public struct MockIdentifier: InventoryIdentifier, Sendable {
     public var type: InventoryIdentifierType
     public var value: String
     public init(type: InventoryIdentifierType, value: String) {
@@ -89,7 +89,7 @@ public struct MockIdentifier: InventoryIdentifierProtocol, Sendable {
     }
 }
 
-public struct MockSource: InventorySourceProtocol, Sendable {
+public struct MockSource: InventorySource, Sendable {
     public var origin: String
     public var department: String?
     public var contactEmail: String?
@@ -97,7 +97,7 @@ public struct MockSource: InventorySourceProtocol, Sendable {
     public init(origin: String) { self.origin = origin }
 }
 
-public struct MockLifecycle: InventoryLifecycleProtocol, Sendable {
+public struct MockLifecycle: InventoryLifecycle, Sendable {
     public var stage: InventoryLifecycleStage
     public var events: [any InventoryLifecycleEventProtocol]
     public init(stage: InventoryLifecycleStage, events: [any InventoryLifecycleEventProtocol] = []) {

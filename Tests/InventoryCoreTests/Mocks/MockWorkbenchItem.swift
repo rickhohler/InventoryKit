@@ -1,7 +1,7 @@
 import Foundation
 import InventoryCore
 
-public struct MockWorkbenchItem: WorkbenchItemProtocol {
+public struct MockWorkbenchItem: WorkbenchItem {
     public let id: UUID
     public let sourceAssetID: UUID
     public let workingFileURL: URL

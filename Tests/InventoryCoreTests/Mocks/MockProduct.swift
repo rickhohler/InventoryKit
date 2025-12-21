@@ -1,7 +1,7 @@
 import Foundation
 import InventoryCore
 
-public struct MockProduct: InventoryProductProtocol, Sendable {
+public struct MockProduct: InventoryProduct, Sendable {
     public let id: UUID
     public let sku: String?
     public let title: String
@@ -10,7 +10,7 @@ public struct MockProduct: InventoryProductProtocol, Sendable {
     public let classification: String?
     public let genre: String?
     
-    public let manufacturer: (any InventoryManufacturerProtocol)?
+    public let manufacturer: (any InventoryManufacturer)?
     public let publisher: String?
     public let developer: String?
     public let creator: String?
@@ -22,7 +22,7 @@ public struct MockProduct: InventoryProductProtocol, Sendable {
     public let systemRequirements: String?
     public let version: String?
     
-    public let identifiers: [any InventoryIdentifierProtocol]
+    public let identifiers: [any InventoryIdentifier]
     
     public let instanceIDs: [UUID]
     public let artworkIDs: [UUID]
@@ -44,7 +44,7 @@ public struct MockProduct: InventoryProductProtocol, Sendable {
         productType: String? = nil,
         classification: String? = nil,
         genre: String? = nil,
-        manufacturer: (any InventoryManufacturerProtocol)? = nil,
+        manufacturer: (any InventoryManufacturer)? = nil,
         publisher: String? = nil,
         developer: String? = nil,
         creator: String? = nil,
@@ -53,7 +53,7 @@ public struct MockProduct: InventoryProductProtocol, Sendable {
         platform: String? = nil,
         systemRequirements: String? = nil,
         version: String? = nil,
-        identifiers: [any InventoryIdentifierProtocol] = [],
+        identifiers: [any InventoryIdentifier] = [],
         instanceIDs: [UUID] = [],
         artworkIDs: [UUID] = [],
         screenshotIDs: [UUID] = [],

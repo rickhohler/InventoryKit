@@ -5,6 +5,26 @@ All notable changes to InventoryKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-12-20
+
+### Changed
+- **Pure Protocol-First Architecture**:
+  - `InventoryKit` now only exposes pure protocol types (e.g., `any InventoryAsset`, `any InventoryDocument`).
+  - Removed all public concrete model implementations from `InventoryKit`.
+  - Concrete helpers (e.g., `InventoryDocumentInfo`) are now internal implementation details.
+- **Service Builders**:
+  - Added `UserInventoryItemBuilder` for creating private/user-owned assets.
+  - Added `LibraryItemBuilder` for creating public catalog items.
+  - Builders return opaque protocol types, enforcing the facade pattern.
+- **Protocol Renaming & Organization**:
+  - Renamed protocols to remove the `Protocol` suffix for idiomatic Swift usage (e.g., `InventoryAssetProtocol` -> `InventoryAsset`).
+  - Restructured `InventoryCore/Protocols` into domain-specific subdirectories (`Assets`, `Components`, `Collections`, etc.).
+  - Moved storage definitions to `InventoryCore/Protocols/Storage`.
+
+### Removed
+- Removed monolithic `InventoryService.swift` in favor of specialized, composable services.
+- Removed `ConcreteInventoryModels.swift` from public API.
+
 ## [Unreleased]
 
 ### Added
