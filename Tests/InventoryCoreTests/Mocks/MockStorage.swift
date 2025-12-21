@@ -2,7 +2,7 @@ import Foundation
 import InventoryCore
 
 // MARK: - Mock User Data Store
-public actor MockUserDataStore: UserDataStoreProtocol {
+public actor MockUserDataStore: UserDataStore {
     private var files: [UUID: Data] = [:]
     
     public init() {}
@@ -39,7 +39,7 @@ public actor MockUserDataStore: UserDataStoreProtocol {
 }
 
 // MARK: - Mock Domain Data Store
-public actor MockDomainDataStore: DomainDataStoreProtocol {
+public actor MockDomainDataStore: DomainDataStore {
     public init() {}
     
     public func isCached(for resourceID: String) async -> Bool { false }
@@ -50,20 +50,20 @@ public actor MockDomainDataStore: DomainDataStoreProtocol {
 }
 
 // MARK: - Mock User Metadata Store
-public actor MockUserMetadataStore: UserMetadataStoreProtocol {
-    private var assets: [UUID: any InventoryAssetProtocol] = [:]
+public actor MockUserMetadataStore: UserMetadataStore {
+    private var assets: [UUID: any InventoryAsset] = [:]
     
     public init() {}
     
-    public func fetchAssets(matching query: StorageQuery) async throws -> [any InventoryAssetProtocol] {
+    public func fetchAssets(matching query: StorageQuery) async throws -> [any InventoryAsset] {
         Array(assets.values)
     }
     
-    public func retrieveAsset(id: UUID) async throws -> (any InventoryAssetProtocol)? {
+    public func retrieveAsset(id: UUID) async throws -> (any InventoryAsset)? {
         assets[id]
     }
     
-    public func saveAsset(_ asset: any InventoryAssetProtocol) async throws {
+    public func saveAsset(_ asset: any InventoryAsset) async throws {
         assets[asset.id] = asset
     }
     
@@ -71,8 +71,8 @@ public actor MockUserMetadataStore: UserMetadataStoreProtocol {
         assets.removeValue(forKey: id)
     }
     
-    public func fetchPersonalCollections(matching query: StorageQuery) async throws -> [any InventoryCollectionProtocol] { [] }
-    public func saveCollection(_ collection: any InventoryCollectionProtocol) async throws {}
+    public func fetchPersonalCollections(matching query: StorageQuery) async throws -> [any InventoryCollection] { [] }
+    public func saveCollection(_ collection: any InventoryCollection) async throws {}
     public func deleteCollection(id: UUID) async throws {}
     
     public func performBatch(operations: @escaping () async throws -> Void) async throws {
@@ -81,29 +81,29 @@ public actor MockUserMetadataStore: UserMetadataStoreProtocol {
 }
 
 // MARK: - Mock Domain Metadata Store
-public actor MockDomainMetadataStore: DomainMetadataStoreProtocol {
+public actor MockDomainMetadataStore: DomainMetadataStore {
     public init() {}
     
-    public func fetchProducts(matching query: StorageQuery) async throws -> [any InventoryProductProtocol] { [] }
-    public func retrieveProduct(id: UUID) async throws -> (any InventoryProductProtocol)? { nil }
-    public func saveProduct(_ product: any InventoryProductProtocol) async throws {}
+    public func fetchProducts(matching query: StorageQuery) async throws -> [any InventoryProduct] { [] }
+    public func retrieveProduct(id: UUID) async throws -> (any InventoryProduct)? { nil }
+    public func saveProduct(_ product: any InventoryProduct) async throws {}
     
-    public func fetchPublicCollections(matching query: StorageQuery) async throws -> [any InventoryCollectionProtocol] { [] }
-    public func saveCollection(_ collection: any InventoryCollectionProtocol) async throws {}
+    public func fetchPublicCollections(matching query: StorageQuery) async throws -> [any InventoryCollection] { [] }
+    public func saveCollection(_ collection: any InventoryCollection) async throws {}
 }
 
 // MARK: - Mock Storage Provider
-public struct MockStorageProvider: StorageProviderProtocol {
-    public var userMetadata: any UserMetadataStoreProtocol
-    public var domainMetadata: any DomainMetadataStoreProtocol
-    public var userData: any UserDataStoreProtocol
-    public var domainData: any DomainDataStoreProtocol
+public struct MockStorageProvider: StorageProvider {
+    public var userMetadata: any UserMetadataStore
+    public var domainMetadata: any DomainMetadataStore
+    public var userData: any UserDataStore
+    public var domainData: any DomainDataStore
     
     public init(
-        userMetadata: any UserMetadataStoreProtocol = MockUserMetadataStore(),
-        domainMetadata: any DomainMetadataStoreProtocol = MockDomainMetadataStore(),
-        userData: any UserDataStoreProtocol = MockUserDataStore(),
-        domainData: any DomainDataStoreProtocol = MockDomainDataStore()
+        userMetadata: any UserMetadataStore = MockUserMetadataStore(),
+        domainMetadata: any DomainMetadataStore = MockDomainMetadataStore(),
+        userData: any UserDataStore = MockUserDataStore(),
+        domainData: any DomainDataStore = MockDomainDataStore()
     ) {
         self.userMetadata = userMetadata
         self.domainMetadata = domainMetadata

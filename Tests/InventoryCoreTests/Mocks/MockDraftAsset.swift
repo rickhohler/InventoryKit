@@ -1,7 +1,7 @@
 import Foundation
 import InventoryCore
 
-public struct MockDraftAsset: DraftAssetProtocol {
+public struct MockDraftAsset: DraftAsset {
     public let id: UUID
     public let originalAssetID: UUID
     public var dirtyFields: Set<String>

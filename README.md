@@ -4,14 +4,15 @@ InventoryKit is a Swift Package Manager (SPM) library for modeling, validating, 
 
 ## Features
 
+- **Protocol-First Architecture**: Core definitions (`InventoryCore`) are separated from concrete implementations (`InventoryKit`), enabling a flexible, modular design.
 - **Rich Models**: Schema-versioned `InventoryDocument` with assets, lifecycle, MRO, health, embedded components, and relationship requirements.
-- **Relationship + Compatibility Checks**: Define relationship types, link assets, and evaluate compliance (e.g., peripherals required for a computer).
-- **Storage Abstractions**: Use `InventoryStorageProvider` to plug in any backend (CloudKit, databases, FileSystemKit, etc.). File and binary data management is handled by FileSystemKit.
-- **Transformers**: Default YAML/JSON transformers built on Yams + JSONEncoder with hooks for custom encodings.
-- **High-Volume Catalog**: `InventoryCatalog` actor indexes assets, supports identifier lookup, component traversal, and paginated queries.
-- **Tag Registry System**: Domain-based tag registration with code execution support. Register custom tags that execute handlers when encountered, enabling domain-specific tag resolution (e.g., RetroboxFS mapping tags to disk image types).
-- **SDK Entry Point**: `InventoryService` bootstraps provider + catalog with configurable logging, giving consumers a single initialization path.
-- **CI + Tests**: `swift test` coverage plus GitHub Actions on macOS and Linux to guarantee builds on push/PR.
+- **Relationship + Compatibility Checks**: Define relationships via `InventoryRelationshipRequirementProtocol` and evaluate compliance (e.g., peripherals required for a computer).
+- **Storage Abstractions**: Use `InventoryStorageProvider` to plug in any backend (CloudKit, Databases, FileSystemKit).
+- **Transformers**: Default YAML/JSON transformers built on Yams + JSONEncoder.
+- **High-Volume Catalog**: `InventoryCatalog` actor indexes assets, supports identifier lookup, and paginated queries.
+- **Tag Registry System**: Domain-based tag registration with code execution support.
+- **SDK Entry Point**: `InventoryService` bootstraps provider + catalog with configurable logging.
+- **CI + Tests**: Validated with >90% code coverage.
 
 ## Platform Support
 

@@ -1,7 +1,7 @@
 import Foundation
 import InventoryCore
 
-public struct MockManufacturer: InventoryManufacturerProtocol, Sendable {
+public struct MockManufacturer: InventoryManufacturer, Sendable {
     public let id: UUID
     public let name: String
     public let aliases: [String]
