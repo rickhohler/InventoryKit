@@ -27,4 +27,7 @@ public protocol InventoryItem: Sendable {
     // MARK: - Identification
     /// Strongly-typed external or internal identifiers.
     var identifiers: [any InventoryIdentifier] { get }
+    
+    /// **Foreign Key**: Link to the Product definition (Reference or User).
+    var productID: InventoryIdentifier? { get }
 }

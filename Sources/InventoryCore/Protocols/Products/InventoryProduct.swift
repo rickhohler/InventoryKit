@@ -15,6 +15,11 @@ public protocol InventoryProduct: Sendable,
     
     /// Extended metadata definitions.
     var metadata: [String: String] { get }
+    
+    /// **Foreign Key**: Link to the "Reference Catalog Entry" (Authority Record).
+    /// *   If this IS a Reference Catalog Entry, this is `nil`.
+    /// *   If this is a User Product (Stub/Derivative), this points to the Authority Record.
+    var referenceProductID: InventoryIdentifier? { get }
 }
 
 // MARK: - Base Protocols
