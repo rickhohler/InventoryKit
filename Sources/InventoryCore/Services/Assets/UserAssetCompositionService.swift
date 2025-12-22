@@ -36,7 +36,7 @@ public actor UserAssetCompositionService {
         try await context.storage.userData.write(from: request.sourceURL, for: assetID)
         
         // 3. Create Metadata (Private Object)
-        let asset = context.assetFactory.createAsset(
+        let asset = try context.assetFactory.createAsset(
             id: assetID,
             name: request.name,
             provenance: request.provenance,

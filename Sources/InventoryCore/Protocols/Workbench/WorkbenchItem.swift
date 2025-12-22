@@ -9,7 +9,7 @@ public protocol WorkbenchItem: Identifiable, Sendable {
     var sourceAssetID: UUID { get }
     
     /// The Mutable wrapper containing the full compound object.
-    var contents: (any InventoryCompoundBaseProtocol) { get set }
+    var contents: (any InventoryCompoundBase) { get set }
     
     /// The location of the mutable working file (e.g., in a temporary directory).
     var workingFileURL: URL { get }

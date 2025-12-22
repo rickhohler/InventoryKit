@@ -7,7 +7,7 @@ public struct MockWorkbenchItem: WorkbenchItem {
     public let workingFileURL: URL
     public var state: WorkbenchState
     
-    public var contents: any InventoryCompoundBaseProtocol
+    public var contents: any InventoryCompoundBase
     public var isModified: Bool
     
     public init(
@@ -15,7 +15,7 @@ public struct MockWorkbenchItem: WorkbenchItem {
         sourceAssetID: UUID,
         workingFileURL: URL,
         state: WorkbenchState = .ready,
-        contents: any InventoryCompoundBaseProtocol,
+        contents: any InventoryCompoundBase,
         isModified: Bool = false
     ) {
         self.id = id

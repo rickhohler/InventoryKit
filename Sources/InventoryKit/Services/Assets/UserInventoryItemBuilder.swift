@@ -10,12 +10,24 @@ public class UserInventoryItemBuilder {
     private var acquisitionSource: String?
     private var acquisitionDate: Date?
     private var tags: [String] = []
+    private var condition: String?
+    private var provenance: String?
+    private var manufacturer: (any InventoryManufacturer)?
+    private var children: [any InventoryItem] = []
+    private var validator: (any InventoryValidationStrategy)?
     
     public init(name: String) {
         self.id = UUID()
         self.name = name
     }
     
+    // ... setters ...
+    
+    public func withValidator(_ validator: any InventoryValidationStrategy) -> Self {
+        self.validator = validator
+        return self
+    }
+
     public func setID(_ id: UUID) -> Self {
         self.id = id
         return self
@@ -37,25 +49,61 @@ public class UserInventoryItemBuilder {
         return self
     }
     
+    public func setCondition(_ condition: String) -> Self {
+        self.condition = condition
+        return self
+    }
+    
+    public func setProvenance(_ provenance: String) -> Self {
+        self.provenance = provenance
+        return self
+    }
+    
+    public func setManufacturer(_ manufacturer: any InventoryManufacturer) -> Self {
+        self.manufacturer = manufacturer
+        return self
+    }
+
+    public func addChild(_ item: any InventoryItem) -> Self {
+        self.children.append(item)
+        return self
+    }
+    
     public func addTag(_ tag: String) -> Self {
         self.tags.append(tag)
         return self
     }
     
-    public func build() -> any InventoryAsset {
-        // We need a concrete implementation to return.
-        // Defining a private struct here to satisfy the requirement
-        // that "InventoryKit" only *exposes* pure protocol types (via return).
+    public func build() throws -> any InventoryAsset {
+        // Validation Logic
         
-        return PrivateAssetImpl(
+        // 1. Base Validation (Always applied)
+        // 1. Base Validation (Always applied)
+        if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+             throw InventoryValidationError.missingRequiredField(field: "name", reason: "Asset name cannot be empty.")
+        }
+        
+        // 2. Build the candidate asset
+        let asset = PrivateAssetImpl(
             id: id,
             name: name,
+            manufacturer: manufacturer,
+            children: children,
             type: type,
             custodyLocation: location,
             acquisitionSource: acquisitionSource,
             acquisitionDate: acquisitionDate,
-            tags: tags
+            tags: tags,
+            provenance: provenance,
+            condition: condition
         )
+        
+        // 3. Strategy Validation (if provided)
+        if let validator = validator {
+            try validator.validate(asset)
+        }
+        
+        return asset
     }
 }
 
@@ -63,16 +111,25 @@ public class UserInventoryItemBuilder {
 private struct PrivateAssetImpl: InventoryAsset {
     var id: UUID
     var name: String
+    // InventoryCompoundBase Conformance
+    var title: String { name }
+    var description: String? = nil
+    var manufacturer: (any InventoryManufacturer)? = nil
+    var releaseDate: Date? = nil
+    var dataSource: (any InventoryDataSource)? = nil
+    var children: [any InventoryItem] = []
+    var images: [any InventoryItem] = []
+    
     var type: String?
     var custodyLocation: String?
     var acquisitionSource: String?
     var acquisitionDate: Date?
     var tags: [String]
+    var provenance: String?
     
     // Default/Empty implementations for other protocol requirements
     var identifiers: [any InventoryIdentifier] = []
     var productID: UUID? = nil
-    var provenance: String? = nil
     var condition: String? = nil
     var forensicClassification: String? = nil
     var relationshipType: AssetRelationshipType? = nil

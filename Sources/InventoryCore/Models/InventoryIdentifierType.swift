@@ -7,4 +7,7 @@ public enum InventoryIdentifierType: String, Codable, Sendable {
     case libraryReferenceID = "library_reference_id"
     case libraryID = "library_id"
     case serialNumber = "serial_number"
+    
+    /// Alias for `.barcode`, reflecting retro terminology (1977-2000).
+    public static let upc = Self.barcode
 }

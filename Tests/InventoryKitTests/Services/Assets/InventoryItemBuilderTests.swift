@@ -7,28 +7,43 @@ final class BuilderTests: XCTestCase {
     func testUserBuilder() {
         let builder = UserInventoryItemBuilder(name: "My Retro Computer")
         
-        let asset: any InventoryAsset = builder
+        let asset: any InventoryAsset = try! builder
             .setType("hardware")
             .addTag("collection")
+            .setAcquisition(source: "Garage Sale", date: Date(timeIntervalSince1970: 1000000000))
+            .setLocation("Home")
             .build()
             
         XCTAssertEqual(asset.name, "My Retro Computer")
         XCTAssertEqual(asset.type, "hardware")
         XCTAssertTrue(asset.tags.contains("collection"))
-        XCTAssertNil(asset.source)
+        XCTAssertEqual(asset.acquisitionSource, "Garage Sale")
+        XCTAssertEqual(asset.custodyLocation, "Home")
     }
     
-    func testLibraryBuilder() {
-        let builder = LibraryItemBuilder(title: "Super Mario Bros")
+    func testReferenceProductBuilder() {
+        let builder = ReferenceProductBuilder(title: "Super Mario Bros")
         
-        let asset: any InventoryAsset = builder
+        let product: any InventoryProduct = try! builder
             .setPlatform("NES")
             .setPublisher("Nintendo")
             .build()
             
-        XCTAssertEqual(asset.name, "Super Mario Bros")
-        XCTAssertEqual(asset.metadata["platform"], "NES")
-        XCTAssertEqual(asset.metadata["publisher"], "Nintendo")
-        XCTAssertEqual(asset.custodyLocation, "Public Library")
+        XCTAssertEqual(product.title, "Super Mario Bros") 
+        XCTAssertEqual(product.platform, "NES")
+        XCTAssertEqual(product.publisher, "Nintendo")
+    }
+    
+    func testReferenceManufacturerBuilder() {
+        let builder = ReferenceManufacturerBuilder(name: "Nintendo")
+        
+        let manufacturer: any InventoryManufacturer = try! builder
+            .addAlias("Nintendo Co., Ltd.")
+            .setDescription("The Giant")
+            .build()
+            
+        XCTAssertEqual(manufacturer.name, "Nintendo")
+        XCTAssertTrue(manufacturer.aliases.contains("Nintendo Co., Ltd."))
+        XCTAssertEqual(manufacturer.description, "The Giant")
     }
 }

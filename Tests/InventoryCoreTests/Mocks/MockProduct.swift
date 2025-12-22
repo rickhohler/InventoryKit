@@ -33,6 +33,9 @@ public struct MockProduct: InventoryProduct, Sendable {
     public let references: [String: String]
     public let metadata: [String: String]
     
+    public var referenceProductID: (any InventoryIdentifier)? // Protocol Requirement
+    public var referenceProductID_v: (any InventoryIdentifier)? { referenceProductID } // for init convenience?
+    
     // Legacy support for tests expecting 'name'
     public var name: String { title }
     

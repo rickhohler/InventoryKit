@@ -5,7 +5,7 @@ import Foundation
 /// Main protocol for an Inventory Asset.
 /// Represents a specific, concrete instance of an item in the user's custody.
 
-public protocol InventoryAsset: InventoryAssetIdentificationProtocol,
+public protocol InventoryAsset: InventoryCompoundBase,
                                       InventoryAssetLocationProtocol,
                                       InventoryAssetLifecycleProtocol,
                                       InventoryAssetRelationshipProtocol,
@@ -23,14 +23,28 @@ public protocol InventoryAsset: InventoryAssetIdentificationProtocol,
     var components: [any InventoryComponentLink] { get }
     var relationshipRequirements: [any InventoryRelationshipRequirement] { get }
     var linkedAssets: [any InventoryLinkedAsset] { get }
+    
+    // Explicit overrides or clarifications for Base properties if needed
+    // id, title (from Base), description, manufacturer, releaseDate, dataSource, children, images
+    
+    /// User-defined name/label.
+    var name: String { get }
+    
+    /// Type of the asset (e.g., "software", "hardware").
+    var type: String? { get }
+    
+    // Note: InventoryAsset typically uses 'name' as title.
+    // InventoryCompoundBase requires 'title'.
 }
 
 // MARK: - Base Protocols
 
 /// Identification attributes for an asset.
 public protocol InventoryAssetIdentificationProtocol: Sendable {
-    /// Unique identifier for this asset instance.
-    var id: UUID { get }
+    // id is inherited from InventoryCompoundBase
+    
+    // Base uses 'title'. Let's alias or use title.
+    // var title: String { get } // Inherited
     
     /// User-defined name/label for the asset.
     var name: String { get }

@@ -3,7 +3,7 @@ import Foundation
 /// A "Reference Catalog Entry" (Authority Record).
 /// Represents a known product in the universe (e.g., "MobyGames ID: 123", "The Oregon Trail").
 /// This is distinct from a "User Product", which is a local instance.
-public protocol ReferenceProduct: InventoryProduct {
+public protocol ReferenceProduct: InventoryProduct, InventoryCompoundBase {
     /// The canonical web URL for this product (e.g., Wikipedia).
     var wikipediaUrl: URL? { get }
     

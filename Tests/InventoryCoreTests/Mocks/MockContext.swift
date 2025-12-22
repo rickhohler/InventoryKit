@@ -17,7 +17,7 @@ public struct MockContext: InventoryContext, Sendable {
 public struct MockAssetFactory: InventoryAssetFactory, Sendable {
     public init() {}
     
-    public func createAsset(id: UUID, name: String, provenance: String, tags: [String]) -> any InventoryAsset {
+    public func createAsset(id: UUID, name: String, provenance: String, tags: [String]) throws -> any InventoryAsset {
         return MockAsset(
             id: id,
             name: name,
