@@ -27,6 +27,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-12-22
+
+### Added
+- **New Metadata Types**:
+  - `SourceCode`: Encapsulates URL and notes for source code references.
+  - `Contact`: Structured contact info (email, social media, role).
+  - `Address`: Structured physical address support with image references.
+- **ReferenceManufacturer Updates**:
+  - Added support for `images`, `addresses`, `associatedPeople`, `developers` (using `Contact` and `Address`).
+- **Questionnaires**:
+  - Added `PhysicalSoftwareQuestionnaire`, `HardwareQuestionnaire`, `DigitalSoftwareQuestionnaire` and others with localized attribute generation.
+  - Added `AssetQuestionnaireTests` covering tag generation logic.
+
+### Changed
+- **Protocol Refactoring**:
+  - `ReferenceProduct` now uses `SourceCode` struct instead of separate `sourceCodeUrl`/`sourceCodeNotes` properties.
+  - `MockReferenceProduct` and `MockProduct` updated to conform to new protocols.
+- **Test Suite**:
+  - Consolidated and fixed compilation errors in `InventoryCoreTests`.
+  - Added `MetadataTypesTests` to ensure coverage of new structs.
+
 ### Added
 - Future changes will be documented here
 

@@ -23,7 +23,7 @@ The application unifies Private and Public data using these abstract base defini
 *   **Usage**:
     *   **Public**: Downloadable Metadata for matching.
     *   **Private**: Extracted Metadata from a user's file (e.g. valid file header info).
-*   **Key Attributes**: `manufacturer`, `releaseDate`, `sku`, `title`.
+*   **Key Attributes**: `manufacturer`, `releaseDate`, `sku`, `title`, `sourceCode` (Availability).
 *   **Distinction vs Collection**:
     *   **Compound Base**: Parts are **Dependent** and form a **Single Atomic Item** (e.g. Box + Disk = 1 Game).
     *   **Collection**: Members are **Independent** and form a **Group/List** (e.g. Game A + Game B = 2 Games).
@@ -37,8 +37,9 @@ The application unifies Private and Public data using these abstract base defini
 *   **Shared Contract**:
     *   **Properties**: `name/filename`, `size/weight`, `type` (UTI/Part#).
     *   **Verification**: `fileHashes` (Digital) OR `serialNumber` (Physical).
-    *   **Classification**: `typeClassifier` (Media, Art, Doc, Hardware).
+    *   **Classification**: `typeClassifier` (Software, Firmware, DiskImage, Archive, Document, Hardware, etc.).
     *   **Identifiers**: `identifiers: [InventoryIdentifier]` (NFC, QR Code, Barcode, Public Library ID).
+    *   **Source Code**: `sourceCode` (Repository URL, License, Notes).
 *   **Conforming Types**:
     *   **Public**: `Public Resource` (File or Hardware Spec).
     *   **Private**: `Inventory Asset Component` (File or Physical Part).
@@ -55,12 +56,20 @@ The application unifies Private and Public data using these abstract base defini
     *   **Hardware**: An "Apple IIe Computer" (Container) containing "Motherboard", "Disk II Card", "Power Supply".
     *   **Digital**: A folder containing `game.dsk`, `manual.pdf`, and `cover.jpg`.
 *   **User-Specific Attributes** (extends Base):
+<<<<<<< HEAD
+    *   **Custody**: Storage location (e.g., "Shelf A").
+    *   **Provenance**: History of *this specific instance* (e.g., "Bought 1983", "Dumped by 4am").
+=======
     *   **Custody**: Storage location (managed via `ItemLocation` / `ItemContainer`).
     *   **Provenance**: History of *this specific instance* (e.g., "Bought 1983").
+>>>>>>> main
     *   **Condition**: Physical/Digital state (e.g. "Mint", "Corrupted").
     *   **Ownership Status**: "Owned" vs "Possessed" vs "Wishlist".
+*   **Foreign references**:
+    *   **`referenceProductID`**: Links this User Asset to the **ReferenceProduct** (Authority Record).
+    *   **`manufacturer`**: Links to the **ReferenceManufacturer** (The Creator/Author).
 *   **Children**: Contains `InventoryAssetComponents` (which conform to `InventoryItem`).
-*   **Example**: "Ultima IV Box (Container)" -> contains -> "Game Disk (Media)", "Cloth Map (Artwork)", "Manual (Document)".
+*   **Example**: "Ultima IV Box (StorageContainer)" -> contains -> "Game Disk (DiskImage)", "Cloth Map (Graphic)", "Manual (Document)".
 
 ### Inventory Asset Component ("The User File/Part")
 *   **Definition**: A concrete instance of an **InventoryItem** inside an Asset.
@@ -77,100 +86,96 @@ The application unifies Private and Public data using these abstract base defini
 *   **Role**: Acts as the user's **Personal Archive** within the greater Library Consortium.
 *   **Realm**: Private Inventory Realm.
 
+### CustomManufacturer ("The Private Creator")
+*   **Definition**: A local-only manufacturer/creator defined by the user for items NOT in the Reference Catalog.
+*   **Conforms To**: `InventoryManufacturer` (ID, Name).
+*   **UI Label**: "**Custom**" or "**Other**".
+*   **Context**: "My friend made this game", "Unknown Indie Dev".
+*   **Storage**: Stored in the User's Private Database.
+*   **Role**: Allows valid data structure without polluting the Curated Reference Manufacturer list.
+
 ---
 
-## 3. Public Domain Entities (Library)
+## 3. Reference Domain Entities (The Public Library)
 
-### Library ("Public Library")
-*   **Definition**: The universe of shared knowledge and public information available to the **Library Consortium**.
-*   **Context**: Contains **Products** and **Public Collections**.
-*   **Role**: Serves as the global "Reference Material" for the system.
-*   **Attributes**:
-    *   **`library_id`**: A small, unique identifier for the library instance (e.g., `ia` for Archive.org, `mg` for MobyGames).
-
-### Compound Resource ("The Library Item")
-*   **Definition**: A concrete instance of an **InventoryCompoundBase** inside the Library.
-*   **Conforms To**: `InventoryCompoundBase` (Title, Metadata, Children).
-*   **Context**: Archive.org calls this an "Item".
-*   **Structure**: Contains one or more **Public Resources**.
-*   **Role**: Serves as the source package for an **Inventory Product**.
-*   **Example**: The "Prince of Persia" item on Archive.org, which contains `prince.dsk`, `manual.pdf`, and `cover.jpg`.
-
-### Public Resource ("The File/Part")
-*   **Definition**: A concrete instance of an **InventoryItem** inside a Library Item.
-*   **Conforms To**: `InventoryItem` (Filename, Hashes, Classifier).
-*   **Context**:
-    *   **Software**: The `game.dsk` file.
-    *   **Hardware**: The `motherboard_photo_front.jpg` file.
-*   **Relationship**: When a user downloads a *Public Resource*, it becomes a *User Asset Component*.
-
-### Inventory Manufacturer ("The Creator")
-*   **Definition**: The company, individual, or entity that originally *created* or *published* the product.
-*   **Context**: The "Brand" or "Author".
-*   **Examples**: **Apple**, **Commodore**, **Broderbund**, **Richard Garriott**.
-*   **Distinction**: Users buy products *made* by a Manufacturer, but may get the *data* from a Data Source.
-
-### Inventory Collection ("The Grouping")
-*   **Definition**: A curated set or grouping of Products or Assets.
-*   **Context**: Used for organization and discovery. Includes both **Public** and **Personal** collections.
-*   **Types**:
-    *   **Public Collection (Shared)**: Provided by a Data Source.
-        *   *Content*: References **Public Products**.
-        *   *Visibility*: Visible to everyone using that Data Source.
-    *   **Personal Collection (Private)**: Created by the User.
-        *   *Content*: References **User Assets** (or links to Products).
-        *   *Visibility*: Visible only to the user (Private Realm).
-*   **Examples**:
-    *   **Public (Curated)**:
-        *   "**TOSEC Apple II**": A comprehensive preservation project collection.
-        *   "**Archive.org Software Library: Apple II**": A massive library of disk images.
-        *   "**MobyGames: Best RPGs of 1990**": A metadata-only list of top-rated games.
-    *   **Personal (User)**:
-        *   "**My Childhood Games**": A user-created list of assets they owned as a kid.
-        *   "**Restoration Queue**": A list of hardware assets currently being repaired.
-        *   "**Favorites**": A simple playlist-style collection of assets.
-*   **Membership**: **Many-to-Many**. A single Product or Asset can belong to **multiple collections** simultaneously (e.g., "Lode Runner" is in "Apple II Games" AND "Top Platformers").
-
-### Collection Category ("The Nature of the Group")
-*   **Definition**: Describes the *intent* or *mechanism* of the grouping.
-*   **Categories**:
-    *   **`curated_set`**: A statically defined list by an authority (e.g. "Best RPGs of 1990").
-    *   **`playlist`**: An arbitrary, user-ordered list (e.g. "To Play Next").
-    *   **`series`**: A sequential grouping of related creative works (e.g. "Ultima I, II, III...").
-    *   **`smart_rule`**: A dynamic collection defined by a query/predicate (e.g. "All items where Manufacturer == Apple").
-
-### Inventory Data Source ("The Provider")
+### ReferenceLibrary ("The Provider")
 *   **Definition**: The entity or organization that *provides* the catalog data, metadata, or curated collections.
-*   **Context Replaces**: Often referred to as "Vendor" in previous designs, but renamed to avoid confusion with "Manufacturer".
+*   **Previous Term**: Inventory Data Source.
+*   **Context**: The "Source of Truth" for the catalog (e.g., Archive.org, MobyGames).
 *   **Key Attributes**:
     *   **Reliability**: Is this a trusted source? (e.g., Verified).
     *   **Type**: Archive, Museum, Database, Community.
     *   **Transport**: The protocol used to fetch data (`https`, `ssh`, `ftp`, `s3`).
-    *   **Source Adapter**: The specific logic module that handles connection, auth, and converts the Provider's specific schema into the app's `InventoryCompoundBase` / `InventoryItem` world.
-*   **Example**: **Archive.org** (Transport: `https`, Adapter: `ArchiveOrgAdapter`), **MobyGames** (Transport: `https/api`, Adapter: `MobyGamesAdapter`).
-*   **Distinction**: Archive.org is a *Data Source*. Apple is a *Manufacturer*.
+*   **Example**: **Archive.org** (Transport: `ia_swift` - Custom implementation of Python archive.org library), **MobyGames** (Transport: `https/api`).
+*   **Distinction**: Archive.org is a *ReferenceLibrary*. Apple is a *ReferenceManufacturer*.
 
-### Library Consortium
-*   **Definition**: A consortium of libraries is simply called a library consortium, a cooperative group that pools resources (like e-resources, staff, technology) to offer more than individual libraries could, benefiting users through shared collections, cost savings (especially for digital licenses), and coordinated services, often formed across local, state, or even international boundaries for academic, public, or school libraries.
-*   **Context**: In our context, we have a library consortium of all public domain (library) disk images, artwork, pdfs, and other retro related artifacts/files.
-
-### Manufacturer Catalog ("The Manufacturer's Offerings")
-*   **Definition**: The complete set of Products offered by a specific Manufacturer during a specific era or generally.
-*   **Context**: Represents the "Original Catalog" of the creator.
-*   **Example**: "Apple Computer Catalog (1980-1989)", "Broderbund Software Catalog".
-*   **Role**: Groups Products by their **Manufacturer**. Distinct from a *Collection* (which is curated by a Data Source).
-
-### Library Data Store ("The Public Cache")
-*   **Definition**: The local repository where the actual data files (imported disk images, artwork, manuals) for a **Library** resource are stored.
+### ReferenceLibraryDataStore ("The Public Cache")
+*   **Definition**: The local repository where the actual data files (imported disk images, artwork, manuals) for a **ReferenceLibrary** are stored.
 *   **Structure**: Uses a **Git-style directory structure** (Content-Addressable Storage).
 *   **Role**: Serves as a functional **Cache** or **Mirror** of the Data Source (Source of Truth).
 *   **States**:
-*   **Partial Store**: Stores only files the user has accessed.
-*   **Complete Mirror**: Stores the full set of files for the collection.
-*   **Context**: Distinction between *Library Metadata* (The List) and *Library Data Store* (The Files).
+    *   **Partial Store**: Stores only files the user has accessed.
+    *   **Complete Mirror**: Stores the full set of files for the collection.
+*   **Context**: Distinction between *Reference Metadata* (The List) and *Reference Data Store* (The Files).
 
-### Union Catalog ("The Index")
-*   **Definition**: The unified database or index that consolidates metadata from the **Library Consortium** (Public) and the **Personal Archive** (Private).
+### ReferenceManufacturer ("The Creator")
+*   **Definition**: The company, individual, or entity that originally *created* or *published* the product.
+*   **Previous Term**: Inventory Manufacturer.
+*   **Context**: The "Brand" or "Author".
+*   **Curation Level**: **Heavily Curated**. These entities are verified against **US Copyright and Trademark entries** and extracted from known good sources (e.g., **WOZ** file headers from **Archive.org** by trusted contributors like **4am**).
+*   **Examples**: **Apple**, **Commodore**, **Broderbund**, **Richard Garriott**.
+*   **Key Attributes**:
+    *   **Identity**: `name`, `slug`, `alsoKnownAs`, `alternativeSpellings`.
+    *   **Contact**: `addresses` (HQ/Offices), `email`, `images` (Logos, Office Photos).
+    *   **People**: `developers` (Technical staff), `associatedPeople` (Founders, Key figures).
+*   **Distinction**: Users buy products *made* by a Manufacturer, but may get the *data* from a Library.
+
+### ReferenceManufacturerCatalog ("The Offering")
+*   **Definition**: The complete set of Products offered by a specific **ReferenceManufacturer** during a specific era or generally.
+*   **Context**: Represents the "Original Catalog" of the creator.
+*   **Nature**: **Static Data**. Resides in the **Shared Data Space** of the application (available to all users).
+*   **Curation Level**: **Heavily Curated**. Verified against **US Copyright and Trademark entries** and extracted from known good sources (e.g., **WOZ** file headers from **Archive.org** by trusted contributors like **4am**).
+*   **Example**: "Apple Computer Catalog (1980-1989)", "Broderbund Software Catalog".
+*   **Role**: Groups Products by their **Manufacturer**. Distinct from a *ReferenceCollection* (which is curated by a Library).
+
+### ReferenceCollection ("The Grouping")
+*   **Definition**: A curated set or grouping of Products or Assets provided by a Library.
+*   **Previous Term**: Inventory Collection (Public).
+*   **Context**: Used for organization and discovery.
+*   **Examples**:
+    *   "**TOSEC Apple II**": A comprehensive preservation project collection.
+    *   "**Archive.org Software Library: Apple II**": A massive library of disk images.
+    *   "**MobyGames: Best RPGs of 1990**": A metadata-only list of top-rated games.
+    *   "**Retrobox Community**": The official destination for user contributions (Hosted on Archive.org).
+        *   Segmented by Platform: `retrobox_apple2`, `retrobox_c64`.
+
+
+### ReferenceProduct ("The Catalog Entry")
+*   **Definition**: A concrete instance of an **InventoryProduct** representing an Authority Record in the Library.
+*   **Nature**: **Compound Type**. Contains related files (`ReferenceItem`s) such as disk images, artwork, and manuals.
+*   **Previous Term**: Compound Resource / Public Product.
+*   **Conforms To**: `InventoryProduct` (Metadata) + `InventoryCompoundBase` (Structure).
+*   **Role**: Acts as the official **Identity** and **Container** for the Reference Assets.
+*   **Example**: "The Oregon Trail" (Entry), which contains `oregon.dsk` and `manual.pdf`.
+
+### ReferenceItem ("The File Metadata Entry")
+*   **Definition**: A concrete instance of an **InventoryItem** inside a Reference Product.
+*   **Nature**: **METADATA ONLY**. Describes the file that *should* exist (Filename, Checksums, Type).
+*   **Storage**: The actual file content (blob) is stored in the **ReferenceLibraryDataStore**, keyed by the `ReferenceItem.id`.
+*   **Previous Term**: Public Resource.
+*   **Conforms To**: `InventoryItem` (Filename, Hashes, Classifier).
+*   **Context**:
+    *   **Software**: The metadata for `game.dsk` (SHA-1: abc1234...).
+    *   **Hardware**: The metadata for `motherboard_front.jpg`.
+*   **Relationship**: The `ReferenceProduct` contains a list of these *Entries*.
+
+### LibraryConsortium ("The Network")
+*   **Definition**: The global network/collection of all known **ReferenceLibraries**.
+*   **Context**: A cooperative group that pools resources to offer more than individual libraries could.
+*   **Role**: Top-level container for all Reference data.
+
+### UnionCatalog ("The Index")
+*   **Definition**: The unified database or index that consolidates metadata from the **LibraryConsortium** (Reference) and the **Personal Archive** (User/Inventory).
 *   **Role**: Enables deduplication, cross-referencing, and search across all resources (Global + Local).
 *   **Implementation**: A local database (SQLite/SwiftData) managed by the Application.
 *   **Goal**: To provide a "Single Pane of Glass" view of all Retro assets, regardless of ownership.
@@ -181,12 +186,12 @@ The application unifies Private and Public data using these abstract base defini
 
 | Entity A | Relationship | Entity B | description |
 | :--- | :--- | :--- | :--- |
-| **Inventory Asset** | *is an instance of* | **Inventory Product** | My specific unit is an instance of the general product model. |
-| **Inventory Asset** | *is acquired from* | **Compound Resource** | My private asset was downloaded from this public library item. |
-| **Inventory Asset Component** | *is a copy of* | **Public Resource** | My local file is a copy of this public library file. |
-| **Inventory Product** | *is created by* | **Manufacturer** | The product was originally made by this company. |
-| **Inventory Product** | *is described by* | **Inventory Data Source** | The metadata for this product came from this source. |
-| **Inventory Collection**| *is provided by* | **Inventory Data Source** | This grouping of products was curated by this source. |
+| **Inventory Asset** | *is an instance of* | **ReferenceProduct** | My specific unit is an instance of the general product model. |
+| **Inventory Asset** | *is acquired from* | **ReferenceProduct** | My private asset was downloaded from this library item. |
+| **Inventory Asset Component** | *is a copy of* | **ReferenceItem** | My local file is a copy of this library reference file. |
+| **ReferenceProduct** | *is created by* | **ReferenceManufacturer** | The product was originally made by this company. |
+| **ReferenceProduct** | *is described by* | **ReferenceLibrary** | The metadata for this product came from this source. |
+| **ReferenceCollection**| *is provided by* | **ReferenceLibrary** | This grouping of products was curated by this source. |
 
 ---
 
@@ -199,6 +204,7 @@ The application unifies Private and Public data using these abstract base defini
     *   **`nfc_tag`**: Physical NFC Token ID attached to the box.
     *   **`qr_code`**: Scanned QR code content.
     *   **`barcode`**: UPC/EAN scan.
+        *   **Note**: "UPC Code" was the common term during the retro era (1977-2000). In this system, `barcode` encompasses UPC, EAN, and others, but `.upc` is provided as an alias.
     *   **`library_reference_id`**: External ID from a Data Source (e.g. Archive.org identifier).
     *   **`library_id`**: The ID of the Library/Provider itself (e.g. `ia`).
     *   **`serial_number`**: Manufacturer serial.
@@ -221,6 +227,15 @@ The application unifies Private and Public data using these abstract base defini
 ### Draft Asset ("The Shadow Copy")
 *   **Definition**: A temporary, detached copy of an Asset used specifically for **Metadata Editing** in the UI.
 
+### System Requirements ("The Hardware Spec")
+*   **Definition**: A classification system used to define the minimum hardware specifications required to operate a software title within a single **Platform Family**.
+*   **Purpose**: To distinguish titles that run on the base model from those requiring upgrades (e.g. OCS vs AGA).
+*   **Attributes**:
+    *   **Memory**: RAM required (e.g. `64k`, `1MB`).
+    *   **Chipset**: CPU/Video required (e.g. `AGA`, `VGA`, `65C02`).
+    *   **Peripherals**: Required input/expansion (e.g. `Mouse`, `Hard Drive`).
+*   **Usage**: Enables filtering a unified platform list (e.g. "Show games compatible with my Amiga 500").
+
 ---
 
 ## 6. Workflows & Lifecycle
@@ -239,6 +254,26 @@ The application unifies Private and Public data using these abstract base defini
 *   **Concept**: Preserving the Original state of an Asset while allowing modifications.
 *   **Immutable Asset**: When imported, the Asset (Original/Derived) is treated as **Read-Only** (Preservation Copy).
 *   **Workbench**: A workspace where users perform modify operations (Play, Crack, Hex Edit).
+
+### ContributionRequest ("The Submission")
+*   **Definition**: A structured request to promote a **Custom** entity or fix an existing **Reference** entity.
+*   **Types**:
+    *   **New Entry**: "Here is a game you don't have."
+    *   **Correction**: "The release date for Prince of Persia is wrong." (Patch).
+*   **Fields**: `targetID` (nil if new), `proposedData` (JSON), `comment` (User explanation), `submitterID`.
+*   **Workflow**:
+    1.  User submits form (with Comment).
+    2.  System creates `ContributionRequest`.
+    3.  **Admin/Curator Role**: A dedicated CloudKit Role (assigned via Dashboard) effectively sees a "Review Queue" in the app or admin tool.
+    *   **Merge Process**: A trusted Curator text/json blob from the Request is merged into the authoritative `ReferenceProduct` by a user with Admin roles.
+    *   **Archive.org Integration**:
+        *   **Identifiers**: Must be unique, 5-80 chars, alphanumeric + `_/-`. No leading specials.
+        *   **Metadata**: Uploads use S3 headers (`x-archive-meta-title: Foo`). Custom fields use `--` for underscores (`x-archive-meta-my--field: val`).
+        *   **Collection Strategy**: New items upload to `community` first (or `retrobox_community`). Once 50+ items exist, we request official `retrobox_{platform}` collections.
+*   **Technical Implementation (CloudKit)**:
+    *   **Public Database**: `ReferenceProduct` records are **World-Readable** but **Admin-Writable** only.
+    *   **Gatekeeper Pattern**: Users have "Create Permission" for `ContributionRequest` records.
+    *   **Security**: The "Admin" capability is managed via **CloudKit Dashboard Roles**, ensuring only trusted accounts can write to `ReferenceProduct`.
 
 ### WorkbenchItem ("The Working Copy")
 *   **Definition**: A temporary, **Mutable** wrapper containing an **InventoryCompoundBase**.

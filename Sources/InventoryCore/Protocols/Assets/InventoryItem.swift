@@ -24,8 +24,10 @@ public protocol InventoryItem: Sendable {
     /// Serial number for physical items.
     var serialNumber: String? { get }
     
+
+    
     // MARK: - Classification
-    /// High-level classification (Media, Art, Doc, Hardware).
+    /// High-level classification (Software, Firmware, DiskImage, Archive, Document, Hardware, etc.).
     var typeClassifier: InventoryItemClassifier { get }
     
     /// Specific physical format (e.g., Floppy 5.25", Cassette).
@@ -36,6 +38,12 @@ public protocol InventoryItem: Sendable {
     /// Strongly-typed external or internal identifiers.
     var identifiers: [any InventoryIdentifier] { get }
     
+    /// **Foreign Key**: Link to the Product definition (Reference or User).
+    var productID: InventoryIdentifier? { get }
+    
+    /// Details about the source code if available.
+    var sourceCode: (any InventorySourceCode)? { get }
+    
     // MARK: - Location
     /// The container this item is stored in (optional).
     var container: (any ItemContainer)? { get }
@@ -43,4 +51,5 @@ public protocol InventoryItem: Sendable {
 
 public extension InventoryItem {
     var container: (any ItemContainer)? { return nil }
+
 }

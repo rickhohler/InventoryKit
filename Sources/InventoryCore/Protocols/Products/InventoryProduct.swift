@@ -15,23 +15,31 @@ public protocol InventoryProduct: Sendable,
     
     /// Extended metadata definitions.
     var metadata: [String: String] { get }
+    
+    /// **Foreign Key**: Link to the "Reference Catalog Entry" (Authority Record).
+    /// *   If this IS a Reference Catalog Entry, this is `nil`.
+    /// *   If this is a User Product (Stub/Derivative), this points to the Authority Record.
+    var referenceProductID: InventoryIdentifier? { get }
 }
 
 // MARK: - Base Protocols
 
 public protocol InventoryProductIdentificationProtocol {
-    var id: UUID { get }
-    var sku: String? { get }
+    var id: UUID { get set }
+    var sku: String? { get set }
     var identifiers: [any InventoryIdentifier] { get }
 }
 
 public protocol InventoryProductMetadataProtocol {
-    var title: String { get }
-    var description: String? { get }
+    var title: String { get set }
+    var description: String? { get set }
     // Note: ProductType is usually an enum (Software/Hardware)
-    var productType: String? { get }
-    var classification: String? { get }
-    var genre: String? { get }
+    var productType: String? { get set }
+    var classification: String? { get set }
+    var genre: String? { get set }
+    
+    /// Information about source code availability.
+    var sourceCode: (any InventorySourceCode)? { get }
 }
 
 public protocol InventoryProductCreatorProtocol {
@@ -45,13 +53,13 @@ public protocol InventoryProductCreatorProtocol {
 }
 
 public protocol InventoryProductTemporalProtocol {
-    var releaseDate: Date? { get }
+    var releaseDate: Date? { get set }
     var productionDate: Date? { get }
 }
 
 public protocol InventoryProductSpecificationProtocol {
-    var platform: String? { get }
-    var systemRequirements: InventorySystemRequirements? { get }
+    var platform: String? { get set }
+    var systemRequirements: (any InventorySystemRequirements)? { get }
     var version: String? { get }
 }
 

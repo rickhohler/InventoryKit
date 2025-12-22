@@ -62,6 +62,10 @@ final class InventoryLocationTests: XCTestCase {
             var typeClassifier: InventoryItemClassifier = .other
             var mediaFormat: InventoryMediaFormat? = nil
             var identifiers: [any InventoryIdentifier] = []
+            
+            // Missing Protocol Stubs
+            var productID: (any InventoryIdentifier)? = nil
+            var sourceCode: (any InventorySourceCode)? = nil
         }
         
         let item = TestItem()

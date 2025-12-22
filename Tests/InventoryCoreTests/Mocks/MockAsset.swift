@@ -5,6 +5,13 @@ public struct MockAsset: InventoryAsset, Sendable {
     public let id: UUID
 
     public let name: String
+    public var title: String { name }
+    public let description: String?
+    public let manufacturer: (any InventoryManufacturer)?
+    public let releaseDate: Date?
+    public let dataSource: (any InventoryDataSource)?
+    public var children: [any InventoryItem]
+    public var images: [any InventoryItem]
     public let type: String?
     public let identifiers: [any InventoryIdentifier]
     public let tags: [String]
@@ -21,6 +28,9 @@ public struct MockAsset: InventoryAsset, Sendable {
     public let linkedAssets: [any InventoryLinkedAsset]
     
     // Flat properties
+    public var accessionNumber: String? = nil
+    public var mediaFormat: InventoryMediaFormat? = nil
+    
     public var provenance: String? { _provenance }
     public var acquisitionSource: String? { _acquisitionSource }
     public var acquisitionDate: Date? { lifecycle?.events.first?.timestamp }
@@ -36,6 +46,13 @@ public struct MockAsset: InventoryAsset, Sendable {
     public init(
         id: UUID = UUID(),
         name: String,
+        description: String? = nil,
+        manufacturer: (any InventoryManufacturer)? = nil, // Base
+        releaseDate: Date? = nil, // Base
+        dataSource: (any InventoryDataSource)? = nil, // Base
+        children: [any InventoryItem] = [], // Base
+        images: [any InventoryItem] = [], // Base
+        
         type: String? = nil,
         identifiers: [any InventoryIdentifier] = [],
         tags: [String] = [],
@@ -46,6 +63,8 @@ public struct MockAsset: InventoryAsset, Sendable {
         custodyLocation: String? = nil,
         productID: UUID? = nil,
         relationshipType: AssetRelationshipType? = nil,
+        
+        // Rich Models
         source: (any InventorySource)? = nil,
         lifecycle: (any InventoryLifecycle)? = nil,
         health: (any InventoryHealth)? = nil,
@@ -57,6 +76,13 @@ public struct MockAsset: InventoryAsset, Sendable {
     ) {
         self.id = id
         self.name = name
+        self.description = description
+        self.manufacturer = manufacturer
+        self.releaseDate = releaseDate
+        self.dataSource = dataSource
+        self.children = children
+        self.images = images
+        
         self.type = type
         self.identifiers = identifiers
         self.tags = tags
