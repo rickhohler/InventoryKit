@@ -13,6 +13,10 @@ public protocol InventoryItem: Sendable {
     /// The specific type identifier (e.g., UTI for files, Part Number for hardware).
     var typeIdentifier: String { get }
     
+    // MARK: - Provenance
+    /// Unique accession number for museum/library tracking (e.g., "2025.1.4").
+    var accessionNumber: String? { get }
+    
     // MARK: - Verification
     /// Cryptographic hashes for digital items (e.g. MD5, SHA1).
     var fileHashes: [String: String]? { get }
