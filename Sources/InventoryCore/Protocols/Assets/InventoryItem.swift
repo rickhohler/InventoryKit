@@ -28,6 +28,10 @@ public protocol InventoryItem: Sendable {
     /// High-level classification (Media, Art, Doc, Hardware).
     var typeClassifier: InventoryItemClassifier { get }
     
+    /// Specific physical format (e.g., Floppy 5.25", Cassette).
+    /// Primarily used when `typeClassifier` is `.media` or `.hardware`.
+    var mediaFormat: InventoryMediaFormat? { get }
+    
     // MARK: - Identification
     /// Strongly-typed external or internal identifiers.
     var identifiers: [any InventoryIdentifier] { get }
