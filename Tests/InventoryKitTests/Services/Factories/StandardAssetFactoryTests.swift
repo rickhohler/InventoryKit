@@ -12,7 +12,7 @@ final class StandardAssetFactoryTests: XCTestCase {
         let tags = ["Tag1"]
         
         // Act
-        let asset = try factory.createAsset(id: id, name: name, provenance: provenance, tags: tags)
+        let asset = try factory.createAsset(id: id, name: name, provenance: provenance, tags: tags, metadata: [:])
         
         // Assert
         XCTAssertEqual(asset.id, id)
@@ -34,7 +34,7 @@ final class StandardAssetFactoryTests: XCTestCase {
         let id = UUID()
         
         // Act & Assert
-        XCTAssertThrowsError(try factory.createAsset(id: id, name: "Test", provenance: "Test", tags: [])) { error in
+        XCTAssertThrowsError(try factory.createAsset(id: id, name: "Test", provenance: "Test", tags: [], metadata: [:])) { error in
             guard let validationError = error as? InventoryValidationError,
                   case .businessRuleViolation(let rule) = validationError else {
                 XCTFail("Wrong error type")

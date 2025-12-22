@@ -2,13 +2,17 @@ import Foundation
 import InventoryCore
 
 /// Builder for creating private inventory assets (User Custody).
-public class UserInventoryItemBuilder {
+public class UserInventoryItemBuilder: MetaDatableBuilder {
+    public typealias QuestionnaireType = any InventoryQuestionnaire
+    
     private var id: UUID
     private var name: String
     private var type: String?
     private var location: String?
     private var acquisitionSource: String?
     private var acquisitionDate: Date?
+    private var metadata: [String: String] = [:]
+    
     private var tags: [String] = []
     private var condition: String?
     private var provenance: String?
@@ -74,10 +78,24 @@ public class UserInventoryItemBuilder {
         return self
     }
     
+    public func addMetadata(_ key: String, _ value: String) -> Self {
+        self.metadata[key] = value
+        return self
+    }
+    
+    public func applyQuestionnaire(_ questionnaire: any InventoryQuestionnaire) -> Self {
+        let tags = questionnaire.generateTags()
+        let attrs = questionnaire.generateAttributes()
+        
+        tags.forEach { let _ = self.addTag($0) }
+        self.metadata.merge(attrs) { (_, new) in new }
+        
+        return self
+    }
+    
     public func build() throws -> any InventoryAsset {
         // Validation Logic
         
-        // 1. Base Validation (Always applied)
         // 1. Base Validation (Always applied)
         if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
              throw InventoryValidationError.missingRequiredField(field: "name", reason: "Asset name cannot be empty.")
@@ -95,7 +113,8 @@ public class UserInventoryItemBuilder {
             acquisitionDate: acquisitionDate,
             tags: tags,
             provenance: provenance,
-            condition: condition
+            condition: condition,
+            metadata: metadata
         )
         
         // 3. Strategy Validation (if provided)

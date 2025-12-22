@@ -14,6 +14,7 @@ public class ReferenceProductBuilder {
     
     // Identifiers & References
     private var identifiers: [any InventoryIdentifier] = []
+    private var metadata: [String: String] = [:]
     
     public init(title: String) {
         self.id = UUID()
@@ -52,6 +53,17 @@ public class ReferenceProductBuilder {
         return self
     }
     
+    public func addMetadata(_ key: String, _ value: String) -> Self {
+        self.metadata[key] = value
+        return self
+    }
+    
+    public func applyQuestionnaire(_ questionnaire: any InventoryQuestionnaire) -> Self {
+        let attrs = questionnaire.generateAttributes()
+        self.metadata.merge(attrs) { (_, new) in new }
+        return self
+    }
+    
     public func build() throws -> any InventoryProduct {
         if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             throw InventoryValidationError.missingRequiredField(field: "title", reason: "Product title cannot be empty.")
@@ -64,7 +76,8 @@ public class ReferenceProductBuilder {
             releaseDate: releaseDate,
             publisher: publisher,
             platform: platform,
-            identifiers: identifiers
+            identifiers: identifiers,
+            metadata: metadata
         )
     }
 }

@@ -12,26 +12,19 @@ public struct StandardAssetFactory: InventoryAssetFactory {
         self.validator = validator
     }
     
-    public func createAsset(id: UUID, name: String, provenance: String, tags: [String]) throws -> any InventoryAsset {
+    public func createAsset(id: UUID, name: String, provenance: String, tags: [String], metadata: [String: String]) throws -> any InventoryAsset {
         // Start Builder
         let builder = UserInventoryItemBuilder(name: name)
             .setID(id)
         
         // Apply Metadata
-        // Note: Provenance is a rich field in our new model, builder should support it via setProvenance or strictly via properties.
-        // Checking UserInventoryItemBuilder... it has .setProvenance?
-        // If not, we should rely on what it has.
-        // Let's assume we might need to update Builder if setProvenance is missing.
-        
-        // For now, let's look at what we have. provenance might be passed as simple metadata or ignored if builder doesn't explicitly support it yet 
-        // (though InventoryAsset protocol has it).
-        // Actually, UserAssetCompositionService passes provenance.
-        
-        // Let's use what we have.
         _ = builder.setProvenance(provenance)
         _ = builder.addTag("Created via Factory")
         for tag in tags {
              _ = builder.addTag(tag)
+        }
+        for (key, value) in metadata {
+            _ = builder.addMetadata(key, value)
         }
         
         // Apply Validator if present

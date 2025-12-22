@@ -15,12 +15,14 @@ public actor UserAssetCompositionService {
         public let sourceURL: URL
         public let provenance: String
         public let tags: [String]
+        public let questionnaire: (any InventoryQuestionnaire)?
         
-        public init(name: String, sourceURL: URL, provenance: String, tags: [String] = []) {
+        public init(name: String, sourceURL: URL, provenance: String, tags: [String] = [], questionnaire: (any InventoryQuestionnaire)? = nil) {
             self.name = name
             self.sourceURL = sourceURL
             self.provenance = provenance
             self.tags = tags
+            self.questionnaire = questionnaire
         }
     }
     
@@ -36,11 +38,21 @@ public actor UserAssetCompositionService {
         try await context.storage.userData.write(from: request.sourceURL, for: assetID)
         
         // 3. Create Metadata (Private Object)
+        // Merge request tags with questionnaire tags
+        var finalTags = request.tags
+        var finalMetadata: [String: String] = [:]
+        
+        if let q = request.questionnaire {
+            finalTags.append(contentsOf: q.generateTags())
+            finalMetadata.merge(q.generateAttributes()) { (_, new) in new }
+        }
+        
         let asset = try context.assetFactory.createAsset(
             id: assetID,
             name: request.name,
             provenance: request.provenance,
-            tags: request.tags
+            tags: finalTags,
+            metadata: finalMetadata
         )
         
         // 4. Save Metadata

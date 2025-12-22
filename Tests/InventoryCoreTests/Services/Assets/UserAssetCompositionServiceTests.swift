@@ -1,6 +1,6 @@
 import XCTest
 import InventoryCore
-@testable import InventoryCoreTests // Build fails without this if logic is internal, but mocks are public.
+@testable import InventoryKit // Component under test
 
 final class UserAssetCompositionServiceTests: XCTestCase {
     

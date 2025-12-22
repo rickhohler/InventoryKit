@@ -8,6 +8,7 @@ public class ReferenceManufacturerBuilder {
     private var aliases: [String] = []
     private var website: URL?
     private var description: String?
+    private var metadata: [String: String] = [:]
     
     public init(name: String) {
         self.id = UUID()
@@ -34,6 +35,19 @@ public class ReferenceManufacturerBuilder {
         return self
     }
     
+    public func addMetadata(_ key: String, _ value: String) -> Self {
+        self.metadata[key] = value
+        return self
+    }
+    
+    public func applyQuestionnaire(_ questionnaire: any ManufacturerQuestionnaire) -> Self {
+        let attrs = questionnaire.generateAttributes()
+        self.metadata.merge(attrs) { (_, new) in new }
+        // Note: Manufacturers don't strictly have "Tags" in their protocol yet, but they have metadata.
+        // If we add tags later, we can map them here.
+        return self
+    }
+    
     public func build() throws -> any InventoryManufacturer {
         if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             throw InventoryValidationError.missingRequiredField(field: "name", reason: "Manufacturer name cannot be empty.")
@@ -44,7 +58,8 @@ public class ReferenceManufacturerBuilder {
             name: name,
             aliases: aliases,
             description: description,
-            website: website
+            website: website,
+            metadata: metadata
         )
     }
 }

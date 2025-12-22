@@ -11,4 +11,7 @@ public protocol InventoryManufacturer: Sendable {
     
     /// Description or history of the manufacturer.
     var description: String? { get }
+    
+    /// Metadata dictionary for untyped/dynamic attributes.
+    var metadata: [String: String] { get }
 }

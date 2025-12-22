@@ -5,10 +5,11 @@ public struct MockReferenceManufacturer: ReferenceManufacturer, Sendable {
     public let id: UUID
     public let slug: String
     public let name: String
-    public let aliases: [String]
-    public let description: String?
+    public var aliases: [String] = []
+    public var description: String? = nil
+    public var metadata: [String: String] = [:]
     
-    public init(id: UUID = UUID(), slug: String, name: String, aliases: [String] = [], description: String? = nil) {
+    public init(id: UUID = UUID(), slug: String, name: String, aliases: [String] = [], description: String? = nil, metadata: [String: String] = [:]) {
         self.id = id
         self.slug = slug
         self.name = name

@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "InventoryKit",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v12), .iOS(.v15), .tvOS(.v15), .watchOS(.v8)
     ],
@@ -20,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/jpsim/Yams.git", from: "5.1.2"),
-        .package(url: "https://github.com/rickhohler/DesignAlgorithmsKit.git", from: "1.6.0"),
+        .package(path: "../DesignAlgorithmsKit"),
     ],
     targets: [
         .target(
