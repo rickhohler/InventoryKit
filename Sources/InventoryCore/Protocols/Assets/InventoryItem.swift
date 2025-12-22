@@ -35,4 +35,12 @@ public protocol InventoryItem: Sendable {
     // MARK: - Identification
     /// Strongly-typed external or internal identifiers.
     var identifiers: [any InventoryIdentifier] { get }
+    
+    // MARK: - Location
+    /// The container this item is stored in (optional).
+    var container: (any ItemContainer)? { get }
+}
+
+public extension InventoryItem {
+    var container: (any ItemContainer)? { return nil }
 }
