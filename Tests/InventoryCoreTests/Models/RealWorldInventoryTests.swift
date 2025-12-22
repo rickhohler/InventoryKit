@@ -80,4 +80,5 @@ struct MockInventoryItem: InventoryItem {
     let identifiers: [any InventoryIdentifier] = []
     let productID: InventoryIdentifier? = nil
     let tags: [String] // Simulating tags for metadata
+    var sourceCode: SourceCode? = nil
 }

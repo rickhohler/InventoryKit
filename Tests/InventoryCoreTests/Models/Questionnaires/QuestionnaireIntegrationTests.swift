@@ -24,7 +24,7 @@ final class QuestionnaireIntegrationTests: XCTestCase {
         XCTAssertTrue(tags.contains("region:ntsc"))
         
         let attrs = q.generateAttributes()
-        XCTAssertEqual(attrs["format_type"], InventoryTag.Format.fluxImage.rawValue)
+        XCTAssertEqual(attrs["format_type"], "Flux Image")
         XCTAssertEqual(attrs["is_cracked"], "true")
         XCTAssertEqual(attrs["region"], "NTSC")
     }
@@ -39,7 +39,7 @@ final class QuestionnaireIntegrationTests: XCTestCase {
         let product = try builder.build()
         
         XCTAssertEqual(product.title, "Test ROM")
-        XCTAssertEqual(product.metadata["format_type"], InventoryTag.Format.rom.rawValue)
+        XCTAssertEqual(product.metadata["format_type"], "ROM")
         XCTAssertEqual(product.metadata["region"], "PAL")
         // Note: Reference Products might not use tags directly, but metadata is key here.
     }

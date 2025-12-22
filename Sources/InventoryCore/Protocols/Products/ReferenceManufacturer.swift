@@ -6,4 +6,7 @@ public protocol ReferenceManufacturer: InventoryManufacturer {
     /// Legacy string ID (Slug).
     /// Used for URL lookups and legacy file matching.
     var slug: String { get }
+    
+    /// Visual representations (Logos, Office Photos, etc).
+    var images: [ReferenceItem] { get }
 }

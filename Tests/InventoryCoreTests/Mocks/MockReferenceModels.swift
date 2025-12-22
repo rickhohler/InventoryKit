@@ -9,13 +9,17 @@ public struct MockReferenceManufacturer: ReferenceManufacturer, Sendable {
     public var description: String? = nil
     public var metadata: [String: String] = [:]
     
-    public init(id: UUID = UUID(), slug: String, name: String, aliases: [String] = [], description: String? = nil, metadata: [String: String] = [:]) {
+    public init(id: UUID = UUID(), slug: String, name: String, aliases: [String] = [], description: String? = nil, metadata: [String: String] = [:], images: [ReferenceItem] = []) {
         self.id = id
         self.slug = slug
         self.name = name
         self.aliases = aliases
         self.description = description
+        self.metadata = metadata
+        self.images = []
     }
+    
+    public var images: [ReferenceItem] = []
 }
 
 public struct MockReferenceLibrary: ReferenceLibrary, Sendable {
@@ -79,8 +83,10 @@ public struct MockReferenceProduct: ReferenceProduct, Sendable {
     public let copyrightRegistration: String?
     public let manualUrls: [URL]?
     
+    
     // Protocol requirement for foreign key (override default to nil for authority)
     public var referenceProductID: InventoryIdentifier? { nil }
+    public var sourceCode: SourceCode?
 
     public init(
         id: UUID = UUID(),
@@ -111,7 +117,8 @@ public struct MockReferenceProduct: ReferenceProduct, Sendable {
         discontinuedYear: Int? = nil,
         platforms: [String]? = nil,
         copyrightRegistration: String? = nil,
-        manualUrls: [URL]? = nil
+        manualUrls: [URL]? = nil,
+        sourceCode: SourceCode? = nil
     ) {
         self.id = id
         self.title = title
@@ -150,5 +157,6 @@ public struct MockReferenceProduct: ReferenceProduct, Sendable {
         self.platforms = platforms
         self.copyrightRegistration = copyrightRegistration
         self.manualUrls = manualUrls
+        self.sourceCode = sourceCode
     }
 }

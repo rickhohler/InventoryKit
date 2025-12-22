@@ -23,7 +23,7 @@ The application unifies Private and Public data using these abstract base defini
 *   **Usage**:
     *   **Public**: Downloadable Metadata for matching.
     *   **Private**: Extracted Metadata from a user's file (e.g. valid file header info).
-*   **Key Attributes**: `manufacturer`, `releaseDate`, `sku`, `title`.
+*   **Key Attributes**: `manufacturer`, `releaseDate`, `sku`, `title`, `sourceCode` (Availability).
 *   **Distinction vs Collection**:
     *   **Compound Base**: Parts are **Dependent** and form a **Single Atomic Item** (e.g. Box + Disk = 1 Game).
     *   **Collection**: Members are **Independent** and form a **Group/List** (e.g. Game A + Game B = 2 Games).
@@ -39,6 +39,7 @@ The application unifies Private and Public data using these abstract base defini
     *   **Verification**: `fileHashes` (Digital) OR `serialNumber` (Physical).
     *   **Classification**: `typeClassifier` (Software, Firmware, DiskImage, Archive, Document, Hardware, etc.).
     *   **Identifiers**: `identifiers: [InventoryIdentifier]` (NFC, QR Code, Barcode, Public Library ID).
+    *   **Source Code**: `sourceCode` (Repository URL, License, Notes).
 *   **Conforming Types**:
     *   **Public**: `Public Resource` (File or Hardware Spec).
     *   **Private**: `Inventory Asset Component` (File or Physical Part).
@@ -118,6 +119,10 @@ The application unifies Private and Public data using these abstract base defini
 *   **Context**: The "Brand" or "Author".
 *   **Curation Level**: **Heavily Curated**. These entities are verified against **US Copyright and Trademark entries** and extracted from known good sources (e.g., **WOZ** file headers from **Archive.org** by trusted contributors like **4am**).
 *   **Examples**: **Apple**, **Commodore**, **Broderbund**, **Richard Garriott**.
+*   **Key Attributes**:
+    *   **Identity**: `name`, `slug`, `alsoKnownAs`, `alternativeSpellings`.
+    *   **Contact**: `addresses` (HQ/Offices), `email`, `images` (Logos, Office Photos).
+    *   **People**: `developers` (Technical staff), `associatedPeople` (Founders, Key figures).
 *   **Distinction**: Users buy products *made* by a Manufacturer, but may get the *data* from a Library.
 
 ### ReferenceManufacturerCatalog ("The Offering")

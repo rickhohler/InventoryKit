@@ -58,6 +58,16 @@ public class ReferenceProductBuilder {
         return self
     }
     
+    public func setSourceCode(url: URL?, notes: String?) -> Self {
+        if let url = url {
+            self.metadata["sourceCodeUrl"] = url.absoluteString
+        }
+        if let notes = notes {
+            self.metadata["sourceCodeNotes"] = notes
+        }
+        return self
+    }
+    
     public func applyQuestionnaire(_ questionnaire: any InventoryQuestionnaire) -> Self {
         let attrs = questionnaire.generateAttributes()
         self.metadata.merge(attrs) { (_, new) in new }
@@ -74,6 +84,12 @@ public class ReferenceProductBuilder {
             title: title,
             manufacturer: manufacturer,
             releaseDate: releaseDate,
+             sourceCode: {
+                if let urlStr = metadata["sourceCodeUrl"], let url = URL(string: urlStr) {
+                    return SourceCode(url: url, notes: metadata["sourceCodeNotes"])
+                }
+                return nil
+            }(),
             publisher: publisher,
             platform: platform,
             identifiers: identifiers,
@@ -99,6 +115,7 @@ private struct PrivateReferenceProductImpl: InventoryProduct {
     var productType: String? = "Product"
     var classification: String? = nil
     var genre: String? = nil
+    var sourceCode: SourceCode? = nil
     var publisher: String?
     var developer: String? = nil
     var creator: String? = nil

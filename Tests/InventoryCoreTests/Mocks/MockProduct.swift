@@ -32,6 +32,7 @@ public struct MockProduct: InventoryProduct, Sendable {
     
     public let references: [String: String]
     public let metadata: [String: String]
+    public var sourceCode: SourceCode? // Protocol Requirement
     
     public var referenceProductID: (any InventoryIdentifier)? // Protocol Requirement
     public var referenceProductID_v: (any InventoryIdentifier)? { referenceProductID } // for init convenience?
@@ -63,7 +64,8 @@ public struct MockProduct: InventoryProduct, Sendable {
         instructionIDs: [UUID] = [],
         collectionIDs: [UUID] = [],
         references: [String: String] = [:],
-        metadata: [String: String] = [:]
+        metadata: [String: String] = [:],
+        sourceCode: SourceCode? = nil
     ) {
         self.id = id
         self.sku = sku
@@ -89,5 +91,6 @@ public struct MockProduct: InventoryProduct, Sendable {
         self.collectionIDs = collectionIDs
         self.references = references
         self.metadata = metadata
+        self.sourceCode = sourceCode
     }
 }

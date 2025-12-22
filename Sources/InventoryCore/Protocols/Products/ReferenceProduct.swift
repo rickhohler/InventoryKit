@@ -25,4 +25,6 @@ public protocol ReferenceProduct: InventoryProduct, InventoryCompoundBase {
     /// URLs to manual PDFs (or filenames).
     /// Note: Base `InventoryProduct` uses `instructionIDs` (UUIDs). This offers a string-based alternative for external URLs.
     var manualUrls: [URL]? { get }
+    
+    
 }

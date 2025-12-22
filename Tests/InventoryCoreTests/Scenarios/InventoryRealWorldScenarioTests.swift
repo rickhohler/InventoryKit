@@ -58,6 +58,7 @@ final class InventoryRealWorldScenarioTests: XCTestCase {
             var typeIdentifier: String { type ?? "unknown" }
             var fileHashes: [String : String]? = nil
             var productID: (any InventoryIdentifier)? = nil
+            var sourceCode: SourceCode? = nil
         }
         
         let disk1 = MockItem(name: "Program Disk", type: "DSK", typeClassifier: .diskImage)

@@ -30,4 +30,7 @@ public protocol InventoryItem: Sendable {
     
     /// **Foreign Key**: Link to the Product definition (Reference or User).
     var productID: InventoryIdentifier? { get }
+    
+    /// Details about the source code if available.
+    var sourceCode: SourceCode? { get }
 }

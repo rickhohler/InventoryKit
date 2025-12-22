@@ -37,6 +37,9 @@ public protocol InventoryProductMetadataProtocol {
     var productType: String? { get }
     var classification: String? { get }
     var genre: String? { get }
+    
+    /// Information about source code availability.
+    var sourceCode: SourceCode? { get }
 }
 
 public protocol InventoryProductCreatorProtocol {

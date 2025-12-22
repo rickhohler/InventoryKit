@@ -43,6 +43,7 @@ private struct LocalMockProduct: InventoryProduct {
     var collectionIDs: [UUID] = []
     var references: [String: String] = [:]
     var referenceProductID: (any InventoryIdentifier)? = nil
+    var sourceCode: SourceCode? = nil
 }
 
 final class InventoryLibraryStorageProviderTests: XCTestCase {

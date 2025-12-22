@@ -66,7 +66,7 @@ public class ReferenceManufacturerBuilder {
 
 // MARK: - Private Implementation
 
-private struct PrivateManufacturerImpl: InventoryManufacturer {
+private struct PrivateManufacturerImpl: ReferenceManufacturer {
     var id: UUID
     var name: String
     var aliases: [String]
@@ -77,4 +77,8 @@ private struct PrivateManufacturerImpl: InventoryManufacturer {
     var dissolvedYear: Int? = nil
     var metadata: [String : String] = [:]
     var logo: (any InventoryItem)? = nil
+    
+    // ReferenceManufacturer conformance
+    var slug: String { name.lowercased().replacingOccurrences(of: " ", with: "-") }
+    var images: [ReferenceItem] = []
 }

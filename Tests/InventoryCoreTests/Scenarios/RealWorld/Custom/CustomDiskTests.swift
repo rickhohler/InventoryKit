@@ -53,6 +53,7 @@ final class CustomDiskTests: XCTestCase {
             var typeIdentifier: String { type ?? "unknown" }
             var fileHashes: [String : String]? = nil
             var productID: (any InventoryIdentifier)? 
+            var sourceCode: SourceCode? = nil
         }
         
         let karatekaID = MockIdentifier(type: .libraryReferenceID, value: karateka.id.uuidString)

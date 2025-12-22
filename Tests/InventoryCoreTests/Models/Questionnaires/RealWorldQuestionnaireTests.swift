@@ -30,7 +30,7 @@ final class RealWorldQuestionnaireTests: XCTestCase {
         
         // 2. Verify Attributes
         let attrs = q.generateAttributes()
-        XCTAssertEqual(attrs["condition_grade"], InventoryTag.Condition.good.rawValue) // Condition value now uses enum rawValue
+        XCTAssertEqual(attrs["condition_grade"], "Good") // Condition rawValue is "Good"
         XCTAssertEqual(attrs["notes_damage"], "Water damage on manual pages 3-4")
         XCTAssertEqual(attrs["notes_provenance"], "Purchased at Electronics Boutique, 1994")
         XCTAssertEqual(attrs["has_box"], "true")
@@ -97,7 +97,7 @@ final class RealWorldQuestionnaireTests: XCTestCase {
         // 2. Verify Attributes
         let attrs = q.generateAttributes()
         XCTAssertEqual(attrs["is_functional"], "true")
-        XCTAssertEqual(attrs["condition_cosmetic"], InventoryTag.Condition.good.rawValue)
+        XCTAssertEqual(attrs["condition_cosmetic"], "Good")
         XCTAssertEqual(attrs["serial_number"], "SB16-99887766")
         XCTAssertNil(attrs["notes_mods"])
     }
