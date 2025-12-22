@@ -59,7 +59,7 @@ public protocol InventoryProductTemporalProtocol {
 
 public protocol InventoryProductSpecificationProtocol {
     var platform: String? { get }
-    var systemRequirements: String? { get }
+    var systemRequirements: InventorySystemRequirements? { get }
     var version: String? { get }
 }
 

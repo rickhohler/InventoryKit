@@ -56,8 +56,13 @@ The application unifies Private and Public data using these abstract base defini
     *   **Hardware**: An "Apple IIe Computer" (Container) containing "Motherboard", "Disk II Card", "Power Supply".
     *   **Digital**: A folder containing `game.dsk`, `manual.pdf`, and `cover.jpg`.
 *   **User-Specific Attributes** (extends Base):
+<<<<<<< HEAD
     *   **Custody**: Storage location (e.g., "Shelf A").
     *   **Provenance**: History of *this specific instance* (e.g., "Bought 1983", "Dumped by 4am").
+=======
+    *   **Custody**: Storage location (managed via `ItemLocation` / `ItemContainer`).
+    *   **Provenance**: History of *this specific instance* (e.g., "Bought 1983").
+>>>>>>> main
     *   **Condition**: Physical/Digital state (e.g. "Mint", "Corrupted").
     *   **Ownership Status**: "Owned" vs "Possessed" vs "Wishlist".
 *   **Foreign references**:
@@ -260,3 +265,38 @@ The application unifies Private and Public data using these abstract base defini
     *   **Public Database**: `ReferenceProduct` records are **World-Readable** but **Admin-Writable** only.
     *   **Gatekeeper Pattern**: Users have "Create Permission" for `ContributionRequest` records.
     *   **Security**: The "Admin" capability is managed via **CloudKit Dashboard Roles**, ensuring only trusted accounts can write to `ReferenceProduct`.
+
+### WorkbenchItem ("The Working Copy")
+*   **Definition**: A temporary, **Mutable** wrapper containing an **InventoryCompoundBase**.
+*   **Role**: Enables "Safe Modification" of an asset's content or structure without altering the original Preservation Copy.
+*   **Contains**: A full copy of the `InventoryAsset` (Compound Base).
+*   **Usage**: Playing a game (saving high scores writes to disk), removing copy protection, adding a manual to a folder.
+*   **Result**: Can be saved back as a new **Modified Asset**, leaving the original untouched.
+
+---
+
+## 7. Location & Containers ("Where is it?")
+
+### InventorySpace ("The Place")
+*   **Definition**: The abstract base type for any location that can hold items or containers.
+*   **Context**: Can be Physical or Digital.
+*   **Conforming Types**:
+    *   **`InventoryBuilding`**: Top-level physical structure (e.g. "Main House", "Warehouse").
+    *   **`InventoryRoom`**: A specific area within a building (e.g. "Retro Lab", "Basement").
+    *   **`InventoryVolume`**: A digital storage unit (e.g. "Macintosh HD", "Cloud Drive").
+
+### ItemContainer ("The Box")
+*   **Definition**: A concrete object that holds `InventoryItems`.
+*   **Role**: Groups items together for storage and tracking.
+*   **Types**:
+    *   **`ItemContainerPhysical`**: A physical box, bin, or shelf. specific to a `InventoryRoom`.
+    *   **`ItemContainerDigital`**: A folder or archive specific to a `InventoryVolume`.
+*   **Attributes**:
+    *   `identifiers`: NFC, Barcode, or QR codes used for scanning/lookup.
+    *   `location`: The specific `ItemLocation` (Room + Exact Spot).
+
+### ItemLocation ("The Address")
+*   **Definition**: A unified value type describing exactly where an item or container is.
+*   **Variants**:
+    *   **`physical`**: Links to an `InventoryRoom`, optional `InventoryGeoLocation`, and a descriptive string (e.g. "Shelf A").
+    *   **`digital`**: Links to a `InventoryVolume` and a URL path.

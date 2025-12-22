@@ -13,6 +13,10 @@ public protocol InventoryItem: Sendable {
     /// The specific type identifier (e.g., UTI for files, Part Number for hardware).
     var typeIdentifier: String { get }
     
+    // MARK: - Provenance
+    /// Unique accession number for museum/library tracking (e.g., "2025.1.4").
+    var accessionNumber: String? { get }
+    
     // MARK: - Verification
     /// Cryptographic hashes for digital items (e.g. MD5, SHA1).
     var fileHashes: [String: String]? { get }
@@ -24,6 +28,10 @@ public protocol InventoryItem: Sendable {
     /// High-level classification (Software, Firmware, DiskImage, Archive, Document, Hardware, etc.).
     var typeClassifier: InventoryItemClassifier { get }
     
+    /// Specific physical format (e.g., Floppy 5.25", Cassette).
+    /// Primarily used when `typeClassifier` is `.media` or `.hardware`.
+    var mediaFormat: InventoryMediaFormat? { get }
+    
     // MARK: - Identification
     /// Strongly-typed external or internal identifiers.
     var identifiers: [any InventoryIdentifier] { get }
@@ -33,4 +41,13 @@ public protocol InventoryItem: Sendable {
     
     /// Details about the source code if available.
     var sourceCode: SourceCode? { get }
+    
+    // MARK: - Location
+    /// The container this item is stored in (optional).
+    var container: (any ItemContainer)? { get }
+}
+
+public extension InventoryItem {
+    var container: (any ItemContainer)? { return nil }
+
 }

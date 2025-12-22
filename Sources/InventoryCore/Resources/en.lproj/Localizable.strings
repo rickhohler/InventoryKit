@@ -7,3 +7,7 @@
 
 // Placeholder to ensure Bundle.module is generated
 "placeholder" = "placeholder";
+
+/* Media Types */
+"Compact Cassette" = "Compact Cassette";
+"DAT Tape" = "DAT Tape";
