@@ -227,6 +227,15 @@ The application unifies Private and Public data using these abstract base defini
 ### Draft Asset ("The Shadow Copy")
 *   **Definition**: A temporary, detached copy of an Asset used specifically for **Metadata Editing** in the UI.
 
+### System Requirements ("The Hardware Spec")
+*   **Definition**: A classification system used to define the minimum hardware specifications required to operate a software title within a single **Platform Family**.
+*   **Purpose**: To distinguish titles that run on the base model from those requiring upgrades (e.g. OCS vs AGA).
+*   **Attributes**:
+    *   **Memory**: RAM required (e.g. `64k`, `1MB`).
+    *   **Chipset**: CPU/Video required (e.g. `AGA`, `VGA`, `65C02`).
+    *   **Peripherals**: Required input/expansion (e.g. `Mouse`, `Hard Drive`).
+*   **Usage**: Enables filtering a unified platform list (e.g. "Show games compatible with my Amiga 500").
+
 ---
 
 ## 6. Workflows & Lifecycle

@@ -139,6 +139,7 @@ private struct PrivateAssetImpl: InventoryAsset {
     var children: [any InventoryItem] = []
     var images: [any InventoryItem] = []
     
+    var accessionNumber: String? = nil
     var type: String?
     var custodyLocation: String?
     var acquisitionSource: String?

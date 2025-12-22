@@ -56,6 +56,9 @@ public protocol InventoryAssetIdentificationProtocol: Sendable {
     /// Note: Protocol uses generic, but typical usage implies strict types.
     var identifiers: [any InventoryIdentifier] { get }
     
+    /// Museum/Catalog Accession Number (e.g. "2025.1.42")
+    var accessionNumber: String? { get }
+    
     /// Optional link to an authoritative Product record.
     /// This is nil for Standalone/Unidentified assets.
     var productID: UUID? { get }

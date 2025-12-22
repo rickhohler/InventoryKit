@@ -24,6 +24,8 @@ public protocol InventoryItem: Sendable {
     /// Serial number for physical items.
     var serialNumber: String? { get }
     
+
+    
     // MARK: - Classification
     /// High-level classification (Software, Firmware, DiskImage, Archive, Document, Hardware, etc.).
     var typeClassifier: InventoryItemClassifier { get }
