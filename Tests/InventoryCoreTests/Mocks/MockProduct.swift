@@ -19,7 +19,7 @@ public struct MockProduct: InventoryProduct, Sendable {
     public let productionDate: Date?
     
     public let platform: String?
-    public let systemRequirements: String?
+    public let systemRequirements: InventorySystemRequirements?
     public let version: String?
     
     public let identifiers: [any InventoryIdentifier]
@@ -51,7 +51,7 @@ public struct MockProduct: InventoryProduct, Sendable {
         releaseDate: Date? = nil,
         productionDate: Date? = nil,
         platform: String? = nil,
-        systemRequirements: String? = nil,
+        systemRequirements: InventorySystemRequirements? = nil,
         version: String? = nil,
         identifiers: [any InventoryIdentifier] = [],
         instanceIDs: [UUID] = [],
