@@ -1,27 +1,14 @@
 import Foundation
 
 /// Represents a key principal, founder, or notable person associated with a manufacturer.
-public struct Contact: Codable, Sendable, Hashable, Identifiable {
-    public var id: UUID
-    public var name: String
-    public var title: String?
-    public var email: String?
-    public var notes: String?
-    public var socialMedia: SocialMedia
-    
-    public init(id: UUID = UUID(),
-                name: String,
-                title: String? = nil,
-                email: String? = nil,
-                notes: String? = nil,
-                socialMedia: SocialMedia = SocialMedia()) {
-        self.id = id
-        self.name = name
-        self.title = title
-        self.email = email
-        self.notes = notes
-        self.socialMedia = socialMedia
-    }
+/// Represents a key principal, founder, or notable person associated with a manufacturer.
+public protocol InventoryContact: Codable, Sendable, Identifiable {
+    var id: UUID { get set }
+    var name: String { get set }
+    var title: String? { get set }
+    var email: String? { get set }
+    var notes: String? { get set }
+    var socialMedia: SocialMedia { get set }
 }
 
 /// Social media presence/handles.

@@ -23,7 +23,7 @@ private struct LocalMockProduct: InventoryProduct {
     
     // Protocol requirements to satisfy InventoryProduct
     var sku: String? = nil
-    var title: String { name }
+    var title: String = "Test"
     var productType: String? = nil
     var classification: String? = nil
     var genre: String? = nil
@@ -32,7 +32,7 @@ private struct LocalMockProduct: InventoryProduct {
     var creator: String? = nil
     var productionDate: Date? = nil
     var platform: String? = nil
-    var systemRequirements: String? = nil
+    var systemRequirements: (any InventorySystemRequirements)? = nil
     var version: String? = nil
     var identifiers: [any InventoryIdentifier] = []
     
@@ -43,7 +43,7 @@ private struct LocalMockProduct: InventoryProduct {
     var collectionIDs: [UUID] = []
     var references: [String: String] = [:]
     var referenceProductID: (any InventoryIdentifier)? = nil
-    var sourceCode: SourceCode? = nil
+    var sourceCode: (any InventorySourceCode)? = nil
 }
 
 final class InventoryLibraryStorageProviderTests: XCTestCase {

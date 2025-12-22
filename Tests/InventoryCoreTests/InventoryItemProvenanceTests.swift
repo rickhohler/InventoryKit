@@ -12,11 +12,14 @@ final class InventoryItemProvenanceTests: XCTestCase {
         // The new property we are testing
         var accessionNumber: String?
         var mediaFormat: InventoryMediaFormat? // Added to satisfy protocol
-        
         var fileHashes: [String : String]?
         var serialNumber: String?
         var typeClassifier: InventoryItemClassifier
         var identifiers: [any InventoryIdentifier]
+        
+        // Missing Protocol Stubs
+        var productID: (any InventoryIdentifier)? = nil
+        var sourceCode: (any InventorySourceCode)? = nil
     }
     
     func testAccessionNumber() {

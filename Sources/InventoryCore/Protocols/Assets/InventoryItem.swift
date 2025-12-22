@@ -42,7 +42,7 @@ public protocol InventoryItem: Sendable {
     var productID: InventoryIdentifier? { get }
     
     /// Details about the source code if available.
-    var sourceCode: SourceCode? { get }
+    var sourceCode: (any InventorySourceCode)? { get }
     
     // MARK: - Location
     /// The container this item is stored in (optional).

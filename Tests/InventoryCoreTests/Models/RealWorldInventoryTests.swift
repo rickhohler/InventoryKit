@@ -78,7 +78,12 @@ struct MockInventoryItem: InventoryItem {
     var serialNumber: String? = nil
     let typeClassifier: InventoryItemClassifier
     let identifiers: [any InventoryIdentifier] = []
+    let ids: [any InventoryIdentifier] = []
     let productID: InventoryIdentifier? = nil
     let tags: [String] // Simulating tags for metadata
-    var sourceCode: SourceCode? = nil
+    var sourceCode: (any InventorySourceCode)? = nil
+    
+    // Missing Protocol Stubs
+    var accessionNumber: String? = nil
+    var mediaFormat: InventoryMediaFormat? = nil
 }

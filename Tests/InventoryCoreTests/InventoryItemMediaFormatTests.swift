@@ -17,6 +17,9 @@ final class InventoryItemMediaFormatTests: XCTestCase {
         var mediaFormat: InventoryMediaFormat?
         
         var identifiers: [any InventoryIdentifier]
+        
+        var productID: (any InventoryIdentifier)? = nil
+        var sourceCode: (any InventorySourceCode)? = nil
     }
     
     func testMediaFormatLabels() {
@@ -68,7 +71,7 @@ final class InventoryItemMediaFormatTests: XCTestCase {
             accessionNumber: nil,
             fileHashes: nil,
             serialNumber: nil,
-            typeClassifier: .media,
+            typeClassifier: .physicalSoftware,
             mediaFormat: .floppy525,
             identifiers: []
         )

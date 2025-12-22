@@ -5,12 +5,16 @@ public struct MockContext: InventoryContext, Sendable {
     public let storage: any StorageProvider
     public let assetFactory: any InventoryAssetFactory
     
+    public let configurator: any InventoryConfigurator
+    
     public init(
         storage: any StorageProvider = MockStorageProvider(),
-        assetFactory: any InventoryAssetFactory = MockAssetFactory()
+        assetFactory: any InventoryAssetFactory = MockAssetFactory(),
+        configurator: any InventoryConfigurator = MockInventoryConfigurator()
     ) {
         self.storage = storage
         self.assetFactory = assetFactory
+        self.configurator = configurator
     }
 }
 

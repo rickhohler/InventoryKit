@@ -52,13 +52,25 @@ final class ValidationTests: XCTestCase {
         struct MockValidationManufacturer: InventoryManufacturer {
             var id: UUID = UUID()
             var name: String = "Test Corp"
+            var slug: String = "test-corp"
             var aliases: [String] = []
             var description: String? = nil
+            var metadata: [String : String] = [:]
+            
+            // Extra protocol requirements
+            var alsoKnownAs: [String] = []
+            var alternativeSpellings: [String] = []
+            var commonMisspellings: [String] = []
+            var email: String? = nil
+            var addresses: [any InventoryAddress] = []
+            var associatedPeople: [any InventoryContact] = []
+            var developers: [any InventoryContact] = []
+            
+            // Legacy/Private fields (optional but harmless)
             var country: String? = nil
             var website: URL? = nil
             var foundedYear: Int? = nil
             var dissolvedYear: Int? = nil
-            var metadata: [String : String] = [:]
             var logo: (any InventoryItem)? = nil
         }
         

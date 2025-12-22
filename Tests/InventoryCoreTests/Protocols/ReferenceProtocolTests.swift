@@ -44,6 +44,8 @@ final class ReferenceProtocolTests: XCTestCase {
         XCTAssertNil(product.referenceProductID, "Authority record should have nil referenceProductID")
     }
     
+    var referenceProductID: (any InventoryIdentifier)?
+    var sourceCode: (any InventorySourceCode)?
     func testReferenceLibrary() {
          let lib = MockReferenceLibrary(name: "Internet Archive", transport: "ia_swift", isVerified: true)
          XCTAssertEqual(lib.name, "Internet Archive")

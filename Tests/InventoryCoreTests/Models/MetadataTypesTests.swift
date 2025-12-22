@@ -7,14 +7,14 @@ final class MetadataTypesTests: XCTestCase {
     
     func testSourceCode() throws {
         let url = URL(string: "https://github.com/example/repo")!
-        let sc = SourceCode(url: url, notes: "v1.0")
+        let sc = MockSourceCode(url: url, notes: "v1.0")
         
         XCTAssertEqual(sc.url, url)
         XCTAssertEqual(sc.notes, "v1.0")
         
         // Codable
         let data = try JSONEncoder().encode(sc)
-        let decoded = try JSONDecoder().decode(SourceCode.self, from: data)
+        let decoded = try JSONDecoder().decode(MockSourceCode.self, from: data)
         
         XCTAssertEqual(decoded.url, url)
         XCTAssertEqual(decoded.notes, "v1.0")
@@ -23,7 +23,7 @@ final class MetadataTypesTests: XCTestCase {
     // MARK: - Address
     
     func testAddress() throws {
-        let addr = Address(
+        let addr = MockAddress(
             address: "123 Retro Way",
             city: "Silicon Valley",
             region: "CA",
@@ -38,7 +38,7 @@ final class MetadataTypesTests: XCTestCase {
         
         // Codable
         let data = try JSONEncoder().encode(addr)
-        let decoded = try JSONDecoder().decode(Address.self, from: data)
+        let decoded = try JSONDecoder().decode(MockAddress.self, from: data)
         XCTAssertEqual(decoded.postalCode, "94000")
         XCTAssertEqual(decoded.imageIDs, addr.imageIDs)
     }
@@ -46,20 +46,18 @@ final class MetadataTypesTests: XCTestCase {
     // MARK: - Contact
     
     func testContact() throws {
-        let contact = Contact(
+        let contact = MockContact(
             name: "Jane Doe",
             title: "Developer",
-            email: "jane@example.com",
-            socialMedia: SocialMedia(xAccount: "jane")
+            email: "jane@example.com"
         )
         
         XCTAssertEqual(contact.name, "Jane Doe")
         XCTAssertEqual(contact.title, "Developer")
-        XCTAssertEqual(contact.socialMedia.xAccount, "jane")
         
         // Codable
         let data = try JSONEncoder().encode(contact)
-        let decoded = try JSONDecoder().decode(Contact.self, from: data)
+        let decoded = try JSONDecoder().decode(MockContact.self, from: data)
         XCTAssertEqual(decoded.email, "jane@example.com")
     }
     

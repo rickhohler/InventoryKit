@@ -8,4 +8,7 @@ public protocol InventoryContext: Sendable {
     
     /// Factory for creating concrete Asset instances.
     var assetFactory: any InventoryAssetFactory { get }
+    
+    /// Configurator for forcing population of concrete types (Dependency Injection).
+    var configurator: any InventoryConfigurator { get }
 }

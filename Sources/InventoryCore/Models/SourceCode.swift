@@ -1,26 +1,17 @@
 import Foundation
 
 /// Represents details about the source code availability for an item.
-public struct SourceCode: Codable, Sendable, Hashable {
-    /// The URL to the source code repository (e.g. GitHub, GitLab, Archive.org).
-    public var url: URL
+/// Represents details about the source code availability for an item.
+public protocol InventorySourceCode: Codable, Sendable {
+    /// The URL where the source code is hosted (e.g. GitHub, GitLab, SourceForge).
+    var url: URL { get set }
     
-    /// Notes regarding the source code (e.g. "Partial source", "Missing assets").
-    public var notes: String?
+    /// Notes regarding the source code (e.g. "incomplete", "requires patches").
+    var notes: String? { get set }
     
     /// The date when the source code was made open/public, if known.
-    public var dateOpened: Date?
+    var dateOpened: Date? { get }
     
     /// The license under which the source code is released (e.g. "MIT", "GPLv3").
-    public var license: String?
-    
-    public init(url: URL, 
-                notes: String? = nil, 
-                dateOpened: Date? = nil, 
-                license: String? = nil) {
-        self.url = url
-        self.notes = notes
-        self.dateOpened = dateOpened
-        self.license = license
-    }
+    var license: String? { get }
 }

@@ -2,29 +2,39 @@ import Foundation
 import InventoryCore
 
 public struct MockManufacturer: InventoryManufacturer, Sendable {
-    public let id: UUID
-    public let name: String
-    public let aliases: [String]
-    public let description: String?
+    public var id: UUID
+    public var name: String
+    public var slug: String
+    public var aliases: [String]
+    public var alsoKnownAs: [String] = []
+    public var alternativeSpellings: [String] = []
+    public var commonMisspellings: [String] = []
+    public var description: String?
     public var metadata: [String: String]
-    public let website: URL?
-    public let supportEmail: String?
+    public var website: URL?
+    public var email: String?
+    
+    public var addresses: [any InventoryAddress] = []
+    public var associatedPeople: [any InventoryContact] = []
+    public var developers: [any InventoryContact] = []
     
     public init(
         id: UUID = UUID(),
         name: String,
+        slug: String = "",
         aliases: [String] = [],
         description: String? = nil,
         metadata: [String: String] = [:],
         website: URL? = nil,
-        supportEmail: String? = nil
+        email: String? = nil
     ) {
         self.id = id
         self.name = name
+        self.slug = slug
         self.aliases = aliases
         self.description = description
         self.metadata = metadata
         self.website = website
-        self.supportEmail = supportEmail
+        self.email = email
     }
 }

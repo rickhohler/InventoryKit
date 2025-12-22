@@ -28,6 +28,9 @@ public struct MockAsset: InventoryAsset, Sendable {
     public let linkedAssets: [any InventoryLinkedAsset]
     
     // Flat properties
+    public var accessionNumber: String? = nil
+    public var mediaFormat: InventoryMediaFormat? = nil
+    
     public var provenance: String? { _provenance }
     public var acquisitionSource: String? { _acquisitionSource }
     public var acquisitionDate: Date? { lifecycle?.events.first?.timestamp }

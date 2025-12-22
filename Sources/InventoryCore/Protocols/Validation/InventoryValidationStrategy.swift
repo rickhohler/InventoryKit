@@ -13,6 +13,7 @@ public enum InventoryValidationError: Error, CustomStringConvertible, Equatable,
     case missingRequiredField(field: String, reason: String)
     case invalidFormat(field: String, reason: String)
     case businessRuleViolation(rule: String)
+    case validationFailed(errors: [String])
     
     public var description: String {
         switch self {
@@ -22,6 +23,8 @@ public enum InventoryValidationError: Error, CustomStringConvertible, Equatable,
             return "Invalid format for '\(field)': \(reason)"
         case .businessRuleViolation(let rule):
             return "Business rule violation: \(rule)"
+        case .validationFailed(let errors):
+            return "Validation failed with errors: \(errors.joined(separator: ", "))"
         }
     }
 }

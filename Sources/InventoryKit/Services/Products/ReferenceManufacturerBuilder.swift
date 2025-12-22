@@ -53,9 +53,12 @@ public class ReferenceManufacturerBuilder {
             throw InventoryValidationError.missingRequiredField(field: "name", reason: "Manufacturer name cannot be empty.")
         }
         
+        let computedSlug = name.lowercased().replacingOccurrences(of: " ", with: "-")
+        
         return PrivateManufacturerImpl(
             id: id,
             name: name,
+            slug: computedSlug,
             aliases: aliases,
             description: description,
             website: website,
@@ -69,16 +72,24 @@ public class ReferenceManufacturerBuilder {
 private struct PrivateManufacturerImpl: ReferenceManufacturer {
     var id: UUID
     var name: String
+    var slug: String
     var aliases: [String]
     var description: String?
     var country: String? = nil
     var website: URL?
+    var email: String? = nil
     var foundedYear: Int? = nil
     var dissolvedYear: Int? = nil
     var metadata: [String : String] = [:]
-    var logo: (any InventoryItem)? = nil
     
-    // ReferenceManufacturer conformance
-    var slug: String { name.lowercased().replacingOccurrences(of: " ", with: "-") }
+    // Additional Protocol Requirements
+    var alsoKnownAs: [String] = []
+    var alternativeSpellings: [String] = []
+    var commonMisspellings: [String] = []
+    
+    var addresses: [any InventoryAddress] = []
+    var associatedPeople: [any InventoryContact] = []
+    var developers: [any InventoryContact] = []
+    
     var images: [ReferenceItem] = []
 }

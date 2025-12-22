@@ -3,6 +3,13 @@ import InventoryCore
 @testable import InventoryCoreTests
 
 final class RetroHardwareTests: XCTestCase {
+    
+    var configurator: InventoryConfigurator!
+    
+    override func setUp() {
+        super.setUp()
+        configurator = MockInventoryConfigurator()
+    }
 
     func testDataLinkModem() {
         // Data from hardware_applied_engineering.json
@@ -15,46 +22,40 @@ final class RetroHardwareTests: XCTestCase {
         */
         
         // 1. Setup Manufacturer
-        let ae = MockReferenceManufacturer(
+        var ae = MockReferenceManufacturer(slug: "", name: "")
+        
+        configurator.configure(
+            &ae,
             id: UUID(),
-            slug: "applied_engineering",
             name: "Applied Engineering",
-            description: "High-end Apple II hardware"
+            slug: "applied_engineering",
+            description: "High-end Apple II hardware",
+            metadata: [:],
+            aliases: []
         )
         
         // 2. Setup Product
-        let dataLink = MockReferenceProduct(
+        var dataLink = MockReferenceProduct(title: "")
+        
+        configurator.configure(
+            &dataLink,
             id: UUID(),
             title: "DataLink Modem",
             description: "Internal modem card",
-            manufacturer: ae,
-            releaseDate: Date(timeIntervalSince1970: 536457600), // ~1987
-            productType: "Hardware", // Broad type
-            classification: "Expansion Card" // Specific
-        )
-        // Note: MockReferenceProduct needs 'modelNumber' if we want to test it, 
-        // or we use extended metadata/identifiers. 
-        // MockReferenceProduct currently has `sku`, `identifiers`.
-        // Let's assume we map "DL" to SKU or an identifier.
-        
-        // var mutableDataLink = dataLink (Removed unused var)
-        // MockReferenceProduct in previous steps was Struct, so we can mutate if var?
-        // Wait, I initialized it as 'let' above. And MockReferenceProduct has 'let' properties in the definition I viewed earlier (Step 3957).
-        // It has `sku` in init.
-        
-        let dataLinkWithSKU = MockReferenceProduct(
-            id: UUID(),
-            title: "DataLink Modem",
-            manufacturer: ae,
             sku: "DL", // Mapping vendorProductId to SKU
-            classification: "Expansion Card"
+            productType: "Hardware", // Broad type
+            classification: "Expansion Card", // Specific
+            genre: nil,
+            releaseDate: Date(timeIntervalSince1970: 536457600), // ~1987
+            platform: nil
         )
-
+        dataLink.manufacturer = ae
+        
         // 3. Verification
-        XCTAssertEqual(dataLinkWithSKU.title, "DataLink Modem")
-        XCTAssertEqual(dataLinkWithSKU.manufacturer?.name, "Applied Engineering")
-        XCTAssertEqual(dataLinkWithSKU.sku, "DL")
-        XCTAssertEqual(dataLinkWithSKU.classification, "Expansion Card")
+        XCTAssertEqual(dataLink.title, "DataLink Modem")
+        XCTAssertEqual(dataLink.manufacturer?.name, "Applied Engineering")
+        XCTAssertEqual(dataLink.sku, "DL")
+        XCTAssertEqual(dataLink.classification, "Expansion Card")
         
         // 4. Test Variant/Version logic (simulated)
         // The JSON has "versions": [ { "name": "Original", ... } ]

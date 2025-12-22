@@ -86,7 +86,7 @@ public class ReferenceProductBuilder {
             releaseDate: releaseDate,
              sourceCode: {
                 if let urlStr = metadata["sourceCodeUrl"], let url = URL(string: urlStr) {
-                    return SourceCode(url: url, notes: metadata["sourceCodeNotes"])
+                    return PrivateSourceCodeImpl(url: url, notes: metadata["sourceCodeNotes"])
                 }
                 return nil
             }(),
@@ -97,6 +97,8 @@ public class ReferenceProductBuilder {
         )
     }
 }
+
+// MARK: - Private Implementations
 
 // MARK: - Private Implementations
 
@@ -115,13 +117,13 @@ private struct PrivateReferenceProductImpl: InventoryProduct {
     var productType: String? = "Product"
     var classification: String? = nil
     var genre: String? = nil
-    var sourceCode: SourceCode? = nil
+    var sourceCode: (any InventorySourceCode)? = nil
     var publisher: String?
     var developer: String? = nil
     var creator: String? = nil
     var productionDate: Date? = nil
     var platform: String?
-    var systemRequirements: String? = nil
+    var systemRequirements: (any InventorySystemRequirements)? = nil
     var version: String? = nil
     var identifiers: [any InventoryIdentifier]
     var instanceIDs: [UUID] = []
@@ -134,6 +136,13 @@ private struct PrivateReferenceProductImpl: InventoryProduct {
     
     // Reference Protocol
     var referenceProductID: InventoryIdentifier? = nil
+}
+
+private struct PrivateSourceCodeImpl: InventorySourceCode, Hashable {
+    var url: URL
+    var notes: String?
+    var dateOpened: Date? = nil
+    var license: String? = nil
 }
 
 private struct SimpleIdentifier: InventoryIdentifier, Sendable {

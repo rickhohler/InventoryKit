@@ -5,8 +5,8 @@ import Foundation
 public protocol ReferenceManufacturer: InventoryManufacturer {
     /// Legacy string ID (Slug).
     /// Used for URL lookups and legacy file matching.
-    var slug: String { get }
+    var slug: String { get set }
     
     /// Visual representations (Logos, Office Photos, etc).
-    var images: [ReferenceItem] { get }
+    var images: [ReferenceItem] { get set }
 }

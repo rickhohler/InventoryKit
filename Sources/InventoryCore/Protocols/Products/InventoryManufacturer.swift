@@ -3,11 +3,12 @@ import Foundation
 /// Protocol representing a Manufacturer (Creator/Publisher) entity.
 /// Allows for various storage implementations (CloudKit, SwiftData, etc.).
 public protocol InventoryManufacturer: Sendable {
-    var id: UUID { get }
-    var name: String { get }
+    var id: UUID { get set }
+    var slug: String { get set }
+    var name: String { get set }
     
     /// Alternate names or aliases (e.g., "Apple Computer, Inc.", "Apple").
-    var aliases: [String] { get }
+    var aliases: [String] { get set }
     
     /// Also known as names (e.g. "Big Blue" for IBM).
     var alsoKnownAs: [String] { get }
@@ -20,20 +21,20 @@ public protocol InventoryManufacturer: Sendable {
     
     /// Physical address or headquarters history.
     /// Physical address or headquarters history.
-    var addresses: [Address] { get }
+    var addresses: [any InventoryAddress] { get }
     
     /// Contact email address.
     var email: String? { get }
     
     /// Key principals, founders, or notable people.
-    var associatedPeople: [Contact] { get }
+    var associatedPeople: [any InventoryContact] { get }
     
     /// Associated developers or engineering teams.
-    var developers: [Contact] { get }
+    var developers: [any InventoryContact] { get }
     
     /// Description or history of the manufacturer.
-    var description: String? { get }
+    var description: String? { get set }
     
     /// Metadata dictionary for untyped/dynamic attributes.
-    var metadata: [String: String] { get }
+    var metadata: [String: String] { get set }
 }

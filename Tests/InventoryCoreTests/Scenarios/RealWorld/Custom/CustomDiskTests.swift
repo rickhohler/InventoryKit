@@ -53,14 +53,18 @@ final class CustomDiskTests: XCTestCase {
             var typeIdentifier: String { type ?? "unknown" }
             var fileHashes: [String : String]? = nil
             var productID: (any InventoryIdentifier)? 
-            var sourceCode: SourceCode? = nil
+            var sourceCode: (any InventorySourceCode)? = nil
+            
+            // New Protocol Requirements
+            var accessionNumber: String? = nil
+            var mediaFormat: InventoryMediaFormat? = nil
         }
         
         let karatekaID = MockIdentifier(type: .libraryReferenceID, value: karateka.id.uuidString)
         let lodeRunnerID = MockIdentifier(type: .libraryReferenceID, value: lodeRunner.id.uuidString)
         
-        let file1 = LocalFile(name: "KARATEKA.BIN", type: "BIN", typeClassifier: .software, productID: karatekaID)
-        let file2 = LocalFile(name: "LODE.BIN", type: "BIN", typeClassifier: .software, productID: lodeRunnerID)
+        let file1 = LocalFile(name: "KARATEKA.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: karatekaID)
+        let file2 = LocalFile(name: "LODE.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: lodeRunnerID)
         
         // 3. Build Asset
         let builder = UserInventoryItemBuilder(name: "Compilation Disk A")
