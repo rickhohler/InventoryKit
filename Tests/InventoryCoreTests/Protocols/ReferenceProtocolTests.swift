@@ -1,5 +1,6 @@
 import XCTest
 @testable import InventoryCore
+import InventoryTypes
 
 final class ReferenceProtocolTests: XCTestCase {
     

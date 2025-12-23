@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Protocol defining the contract for the "User Data Store" (Private Vault).
 /// Handles the actual bytes for user-owned files (Originals, Derived, Modified).

@@ -1,7 +1,8 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
-public struct MockManufacturer: InventoryManufacturer, Sendable {
+public struct MockManufacturer: Manufacturer, Sendable {
     public var id: UUID
     public var name: String
     public var slug: String
@@ -14,9 +15,9 @@ public struct MockManufacturer: InventoryManufacturer, Sendable {
     public var website: URL?
     public var email: String?
     
-    public var addresses: [any InventoryAddress] = []
-    public var associatedPeople: [any InventoryContact] = []
-    public var developers: [any InventoryContact] = []
+    public var addresses: [any Address] = []
+    public var associatedPeople: [any Contact] = []
+    public var developers: [any Contact] = []
     
     public init(
         id: UUID = UUID(),

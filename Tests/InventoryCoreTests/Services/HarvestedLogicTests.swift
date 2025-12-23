@@ -1,6 +1,6 @@
 import XCTest
 import InventoryCore
-@testable import InventoryCoreTests
+import InventoryTypes
 
 final class HarvestedLogicTests: XCTestCase {
     

@@ -284,7 +284,44 @@ The application unifies Private and Public data using these abstract base defini
 
 ---
 
-## 7. Location & Containers ("Where is it?")
+## 7. Import & Creation ("The Entry Point")
+
+### InventoryImportService ("The Importer")
+*   **Definition**: The high-level service responsible for ingesting files and folders into the system.
+*   **Role**: Orchestrates the scanning, filtering, and initial creation of **InventoryAsset** candidates.
+*   **Capabilities**:
+    *   **Archive Handling**: Automatically expands and scans archives (ZIP, LHA).
+    *   **Filtering**: Ignores system files (`.DS_Store`, `__MACOSX`) to keep the inventory clean.
+    *   `AssetCandidate`: Produces a lightweight preview structure before committing to the database.
+
+### Questionnaire ("The Wizard")
+*   **Definition**: A domain-specific logic engine that asks questions about an item to determine its metadata.
+*   **Role**: Simplifies complex cataloging by guiding the user through a decision tree.
+*   **Types**:
+    *   **`HardwareQuestionnaire`**: Asks about Condition, Cables, Mods (e.g. "Is it yellowed?", "Do you have the power brick?").
+    *   **`SoftwareQuestionnaire`**: Asks about Media, Box, Manuals (e.g. "Is the disk cracked?", "Is the manual present?").
+*   **Output**: Generates standardized **Tags**, **Attributes**, and **Condition Notes** for an Asset.
+
+---
+
+## 8. Relationships & Logic ("The Brain")
+
+### InventoryRelationshipService ("The Matchmaker")
+*   **Definition**: The service responsible for managing links between assets and evaluating compliance.
+*   **Role**: Ensures assets are connected correctly according to their requirements.
+*   **Functions**:
+    *   **`link`**: Connects a Source Asset to a Target Asset (e.g. Computer -> Monitor).
+    *   **`evaluateCompliance`**: Checks if an Asset's requirements are met (e.g. "Does this Computer have a Monitor?").
+    *   **`findCandidates`**: Searches the inventory for Assets that *could* fulfill a requirement.
+
+### InventoryRelationshipRequirement ("The Rule")
+*   **Definition**: A rule defining what an Asset needs to be "Complete" or "Operational".
+*   **Structure**: `typeID` (e.g. `rel.display`), `required` (Bool), `compatibleAssetIDs` (UUIDs), `requiredTags` (Tags).
+*   **Context**: "Commodore 64" *requires* a "Display" (Tag: `type:monitor`).
+
+---
+
+## 9. Location & Containers ("Where is it?")
 
 ### InventorySpace ("The Place")
 *   **Definition**: The abstract base type for any location that can hold items or containers.
@@ -302,10 +339,10 @@ The application unifies Private and Public data using these abstract base defini
     *   **`ItemContainerDigital`**: A folder or archive specific to a `InventoryVolume`.
 *   **Attributes**:
     *   `identifiers`: NFC, Barcode, or QR codes used for scanning/lookup.
-    *   `location`: The specific `ItemLocation` (Room + Exact Spot).
+    *   `location`: The specific `ItemLocationType` (Room + Exact Spot).
 
-### ItemLocation ("The Address")
-*   **Definition**: A unified value type describing exactly where an item or container is.
+### ItemLocationType ("The Address")
+*   **Definition**: A unified enum describing exactly where an item or container is.
 *   **Variants**:
     *   **`physical`**: Links to an `InventoryRoom`, optional `InventoryGeoLocation`, and a descriptive string (e.g. "Shelf A").
-    *   **`digital`**: Links to a `InventoryVolume` and a URL path.
+    *   **`digital`**: Links to a `InventoryVolume` (by ID) and a URL path.

@@ -1,7 +1,7 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 import DesignAlgorithmsKit
-@testable import InventoryCoreTests
 
 final class PipelineIntegrationTests: XCTestCase {
     

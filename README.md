@@ -220,6 +220,35 @@ Recommended release workflow:
 2. Tag the commit `vMAJOR.MINOR.PATCH`.
 3. Publish release notes summarizing API + schema changes.
 
+
+## Client Integration
+
+**IMPORTANT:** Client applications must NOT use internal services or actors directly. Always use the public Facade API.
+
+- [Client Integration Guide](docs/CLIENT_INTEGRATION.md) - Detailed guide on using the Facade API.
+
+### Accessing the API
+
+```swift
+let services = InventoryKit.shared.services
+
+// Use services.transactions, services.locations, etc.
+```
+
+## Localization
+
+InventoryKit supports client-side localization overrides. Define keys in your main app bundle's `Localizable.strings` to override default text.
+
+## Documentation
+
+The `docs/` directory contains detailed guides for architecture and usage:
+
+- **[Terminology](docs/INVENTORY_TERMINOLOGY.md)**: Definitions of core concepts (Asset, Product, Relationship).
+- **[Services](docs/SERVICES.md)**: Guide to the service layer (Import, Enrichment, Relationship).
+- **[Client Integration](docs/CLIENT_INTEGRATION.md)**: How to integrate InventoryKit into an app.
+- **[Standards](docs/STANDARDS.md)**: Code standards and implementation patterns.
+- **[Contribution Design](docs/SUBMISSION_DESIGN.md)**: Workflow for user submissions to the public catalog.
+
 ## Roadmap
 
 - Ship additional storage providers (CloudKit, SQLite).

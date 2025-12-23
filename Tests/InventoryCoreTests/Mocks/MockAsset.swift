@@ -1,55 +1,68 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
 public struct MockAsset: InventoryAsset, Sendable {
-    public let id: UUID
+    public var id: UUID
 
-    public let name: String
-    public var title: String { name }
-    public let description: String?
-    public let manufacturer: (any InventoryManufacturer)?
-    public let releaseDate: Date?
-    public let dataSource: (any InventoryDataSource)?
+    public var name: String
+    public var title: String {
+        get { name }
+        set { name = newValue }
+    }
+    public var description: String?
+    public var manufacturer: (any Manufacturer)?
+    public var releaseDate: Date?
+    public var dataSource: (any DataSource)?
     public var children: [any InventoryItem]
     public var images: [any InventoryItem]
-    public let type: String?
-    public let identifiers: [any InventoryIdentifier]
-    public let tags: [String]
-    public let metadata: [String: String]
+    public var type: String?
+    public var identifiers: [any InventoryIdentifier]
+    public var tags: [String]
+    public var metadata: [String: String]
     
     // Rich Data
-    public let source: (any InventorySource)?
-    public let lifecycle: (any InventoryLifecycle)?
-    public let health: (any InventoryHealth)?
-    public let mro: (any InventoryMROInfo)?
-    public let copyright: (any CopyrightInfo)?
-    public let components: [any InventoryComponentLink]
-    public let relationshipRequirements: [any InventoryRelationshipRequirement]
-    public let linkedAssets: [any InventoryLinkedAsset]
+    public var source: (any InventorySource)?
+    public var lifecycle: (any InventoryLifecycle)?
+    public var health: (any InventoryHealth)?
+    public var mro: (any InventoryMROInfo)?
+    public var copyright: (any CopyrightInfo)?
+    public var components: [any InventoryComponentLink]
+    public var relationshipRequirements: [any InventoryRelationshipRequirement]
+    public var linkedAssets: [any InventoryLinkedAsset]
     
     // Flat properties
     public var accessionNumber: String? = nil
-    public var mediaFormat: InventoryMediaFormat? = nil
+    public var mediaFormat: MediaFormatType? = nil
     
-    public var provenance: String? { _provenance }
-    public var acquisitionSource: String? { _acquisitionSource }
-    public var acquisitionDate: Date? { lifecycle?.events.first?.timestamp }
-    public var condition: String? { health?.physicalCondition.rawValue }
+    // InventoryItem Conformance
+    public var sizeOrWeight: Int64? = nil
+    public var typeIdentifier: String = "mock"
+    public var fileHashes: [String : String]? = nil
+    public var serialNumber: String? = nil
+    public var typeClassifier: ItemClassifierType = .physicalItem
+    public var sourceCode: (any InventorySourceCode)? = nil
     
-    private let _provenance: String?
-    private let _acquisitionSource: String?
-    public let forensicClassification: String?
-    public let custodyLocation: String?
-    public let productID: UUID?
-    public let relationshipType: AssetRelationshipType?
+    // Protocol Conformance (Mutable)
+    public var provenance: String?
+    public var acquisitionSource: String?
+    public var acquisitionDate: Date?
+    public var location: ItemLocationType?
+    public var container: (any ItemContainer)?
+    public var condition: String?
+    
+    public var forensicClassification: String?
+    public var custodyLocation: String?
+    public var productID: UUID?
+    public var relationshipType: AssetRelationshipType?
     
     public init(
         id: UUID = UUID(),
         name: String,
         description: String? = nil,
-        manufacturer: (any InventoryManufacturer)? = nil, // Base
+        manufacturer: (any Manufacturer)? = nil, // Base
         releaseDate: Date? = nil, // Base
-        dataSource: (any InventoryDataSource)? = nil, // Base
+        dataSource: (any DataSource)? = nil, // Base
         children: [any InventoryItem] = [], // Base
         images: [any InventoryItem] = [], // Base
         
@@ -87,8 +100,8 @@ public struct MockAsset: InventoryAsset, Sendable {
         self.identifiers = identifiers
         self.tags = tags
         self.metadata = metadata
-        self._provenance = provenance
-        self._acquisitionSource = acquisitionSource
+        self.provenance = provenance
+        self.acquisitionSource = acquisitionSource
         self.forensicClassification = forensicClassification
         self.custodyLocation = custodyLocation
         self.productID = productID
@@ -102,14 +115,22 @@ public struct MockAsset: InventoryAsset, Sendable {
         self.components = components
         self.relationshipRequirements = relationshipRequirements
         self.linkedAssets = linkedAssets
+        
+        // Map Lifecycle/Health to flat properties if provided but not explicitly set
+        if self.acquisitionDate == nil {
+             self.acquisitionDate = lifecycle?.events.first?.timestamp
+        }
+        if self.condition == nil {
+             self.condition = health?.physicalCondition.rawValue
+        }
     }
 }
 
 // Minimal Mocks for Core Tests
 public struct MockIdentifier: InventoryIdentifier, Sendable {
-    public var type: InventoryIdentifierType
+    public var type: IdentifierType
     public var value: String
-    public init(type: InventoryIdentifierType, value: String) {
+    public init(type: IdentifierType, value: String) {
         self.type = type
         self.value = value
     }
@@ -142,4 +163,3 @@ public struct MockLifecycleEvent: InventoryLifecycleEventProtocol, Sendable {
         self.note = note
     }
 }
-

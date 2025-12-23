@@ -1,5 +1,6 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 @testable import InventoryKit // Component under test
 
 final class UserAssetCompositionServiceTests: XCTestCase {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import InventoryTypes
 
 /// InventoryCore provides the foundational protocols and base types for InventoryKit.
 ///

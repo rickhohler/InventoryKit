@@ -1,5 +1,6 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
 public struct MockHealth: InventoryHealth, Sendable {
     public var physicalCondition: InventoryPhysicalCondition

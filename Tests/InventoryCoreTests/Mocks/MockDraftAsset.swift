@@ -1,5 +1,6 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
 public struct MockDraftAsset: DraftAsset {
     public let id: UUID

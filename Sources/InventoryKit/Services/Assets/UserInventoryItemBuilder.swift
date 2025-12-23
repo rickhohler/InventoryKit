@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 import InventoryCore
 
 /// Builder for creating private inventory assets (User Custody).
@@ -16,7 +17,7 @@ public class UserInventoryItemBuilder: MetaDatableBuilder {
     private var tags: [String] = []
     private var condition: String?
     private var provenance: String?
-    private var manufacturer: (any InventoryManufacturer)?
+    private var manufacturer: (any Manufacturer)?
     private var children: [any InventoryItem] = []
     private var validator: (any InventoryValidationStrategy)?
     
@@ -63,7 +64,7 @@ public class UserInventoryItemBuilder: MetaDatableBuilder {
         return self
     }
     
-    public func setManufacturer(_ manufacturer: any InventoryManufacturer) -> Self {
+    public func setManufacturer(_ manufacturer: any Manufacturer) -> Self {
         self.manufacturer = manufacturer
         return self
     }
@@ -102,7 +103,7 @@ public class UserInventoryItemBuilder: MetaDatableBuilder {
         }
         
         // 2. Build the candidate asset
-        let asset = PrivateAssetImpl(
+        let asset = UserAsset(
             id: id,
             name: name,
             manufacturer: manufacturer,
@@ -124,43 +125,4 @@ public class UserInventoryItemBuilder: MetaDatableBuilder {
         
         return asset
     }
-}
-
-// Private concrete implementation, hidden from public API
-private struct PrivateAssetImpl: InventoryAsset {
-    var id: UUID
-    var name: String
-    // InventoryCompoundBase Conformance
-    var title: String { name }
-    var description: String? = nil
-    var manufacturer: (any InventoryManufacturer)? = nil
-    var releaseDate: Date? = nil
-    var dataSource: (any InventoryDataSource)? = nil
-    var children: [any InventoryItem] = []
-    var images: [any InventoryItem] = []
-    
-    var accessionNumber: String? = nil
-    var type: String?
-    var custodyLocation: String?
-    var acquisitionSource: String?
-    var acquisitionDate: Date?
-    var tags: [String]
-    var provenance: String?
-    
-    // Default/Empty implementations for other protocol requirements
-    var identifiers: [any InventoryIdentifier] = []
-    var productID: UUID? = nil
-    var condition: String? = nil
-    var forensicClassification: String? = nil
-    var relationshipType: AssetRelationshipType? = nil
-    var metadata: [String : String] = [:]
-    
-    var source: (any InventorySource)? = nil
-    var lifecycle: (any InventoryLifecycle)? = nil
-    var health: (any InventoryHealth)? = nil
-    var mro: (any InventoryMROInfo)? = nil
-    var copyright: (any CopyrightInfo)? = nil
-    var components: [any InventoryComponentLink] = []
-    var relationshipRequirements: [any InventoryRelationshipRequirement] = []
-    var linkedAssets: [any InventoryLinkedAsset] = []
 }

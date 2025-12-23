@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Service responsible for validating Inventory Entities against business rules.
 ///
@@ -15,11 +16,15 @@ import Foundation
 /// ```
 public struct InventoryValidationService: Sendable {
     
-    private let context: InventoryContext
+    // MARK: - Dependencies
     
-    /// Creates a new validation service.
-    /// - Parameter context: The shared `InventoryContext`.
-    public init(context: InventoryContext) {
+    private let context: Context
+    
+    // MARK: - Initialization
+    
+    /// Initializes the validation service.
+    /// - Parameter context: The shared `Context`.
+    public init(context: Context) {
         self.context = context
     }
     

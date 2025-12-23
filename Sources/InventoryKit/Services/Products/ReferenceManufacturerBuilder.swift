@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 import InventoryCore
 
 /// Builder for creating Authority Records for Manufacturers (Reference Manufacturers).
@@ -48,7 +49,7 @@ public class ReferenceManufacturerBuilder {
         return self
     }
     
-    public func build() throws -> any InventoryManufacturer {
+    public func build() throws -> any Manufacturer {
         if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             throw InventoryValidationError.missingRequiredField(field: "name", reason: "Manufacturer name cannot be empty.")
         }
@@ -87,9 +88,9 @@ private struct PrivateManufacturerImpl: ReferenceManufacturer {
     var alternativeSpellings: [String] = []
     var commonMisspellings: [String] = []
     
-    var addresses: [any InventoryAddress] = []
-    var associatedPeople: [any InventoryContact] = []
-    var developers: [any InventoryContact] = []
+    var addresses: [any Address] = []
+    var associatedPeople: [any Contact] = []
+    var developers: [any Contact] = []
     
     var images: [ReferenceItem] = []
 }

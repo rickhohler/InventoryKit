@@ -1,10 +1,11 @@
 import Foundation
+import InventoryTypes
 
 /// Errors emitted by InventoryKit APIs.
 public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable {
     case unreadableFile(URL)
     case unsupportedDataEncoding
-    case schemaIncompatible(expected: InventorySchemaVersion, actual: InventorySchemaVersion)
+    case schemaIncompatible(expected: SchemaVersion, actual: SchemaVersion)
     case yamlDecodingFailed(String)
     case yamlEncodingFailed(String)
     case storageError(String)

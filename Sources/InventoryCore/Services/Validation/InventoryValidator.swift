@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 public struct ValidationResult: Sendable, Equatable {
     public let isValid: Bool

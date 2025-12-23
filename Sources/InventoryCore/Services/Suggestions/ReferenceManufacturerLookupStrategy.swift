@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Strategy to suggest manufacturers from a reference list (Simulated).
 /// In a real app, this would query Core Data or a web API.

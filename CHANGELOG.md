@@ -27,6 +27,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2025-12-22
+
+### Added
+- **InventoryImportService**: New high-level service for handling file imports, scanning directory structures, and creating asset candidates.
+- **InventoryRelationshipService**: Dedicated service for managing asset links (`link`, `unlink`) and evaluating requirement compliance.
+- **Documentation**:
+  - Updated `INVENTORY_TERMINOLOGY.md` with new service definitions.
+  - Added `docs/archive/` for retired design documents.
+  - Added centralized **Documentation** section to `README.md`.
+
+### Changed
+- **Code Coverage**: Achieved **95.97%** code coverage (up from ~50%).
+  - Added comprehensive tests for `RelationshipScenario`, `Questionnaire` logic, and `StorageProvider` defaults.
+- **Mocking Strategy**: Refactored test suite to use robust local mocks (`MockScenarioStorage`, `MockClassAsset`) ensuring test isolation.
+- **Error Handling**: Renamed internal `InventoryError` to `RelationshipError` in `InventoryRelationshipService` to avoid shadowing.
+
+### Fixed
+- **Compilation**: Resolved all compiler warnings (unused variables, immutability, Sendable conformance).
+- **Architecture**: Removed redundant `INVENTORY_KIT_ARCHITECTURE.md` (consolidated/archived).
+
 ## [2.2.0] - 2025-12-22
 
 ### Added

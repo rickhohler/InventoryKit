@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// A strategy for formatting or correcting entity data.
 /// adheres to SRP: This strategy only knows how to clean/format data, not validate or enrich it.

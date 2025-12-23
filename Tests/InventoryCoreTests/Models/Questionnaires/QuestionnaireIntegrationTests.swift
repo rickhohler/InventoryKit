@@ -1,5 +1,6 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 import InventoryKit
 
 final class QuestionnaireIntegrationTests: XCTestCase {
@@ -17,10 +18,10 @@ final class QuestionnaireIntegrationTests: XCTestCase {
         )
         
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Format.fluxImage.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.DigitalState.cracked.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.DigitalState.trainer.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.DigitalState.originalDump.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Format.fluxImage.rawValue))
+        XCTAssertTrue(tags.contains(TagType.DigitalState.cracked.rawValue))
+        XCTAssertTrue(tags.contains(TagType.DigitalState.trainer.rawValue))
+        XCTAssertTrue(tags.contains(TagType.DigitalState.originalDump.rawValue))
         XCTAssertTrue(tags.contains("region:ntsc"))
         
         let attrs = q.generateAttributes()
@@ -55,9 +56,9 @@ final class QuestionnaireIntegrationTests: XCTestCase {
         )
         
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Manufacturer.publisher.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.Manufacturer.indie.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.Manufacturer.active.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Manufacturer.publisher.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Manufacturer.indie.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Manufacturer.active.rawValue))
         XCTAssertTrue(tags.contains("platform:pc"))
         
         let attrs = q.generateAttributes()
@@ -73,9 +74,9 @@ final class QuestionnaireIntegrationTests: XCTestCase {
         )
         
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Manufacturer.hardware.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Manufacturer.hardware.rawValue))
         XCTAssertTrue(tags.contains("type:computer"))
-        XCTAssertTrue(tags.contains(InventoryTag.Manufacturer.defunct.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Manufacturer.defunct.rawValue))
         
         let attrs = q.generateAttributes()
         XCTAssertEqual(attrs["type"], "Hardware Manufacturer")
@@ -105,7 +106,7 @@ final class QuestionnaireIntegrationTests: XCTestCase {
     func testPeripheralQuestionnaire() {
         let q = PeripheralQuestionnaire(interface: .usb, requiresDrivers: true, compatibility: ["Mac"])
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Interface.usb.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Interface.usb.rawValue))
         XCTAssertTrue(tags.contains("req:drivers"))
         XCTAssertTrue(tags.contains("compat:mac"))
     }
@@ -121,8 +122,8 @@ final class QuestionnaireIntegrationTests: XCTestCase {
     func testMultimediaQuestionnaire() {
         let q = MultimediaQuestionnaire(format: .vhs, durationMinutes: 90)
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.MediaFormat.vhs.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.Format.physical.rawValue))
+        XCTAssertTrue(tags.contains(TagType.MediaFormatType.vhs.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Format.physical.rawValue))
         let attrs = q.generateAttributes()
         XCTAssertEqual(attrs["duration_min"], "90")
     }
@@ -130,7 +131,7 @@ final class QuestionnaireIntegrationTests: XCTestCase {
     func testPhysicalItemQuestionnaire() {
         let q = PhysicalItemQuestionnaire(material: .wood, primaryColor: "Oak")
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Material.wood.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Material.wood.rawValue))
         XCTAssertTrue(tags.contains("color:oak"))
     }
 }

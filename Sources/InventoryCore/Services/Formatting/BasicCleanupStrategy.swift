@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 public extension InventoryFormattingStrategies {
     
