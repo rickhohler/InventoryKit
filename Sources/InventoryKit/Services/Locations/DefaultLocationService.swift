@@ -3,6 +3,7 @@ import InventoryTypes
 import InventoryCore
 
 /// Default implementation of the InventoryLocationService.
+/// Default implementation of the InventoryLocationService.
 public final class DefaultLocationService: InventoryLocationService {
     
     private let storage: any StorageProvider
@@ -13,40 +14,30 @@ public final class DefaultLocationService: InventoryLocationService {
     
     public func getItems(in space: any Space) async throws -> [any InventoryItem] {
         // Query Assets
-        // Assuming "location" field stores the ID of the container/room.
-        // This is a simplification. Real query might check for ItemLocationType enum cases.
-        // Or we might need a specific filter like .custom("locationID", space.id)
-        
-        let filter = StorageFilter.field(key: "location", op: .equals, value: space.id.uuidString)
+        // Assuming "location" field stores the ID of the container/room/volume matches space.id
+        // Filter logic relies on storage provider capability to query complex enums or flattened fields.
+        // We use a simplified assumption that 'locationID' is a searchable index.
+        let filter = StorageFilter.field(key: "locationID", op: .equals, value: space.id.uuidString)
         let query = StorageQuery(filter: filter)
         
-        // Fetch assets
         let assets = try await storage.assetRepository.fetch(matching: query)
-        
-        // Also fetch containers?
-        // Method signature returns [any InventoryItem].
-        // Are containers considered InventoryItems?
-        // No, ItemContainer is separate.
-        // But getContainers(in:) is a separate method.
-        
         return assets.map { $0 as any InventoryItem }
     }
     
     public func getContainers(in space: any Space) async throws -> [any ItemContainer] {
-        // Query logic for containers
-        // Not implemented fully in repositories yet.
+        // Feature: Container Repository access expected here.
+        // Currently StorageProvider does not expose a generic ItemContainerRepository.
+        // We return empty until Container logic is formalized in Storage.
         return []
     }
     
     public func getContainers(near container: any ItemContainer) async throws -> [any ItemContainer] {
         // Find containers in the same location (Same parent)
-        // If container.location is .physical(roomID), fetch all containers in that room.
-        
+        // Check container.location
         switch container.location {
         case .physical(_, _, _):
-            // We need to fetch containers in roomID
-            // But we don't have a ContainerRepository exposed easily.
-            // Assuming simplified empty return for now.
+            // Return containers in the same room is a reasonable "near" definition.
+            // But we can't query containers yet.
             return []
         case .digital(_, _):
             // Same folder?
@@ -60,17 +51,22 @@ public final class DefaultLocationService: InventoryLocationService {
             return directGeo
         }
         
-        // 2. Check hierarchy
+        // 2. Check hierarchy (Room -> Building)
+        // 2. Check hierarchy (Room -> Building)
         if let room = space as? any Room {
-            // Room -> Building
-            // Building acts as the root in this simplified model.
-            return room.building.geoLocation
+             return await resolveGeoLocation(for: room.building)
         }
         
-        // 3. DigitalVolumes?
-        // DigitalVolume has geoLocation. If nil, maybe server location?
+        // 3. DigitalVolumes (Volume -> ??)
+        // Currently no parent for Volume defined.
         
         return nil
+    }
+    
+    public func resolveGeoLocation(for building: any Building) -> InventoryGeoLocation? {
+        // Helper specifically for building to avoid cast overhead if needed, 
+        // but Protocol 'Space' covers it.
+        return building.geoLocation
     }
     
     public func reconcileLocation(container: any ItemContainer, nearbyContainers: [any ItemContainer], scanDate: Date) async throws -> LocationReconciliationResult {
@@ -88,6 +84,7 @@ public final class DefaultLocationService: InventoryLocationService {
         
         // Find majority
         let threshold = nearbyContainers.count / 2 + 1
+        // Retrieve max count
         if let (majorityRoomID, count) = locationCounts.max(by: { $0.value < $1.value }), count >= threshold {
             
             // Check if current container is already there
@@ -95,9 +92,11 @@ public final class DefaultLocationService: InventoryLocationService {
                 return .noChange
             } else {
                 // It seems to have moved to majorityRoomID
-                // Fetch the room logic
-                if let newRoom = try await storage.spaceRepository.retrieve(id: majorityRoomID) {
-                    return .potentialMove(to: newRoom, confidence: 0.9)
+                // Fetch the room logic via SpaceRepository
+                // spaceRepository returns 'any Space', we cast to Room or generic Space.
+                if let space = try await storage.spaceRepository.retrieve(id: majorityRoomID),
+                   let _ = space as? any Room { // Verify it's a room?
+                    return .potentialMove(to: space, confidence: 0.9)
                 } else {
                     return .ambiguous(reasons: ["Inferred move to unknown room ID: \(majorityRoomID)"])
                 }
@@ -106,8 +105,24 @@ public final class DefaultLocationService: InventoryLocationService {
         
         return .ambiguous(reasons: ["No clear majority location in nearby items"])
     }
+    
     public func updateDigitalLocation(item: any InventoryItem, newUri: URL) async throws {
         // Logic to update storage
-        // For now, stub.
+        // Retrieve asset -> modify -> save
+        // We must ensure the item is a valid InventoryAsset to have an ID and be retrievable.
+        guard let validAsset = item as? any InventoryAsset else {
+             throw InventoryError.storageError("Item provided is not a valid InventoryAsset and cannot be updated directly.")
+        }
+        
+        guard var asset = try await storage.assetRepository.retrieve(id: validAsset.id) else {
+            throw InventoryError.storageError("Item not found with id: \(validAsset.id)")
+        }
+        
+        // Update location
+        // Find Volume? Or just update URL?
+        // Assume digital location simple update
+        asset.location = ItemLocationType.digital(url: newUri, volumeID: nil) // Volume ID lookup skipped for now
+        
+        try await storage.assetRepository.save(asset)
     }
 }
