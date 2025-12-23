@@ -1,14 +1,14 @@
 import XCTest
 import InventoryCore
-@testable import InventoryCoreTests
+import InventoryTypes
 
 final class RetroHardwareTests: XCTestCase {
     
-    var configurator: InventoryConfigurator!
+    var configurator: Configurator!
     
     override func setUp() {
         super.setUp()
-        configurator = MockInventoryConfigurator()
+        configurator = MockConfigurator()
     }
 
     func testDataLinkModem() {

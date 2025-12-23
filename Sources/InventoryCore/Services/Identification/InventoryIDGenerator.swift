@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 import DesignAlgorithmsKit
 
 /// A utility for generating deterministic UUIDs (UUIDv5) for InventoryKit entities.

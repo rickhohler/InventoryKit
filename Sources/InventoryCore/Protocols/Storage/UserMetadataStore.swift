@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Protocol for the "User Metadata Store" (Private Realm).
 /// Handles persistence for User Assets and Personal Collections.
@@ -11,8 +12,8 @@ public protocol UserMetadataStore: Sendable {
     func deleteAsset(id: UUID) async throws
     
     // MARK: - Personal Collections
-    func fetchPersonalCollections(matching query: StorageQuery) async throws -> [any InventoryCollection]
-    func saveCollection(_ collection: any InventoryCollection) async throws
+    func fetchPersonalCollections(matching query: StorageQuery) async throws -> [any Collection]
+    func saveCollection(_ collection: any Collection) async throws
     func deleteCollection(id: UUID) async throws
     
     // MARK: - Transaction

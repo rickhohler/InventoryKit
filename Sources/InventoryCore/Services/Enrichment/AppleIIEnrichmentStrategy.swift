@@ -1,11 +1,12 @@
 import Foundation
+import InventoryTypes
 
 /// A strategy that infers system requirements specifically for the Apple II platform based on release year.
 public struct AppleIIEnrichmentStrategy: SystemRequirementsEnrichmentStrategy {
     
     public init() {}
     
-    public func enrich(product: any InventoryProduct) -> InventorySystemRequirements? {
+    public func enrich(product: any Product) -> InventorySystemRequirements? {
         guard let date = product.releaseDate ?? product.productionDate else {
             return nil
         }

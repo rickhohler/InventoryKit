@@ -1,0 +1,177 @@
+/* 
+  Localizable.strings
+  InventoryKit
+
+  French Localization
+*/
+
+// MARK: - Conditions
+"condition.new" = "Neuf";
+"condition.sealed" = "Scellé en Usine";
+"condition.openBox" = "Boîte Ouverte";
+"condition.mint" = "Comme Neuf";
+"condition.nearMint" = "Proche du Neuf";
+"condition.excellent" = "Excellent";
+"condition.veryGood" = "Très Bon";
+"condition.good" = "Bon";
+"condition.fair" = "Correct";
+"condition.poor" = "Mauvais";
+"condition.forParts" = "Pour Pièces / Ne Fonctionne Pas";
+"condition.working" = "Fonctionnel";
+"condition.notWorking" = "Ne Fonctionne Pas";
+"condition.untested" = "Non Testé";
+"condition.cib" = "Complet en Boîte";
+"condition.loose" = "En Vrac / Sans Boîte";
+"condition.boxed" = "En Boîte";
+"condition.recapped" = "Recapé (Condensateurs)";
+"condition.modded" = "Modifié";
+"condition.yellowed" = "Jauni / Décoloré";
+"condition.damaged" = "Endommagé";
+"condition.stable" = "Stable";
+"condition.fragile" = "Fragile";
+"condition.deteriorating" = "Détérioration";
+"condition.corrosion" = "Corrodé";
+"condition.discoloration" = "Décoloré";
+"condition.incomplete" = "Incomplet";
+
+// MARK: - Formats
+"format.physical" = "Item Physique";
+"format.digital" = "Fichier Numérique";
+"format.executable" = "Exécutable";
+"format.diskImage" = "Image Disque";
+"format.fluxImage" = "Image Flux";
+"format.rom" = "Image ROM";
+"format.cassette" = "Image Cassette";
+"format.archive" = "Archive / Zip";
+
+// MARK: - Content
+"content.manual" = "Manuel / Documentation";
+"content.box" = "Boîte / Emballage";
+"content.media" = "Média de Jeu";
+"content.map" = "Carte";
+"content.registrationCard" = "Carte d'Enregistrement";
+"content.cables" = "Câbles";
+"content.powerSupply" = "Alimentation Électrique";
+
+// MARK: - States
+"state.cracked" = "Cracked (Déprotégé)";
+"state.trainer" = "Trainer / Triche";
+"state.verifiedClean" = "Vérifié Sain";
+"state.originalDump" = "Dump Original";
+
+// MARK: - Manufacturers
+"mfg.publisher" = "Éditeur de Logiciels";
+"mfg.developer" = "Développeur de Logiciels";
+"mfg.hardware" = "Fabricant de Matériel";
+"mfg.indie" = "Développeur Indépendant";
+"mfg.active" = "Actif";
+"mfg.defunct" = "Disparu";
+"mfg.acquired" = "Acquis";
+"mfg.merged" = "Fusionné";
+
+// MARK: - Regions
+"region.ntsc" = "NTSC";
+"region.pal" = "PAL";
+"region.usa" = "Amérique du Nord (USA)";
+"region.eur" = "Europe";
+"region.jpn" = "Japon";
+
+// MARK: - Acquisition
+"acq.purchase" = "Acheté";
+"acq.gift" = "Cadeau";
+"acq.donation" = "Don";
+"acq.bequest" = "Legs";
+"acq.found" = "Trouvé";
+"acq.trade" = "Échangé";
+"acq.unknown" = "Inconnu";
+
+// MARK: - Interfaces
+"interface.usb" = "USB";
+"interface.serial" = "Série";
+"interface.parallel" = "Parallèle";
+"interface.ps2" = "PS/2";
+"interface.adb" = "ADB (Apple Desktop Bus)";
+"interface.scsi" = "SCSI";
+"interface.ide" = "IDE / PATA";
+"interface.midi" = "MIDI";
+"interface.gameport" = "Port Jeu";
+"interface.proprietary" = "Propriétaire";
+
+// MARK: - Materials
+"material.plastic" = "Plastique";
+"material.metal" = "Métal";
+"material.wood" = "Bois";
+"material.paper" = "Papier";
+"material.cardboard" = "Carton";
+
+// MARK: - Media
+"media.vhs" = "VHS";
+"media.dvd" = "DVD";
+"media.cd" = "CD / CD-ROM";
+"media.vinyl" = "Disque Vinyle";
+"media.cassetteAudio" = "Cassette Audio";
+"media.laserdisc" = "LaserDisc";
+
+// MARK: - Questions (Digital Software)
+"question.digitalFormat" = "Quel est le format du fichier ?";
+"question.isCracked" = "Cette version est-elle crackée ?";
+"question.hasTrainer" = "Inclut-elle un trainer/triche ?";
+"question.isVerifiedClean" = "Est-elle vérifiée contre une base de données (ex. TOSEC) ?";
+"question.region" = "Quelle est la région (NTSC/PAL) ?";
+"question.isOriginalDump" = "Avez-vous fait le dump vous-même depuis le média original ?";
+
+// MARK: - Questions (Peripheral)
+"question.interface" = "Interface de Connexion :";
+"question.requiresDrivers" = "Nécessite-t-il des pilotes ?";
+"question.isWireless" = "Est-il sans fil ?";
+"question.compatibility" = "Systèmes compatibles (séparés par des virgules) :";
+"question.condition" = "Condition Physique :";
+"question.isFunctional" = "Est-il fonctionnel actuellement ?";
+
+// MARK: - Questions (Hardware)
+"question.hasHardwareBox" = "Avez-vous la boîte d'origine ?";
+"question.hasHardwareManual" = "Le manuel est-il inclus ?";
+"question.hasPowerSupply" = "L'alimentation est-elle incluse ?";
+"question.hasCables" = "Les câbles nécessaires sont-ils inclus ?";
+"question.needsRecap" = "A-t-il besoin d'un recap (condensateurs) ?";
+"question.cosmeticCondition" = "Quelle est la condition esthétique ?";
+"question.serialNumber" = "Entrez le numéro de série (optionnel) :";
+"question.modNotes" = "Décrivez les modifications :";
+"question.damageNotes" = "Décrivez les dommages visibles :";
+
+// MARK: - Questions (Multimedia)
+"question.mediaFormat" = "Format (ex. VHS, DVD) :";
+"question.duration" = "Durée en minutes :";
+"question.isPhysicalMedia" = "Est-ce un média physique ?";
+
+// MARK: - Questions (Physical Item)
+"question.material" = "Matériau :";
+"question.primaryColor" = "Couleur principale :";
+
+// MARK: - Questions (Manufacturer)
+"question.isIndie" = "Est-ce un développeur indépendant ?";
+"question.primaryRegion" = "Région Principale :";
+"question.notablePlatforms" = "Plateformes Notables (séparées par des virgules) :";
+"question.companyStatus" = "Statut de l'Entreprise :";
+"question.manufacturerType" = "Type de Fabricant de Matériel :";
+
+// MARK: - Questions (Physical Software)
+"question.hasBox" = "A-t-il la boîte d'origine ?";
+"question.hasManual" = "Inclut-il le manuel ?";
+"question.hasMedia" = "Le média du jeu (disque/cartouche) est-il présent ?";
+"question.hasRegistrationCard" = "La carte d'enregistrement est-elle incluse ?";
+"question.hasMaps" = "Y a-t-il des cartes incluses ?";
+"question.overallCondition" = "Quelle est la condition générale ?";
+"question.provenanceNotes" = "Où/Quand avez-vous acquis ceci ?";
+
+// MARK: - Questions (Publication)
+"question.pubTitle" = "Titre de la publication :";
+"question.author" = "Auteur (optionnel) :";
+"question.isbn" = "ISBN / Numéro de Catalogue :";
+"question.pubYear" = "Année de publication :";
+"question.pageCount" = "Nombre de pages :";
+"question.binding" = "Quel est le type de reliure ?";
+
+// MARK: - Media Formats (Constants)
+"Compact Cassette" = "Cassette Compacte";
+"DAT Tape" = "Bande DAT";

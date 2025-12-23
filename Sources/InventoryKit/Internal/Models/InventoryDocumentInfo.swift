@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Optional metadata describing the origin of an inventory document.
 struct InventoryDocumentInfo: Codable, Equatable, Sendable {

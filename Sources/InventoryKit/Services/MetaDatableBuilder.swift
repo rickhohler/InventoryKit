@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 import InventoryCore
 
 /// A builder that supports attaching metadata strings and applying questionnaires.

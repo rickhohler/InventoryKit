@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Primary interface for interacting with the Inventory System.
 /// Handles CRUD operations for Assets, Products, and Collections.
@@ -25,19 +26,19 @@ public protocol InventoryService: Sendable {
     // MARK: - Product Management
     
     /// Retrieve a product by its UUID.
-    func product(for id: UUID) async throws -> (any InventoryProduct)?
+    func product(for id: UUID) async throws -> (any Product)?
     
     /// Retrieve a product by its IRN string (Universal Lookup).
-    func product(for irn: InventoryResourceName) async throws -> (any InventoryProduct)?
+    func product(for irn: InventoryResourceName) async throws -> (any Product)?
     
     /// Search for products.
-    func searchProducts(query: String) async throws -> [any InventoryProduct]
+    func searchProducts(query: String) async throws -> [any Product]
     
     // MARK: - Collection Management
     
     /// Retrieve a collection by ID.
-    func collection(for id: UUID) async throws -> (any InventoryCollection)?
+    func collection(for id: UUID) async throws -> (any Collection)?
     
     /// List all collections.
-    func collections() async throws -> [any InventoryCollection]
+    func collections() async throws -> [any Collection]
 }

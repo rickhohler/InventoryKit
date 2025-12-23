@@ -1,5 +1,6 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 
 final class MetadataTypesTests: XCTestCase {
 
@@ -69,7 +70,7 @@ final class MetadataTypesTests: XCTestCase {
         // Wait, MockReferenceManufacturer (Step 9515) has:
         // aliases, description, metadata, images.
         // It does NOT have addresses, email, contacts explicitly stored yet?
-        // If InventoryManufacturer+Defaults.swift supplies them, they return defaults (empty).
+        // If Manufacturer+Defaults.swift supplies them, they return defaults (empty).
         
         // Let's verify defaults work.
         let m = MockReferenceManufacturer(slug: "test", name: "Test Corp")

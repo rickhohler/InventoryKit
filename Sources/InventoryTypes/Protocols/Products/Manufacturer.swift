@@ -1,0 +1,40 @@
+import Foundation
+
+/// Protocol representing a Manufacturer (Creator/Publisher) entity.
+/// Allows for various storage implementations (CloudKit, SwiftData, etc.).
+public protocol Manufacturer: Sendable {
+    var id: UUID { get set }
+    var slug: String { get set }
+    var name: String { get set }
+    
+    /// Alternate names or aliases (e.g., "Apple Computer, Inc.", "Apple").
+    var aliases: [String] { get set }
+    
+    /// Also known as names (e.g. "Big Blue" for IBM).
+    var alsoKnownAs: [String] { get }
+    
+    /// Alternative spellings (e.g. "Micro-Soft" vs "Microsoft").
+    var alternativeSpellings: [String] { get }
+    
+    /// Common misspellings to assist search (e.g. "Nitendo").
+    var commonMisspellings: [String] { get }
+    
+    /// Physical address or headquarters history.
+    /// Physical address or headquarters history.
+    var addresses: [any Address] { get }
+    
+    /// Contact email address.
+    var email: String? { get }
+    
+    /// Key principals, founders, or notable people.
+    var associatedPeople: [any Contact] { get }
+    
+    /// Associated developers or engineering teams.
+    var developers: [any Contact] { get }
+    
+    /// Description or history of the manufacturer.
+    var description: String? { get set }
+    
+    /// Metadata dictionary for untyped/dynamic attributes.
+    var metadata: [String: String] { get set }
+}

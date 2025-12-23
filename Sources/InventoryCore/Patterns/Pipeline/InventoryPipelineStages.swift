@@ -1,8 +1,9 @@
 import Foundation
+import InventoryTypes
 import DesignAlgorithmsKit
 
 /// A Stage that runs the Formatting Service.
-public struct FormattingStage<T: InventoryContact>: AsyncDataPipelineStage {
+public struct FormattingStage<T: Contact>: AsyncDataPipelineStage {
     public typealias Input = T
     public typealias Output = T
     
@@ -20,7 +21,7 @@ public struct FormattingStage<T: InventoryContact>: AsyncDataPipelineStage {
 }
 
 /// A Stage that runs the Suggestion/Enrichment Service.
-public struct EnrichmentStage<T: InventoryContact>: AsyncDataPipelineStage {
+public struct EnrichmentStage<T: Contact>: AsyncDataPipelineStage {
     public typealias Input = T
     public typealias Output = T
     

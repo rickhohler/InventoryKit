@@ -1,0 +1,178 @@
+/* 
+  Localizable.strings
+  InventoryKit
+
+  Created by InventoryKit
+*/
+
+// MARK: - Conditions
+"condition.new" = "New";
+"condition.sealed" = "Factory Sealed";
+"condition.openBox" = "Open Box";
+"condition.mint" = "Mint";
+"condition.nearMint" = "Near Mint";
+"condition.excellent" = "Excellent";
+"condition.veryGood" = "Very Good";
+"condition.good" = "Good";
+"condition.fair" = "Fair";
+"condition.poor" = "Poor";
+"condition.forParts" = "For Parts / Not Working";
+"condition.working" = "Working";
+"condition.notWorking" = "Not Working";
+"condition.untested" = "Untested";
+"condition.cib" = "Complete In Box";
+"condition.loose" = "Loose";
+"condition.boxed" = "Boxed";
+"condition.recapped" = "Recapped";
+"condition.modded" = "Modded";
+"condition.yellowed" = "Yellowed / Discolored";
+"condition.damaged" = "Damaged";
+"condition.stable" = "Stable";
+"condition.fragile" = "Fragile";
+"condition.deteriorating" = "Deteriorating";
+"condition.corrosion" = "Corroded";
+"condition.discoloration" = "Discolored";
+"condition.incomplete" = "Incomplete";
+
+// MARK: - Formats
+"format.physical" = "Physical Item";
+"format.digital" = "Digital File";
+"format.executable" = "Executable";
+"format.diskImage" = "Disk Image";
+"format.fluxImage" = "Flux Image";
+"format.rom" = "ROM Image";
+"format.cassette" = "Cassette Image";
+"format.archive" = "Archive / Zip";
+
+// MARK: - Content
+"content.manual" = "Manual / Documentation";
+"content.box" = "Box / Packaging";
+"content.media" = "Game Media";
+"content.map" = "Map";
+"content.registrationCard" = "Registration Card";
+"content.cables" = "Cables";
+"content.powerSupply" = "Power Supply";
+
+// MARK: - States
+"state.cracked" = "Cracked";
+"state.trainer" = "Trainer / Cheat";
+"state.verifiedClean" = "Verified Clean";
+"state.originalDump" = "Original Dump";
+
+// MARK: - Manufacturers
+"mfg.publisher" = "Software Publisher";
+"mfg.developer" = "Software Developer";
+"mfg.hardware" = "Hardware Manufacturer";
+"mfg.indie" = "Indie Developer";
+"mfg.active" = "Active";
+"mfg.defunct" = "Defunct";
+"mfg.acquired" = "Acquired";
+"mfg.merged" = "Merged";
+
+// MARK: - Regions
+"region.ntsc" = "NTSC";
+"region.pal" = "PAL";
+"region.usa" = "North America (USA)";
+"region.eur" = "Europe";
+"region.jpn" = "Japan";
+
+// MARK: - Acquisition
+"acq.purchase" = "Purchased";
+"acq.gift" = "Gifted";
+"acq.donation" = "Donated";
+"acq.bequest" = "Bequest";
+"acq.found" = "Found";
+"acq.trade" = "Traded";
+"acq.unknown" = "Unknown";
+
+// MARK: - Interfaces
+"interface.usb" = "USB";
+"interface.serial" = "Serial";
+"interface.parallel" = "Parallel";
+"interface.ps2" = "PS/2";
+"interface.adb" = "ADB (Apple Desktop Bus)";
+"interface.scsi" = "SCSI";
+"interface.ide" = "IDE / PATA";
+"interface.midi" = "MIDI";
+"interface.gameport" = "Gameport";
+"interface.proprietary" = "Proprietary";
+
+// MARK: - Materials
+"material.plastic" = "Plastic";
+"material.metal" = "Metal";
+"material.wood" = "Wood";
+"material.paper" = "Paper";
+"material.cardboard" = "Cardboard";
+
+// MARK: - Media
+"media.vhs" = "VHS";
+"media.dvd" = "DVD";
+"media.cd" = "CD / CD-ROM";
+"media.vinyl" = "Vinyl Record";
+"media.cassetteAudio" = "Audio Cassette";
+"media.laserdisc" = "LaserDisc";
+
+// MARK: - Questions (Digital Software)
+"question.digitalFormat" = "What is the file format?";
+"question.isCracked" = "Is this version cracked?";
+"question.hasTrainer" = "Does it include a trainer/cheat?";
+"question.isVerifiedClean" = "Is is verified against a database (e.g. TOSEC)?";
+"question.region" = "What is the region (NTSC/PAL)?";
+"question.isOriginalDump" = "Did you dump this yourself from original media?";
+
+// MARK: - Questions (Peripheral)
+"question.interface" = "Connection Interface:";
+"question.requiresDrivers" = "Does it require drivers?";
+"question.isWireless" = "Is it wireless?";
+"question.compatibility" = "Compatible Systems (comma separated):";
+"question.condition" = "Physical Condition:";
+"question.isFunctional" = "Is it currently functional?";
+
+// MARK: - Questions (Hardware)
+"question.hasHardwareBox" = "Do you have the original box?";
+"question.hasHardwareManual" = "Is the manual included?";
+"question.hasPowerSupply" = "Is the power supply included?";
+"question.hasCables" = "Are the necessary cables included?";
+"question.needsRecap" = "Does it need recapping (capacitors)?";
+"question.cosmeticCondition" = "How is the cosmetic condition?";
+"question.serialNumber" = "Enter the serial number (optional):";
+"question.modNotes" = "Describe any modifications:";
+"question.damageNotes" = "Describe any visible damage:";
+
+// MARK: - Questions (Multimedia)
+"question.mediaFormat" = "Format (e.g. VHS, DVD):";
+"question.duration" = "Duration in minutes:";
+"question.isPhysicalMedia" = "Is this physical media?";
+
+// MARK: - Questions (Physical Item)
+"question.material" = "Material:";
+"question.primaryColor" = "Primary Color:";
+
+// MARK: - Questions (Manufacturer)
+"question.isIndie" = "Is this an Indie developer?";
+"question.primaryRegion" = "Primary Region:";
+"question.notablePlatforms" = "Notable Platforms (comma separated):";
+"question.companyStatus" = "Company Status:";
+"question.manufacturerType" = "Type of Hardware Manufacturer:";
+
+// MARK: - Questions (Physical Software)
+"question.hasBox" = "Does it have the original box?";
+"question.hasManual" = "Does it include the manual?";
+"question.hasMedia" = "Is the game media (disk/cart) present?";
+"question.hasRegistrationCard" = "Is the registration card included?";
+"question.hasMaps" = "Are there any maps included?";
+"question.overallCondition" = "What is the overall condition?";
+"question.provenanceNotes" = "Where/When did you acquire this?";
+
+// MARK: - Questions (Publication)
+"question.pubTitle" = "Title of the publication:";
+"question.author" = "Author (optional):";
+"question.isbn" = "ISBN / Catalog Number:";
+"question.pubYear" = "Year of publication:";
+"question.pageCount" = "Number of pages:";
+"question.binding" = "What is the binding type?";
+
+// MARK: - Media Formats (Constants)
+"Compact Cassette" = "Compact Cassette";
+"DAT Tape" = "DAT Tape";
+

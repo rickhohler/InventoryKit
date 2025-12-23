@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Protocol for tag registry that enables code execution when tags are encountered.
 ///

@@ -46,6 +46,26 @@ InventoryKit provides a suite of stateless services for processing inventory dat
   let id = InventoryIDGenerator.generate(for: .manufacturer, name: "Atari")
   ```
 
+### 5. InventoryImportService
+**Purpose**: High-level orchestration of file ingestion.
+**Source**: `InventoryKit/Services/Import/InventoryImportService.swift`
+**Usage**:
+  ```swift
+  let service = InventoryImportService(storage: storage)
+  let candidates = try await service.scan(urls: [fileURL])
+  let asset = try await service.import(candidate: candidate)
+  ```
+
+### 6. InventoryRelationshipService
+**Purpose**: Manages asset linking and compliance evaluation.
+**Source**: `InventoryKit/Services/Relationships/InventoryRelationshipService.swift`
+**Usage**:
+  ```swift
+  let service = InventoryRelationshipService(storage: storage)
+  try await service.link(sourceID: id1, targetID: id2, typeID: "rel.display")
+  let compliance = try await service.evaluateCompliance(for: asset)
+  ```
+
 ## Pipelines
 
 Services can be orchestrated using `InventoryPipelineStages`:

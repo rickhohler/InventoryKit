@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Abstract representation of a query.
 public struct StorageQuery: Sendable {

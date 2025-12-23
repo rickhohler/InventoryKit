@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Common validators for primitive types and logic.
 public enum InventoryAppLogicValidators {

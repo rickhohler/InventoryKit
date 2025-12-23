@@ -1,0 +1,24 @@
+import Foundation
+
+/// Protocol defining the structure of an Inventory Document.
+///
+/// An inventory document represents a serialization of inventory state, including schema version,
+/// metadata, and a collection of assets.
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public protocol InventoryDocument: Sendable {
+    /// The schema version of the document.
+    var schemaVersion: SchemaVersion { get }
+    
+    /// Optional metadata info about the document export/creation.
+    var info: (any InventoryDocumentInfo)? { get }
+    
+    /// Extended metadata for the document.
+    var metadata: [String: String] { get }
+    
+    /// The list of assets contained in the document.
+    /// Uses `any InventoryAsset` to allow mixed asset types.
+    var assets: [any InventoryAsset] { get }
+    /// Relationship definitions used in the document.
+    /// Relationship definitions used in the document.
+    var relationshipTypes: [any InventoryRelationshipType] { get }
+}

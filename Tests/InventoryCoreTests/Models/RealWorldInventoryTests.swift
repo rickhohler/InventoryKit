@@ -1,5 +1,6 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 
 final class RealWorldInventoryTests: XCTestCase {
 
@@ -7,7 +8,7 @@ final class RealWorldInventoryTests: XCTestCase {
     
     func testKaratekaPhysicalVsDigital() {
         // 1. Digital Backup
-        let digitalCopy = MockInventoryItem(
+        let digitalCopy = LocalInventoryItem(
             name: "Karateka.dsk",
             typeClassifier: .software, // Defaults to digital
             tags: ["Backup"]
@@ -18,9 +19,9 @@ final class RealWorldInventoryTests: XCTestCase {
         
         // 2. Physical Boxed Copy
         // User indicates they have the Box, Manual, and Disk
-        let contents: InventoryPackageContents = [.box, .manual, .media]
+        let contents: PackageContentsType = [.box, .manual, .media]
         
-        let physicalCopy = MockInventoryItem(
+        let physicalCopy = LocalInventoryItem(
             name: "Karateka (Original Box)",
             typeClassifier: .physicalSoftware, // Explicitly physical software
             tags: ["CIB", "Original"] // Tags might store the string representation or we map contents to tags
@@ -40,11 +41,11 @@ final class RealWorldInventoryTests: XCTestCase {
     
     func testSoundBlasterHardware() {
         // User has the Card (media/device), Box, but NO Manual, NO Cables.
-        let mySoundBlasterContents: InventoryPackageContents = [.box, .media] // Media here implies the card itself or driver disks? 
+        let mySoundBlasterContents: PackageContentsType = [.box, .media] // Media here implies the card itself or driver disks? 
         // Actually for hardware, "media" usually means software media. The hardware ITSELF is the primary item.
         // But let's assume 'media' tracks the driver disks.
         
-        let soundBlaster = MockInventoryItem(
+        let soundBlaster = LocalInventoryItem(
             name: "Sound Blaster 16",
             typeClassifier: .computerHardware,
             tags: ["In Box", "Missing Manual"]
@@ -61,7 +62,7 @@ final class RealWorldInventoryTests: XCTestCase {
         XCTAssertTrue(mySoundBlasterContents.contains(.box))
         
         // Check what is missing from CIB
-        let missingItems = InventoryPackageContents.hardwareCIB.subtracting(mySoundBlasterContents)
+        let missingItems = PackageContentsType.hardwareCIB.subtracting(mySoundBlasterContents)
         XCTAssertTrue(missingItems.contains(.manual))
         XCTAssertTrue(missingItems.contains(.cables))
         XCTAssertTrue(missingItems.contains(.powerSupply))
@@ -70,20 +71,22 @@ final class RealWorldInventoryTests: XCTestCase {
 
 // MARK: - Mock Helper
 // Simple Mock to test the logic of the types
-struct MockInventoryItem: InventoryItem {
+struct LocalInventoryItem: InventoryItem {
     let name: String
     var sizeOrWeight: Int64? = nil
     var typeIdentifier: String = "public.data"
     var fileHashes: [String : String]? = nil
     var serialNumber: String? = nil
-    let typeClassifier: InventoryItemClassifier
+    let typeClassifier: ItemClassifierType
     let identifiers: [any InventoryIdentifier] = []
     let ids: [any InventoryIdentifier] = []
-    let productID: InventoryIdentifier? = nil
+    let productID: UUID? = nil
     let tags: [String] // Simulating tags for metadata
     var sourceCode: (any InventorySourceCode)? = nil
+    var container: (any ItemContainer)? = nil
+    var location: ItemLocationType? = nil
     
     // Missing Protocol Stubs
     var accessionNumber: String? = nil
-    var mediaFormat: InventoryMediaFormat? = nil
+    var mediaFormat: MediaFormatType? = nil
 }

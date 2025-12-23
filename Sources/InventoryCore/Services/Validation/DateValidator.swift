@@ -1,9 +1,10 @@
 import Foundation
+import InventoryTypes
 
 public extension InventoryAppLogicValidators {
     
     /// Validates that a date's year is within a reasonable range (1950 - Current+1).
-    public struct DateValidator: InventoryValidator {
+    struct DateValidator: InventoryValidator {
         public typealias Input = Date
         
         public init() {}

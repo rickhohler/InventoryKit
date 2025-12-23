@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 import InventoryCore
 
 /// Validates software assets. Requires platform and type.

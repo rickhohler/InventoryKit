@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Describes a pagination request.
 struct InventoryPageRequest: Sendable, Equatable {

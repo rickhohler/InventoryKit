@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Protocol for storage providers that persist and load inventory documents.
 ///
@@ -27,14 +28,14 @@ public protocol InventoryStorageProvider: Sendable {
     /// Vendor information for this storage provider.
     /// nil if vendor information is not available or not applicable.
     /// Allows tracking which vendor/company provides the storage backend.
-    var vendor: (any InventoryVendor)? { get }
+    var vendor: (any Vendor)? { get }
 
     /// Loads an inventory document from storage.
     ///
     /// - Parameter version: Schema version to validate against
     /// - Returns: The loaded inventory document
     /// - Throws: `InventoryError` if loading fails or schema validation fails
-    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> any InventoryDocument
+    func loadInventory(validatingAgainst version: SchemaVersion) async throws -> any InventoryDocument
 
     /// Persists an inventory document to storage.
     ///
@@ -59,7 +60,7 @@ public protocol InventoryStorageProvider: Sendable {
     ///
     /// - Parameter vendor: The vendor to create
     /// - Throws: `InventoryError` if creation fails or vendor already exists
-    func createVendor(_ vendor: any InventoryVendor) async throws
+    func createVendor(_ vendor: any Vendor) async throws
     
     /// Save a vendor to storage (create or update).
     ///
@@ -68,20 +69,20 @@ public protocol InventoryStorageProvider: Sendable {
     ///
     /// - Parameter vendor: The vendor to save
     /// - Throws: `InventoryError` if save fails
-    func saveVendor(_ vendor: any InventoryVendor) async throws
+    func saveVendor(_ vendor: any Vendor) async throws
     
     /// Load a vendor from storage by ID.
     ///
     /// - Parameter id: Vendor identifier
     /// - Returns: The vendor if found, nil otherwise
     /// - Throws: `InventoryError` if loading fails
-    func loadVendor(id: UUID) async throws -> (any InventoryVendor)?
+    func loadVendor(id: UUID) async throws -> (any Vendor)?
     
     /// Fetch all vendors from storage.
     ///
     /// - Returns: Array of all vendors
     /// - Throws: `InventoryError` if fetch fails
-    func fetchVendors() async throws -> [any InventoryVendor]
+    func fetchVendors() async throws -> [any Vendor]
     
     /// Delete a vendor from storage.
     ///
@@ -93,7 +94,7 @@ public protocol InventoryStorageProvider: Sendable {
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension InventoryStorageProvider {
     /// Default implementation: no vendor information
-    public var vendor: (any InventoryVendor)? {
+    public var vendor: (any Vendor)? {
         return nil
     }
     
@@ -105,22 +106,22 @@ extension InventoryStorageProvider {
     // MARK: - Vendor Operations Default Implementations
     
     /// Default implementation: throws error indicating vendor operations are not supported
-    public func createVendor(_ vendor: any InventoryVendor) async throws {
+    public func createVendor(_ vendor: any Vendor) async throws {
         throw InventoryError.vendorOperationNotSupported("Vendor operations are not supported by this storage provider")
     }
     
     /// Default implementation: throws error indicating vendor operations are not supported
-    public func saveVendor(_ vendor: any InventoryVendor) async throws {
+    public func saveVendor(_ vendor: any Vendor) async throws {
         throw InventoryError.vendorOperationNotSupported("Vendor operations are not supported by this storage provider")
     }
     
     /// Default implementation: returns nil (vendor not found)
-    public func loadVendor(id: UUID) async throws -> (any InventoryVendor)? {
+    public func loadVendor(id: UUID) async throws -> (any Vendor)? {
         return nil
     }
     
     /// Default implementation: returns empty array
-    public func fetchVendors() async throws -> [any InventoryVendor] {
+    public func fetchVendors() async throws -> [any Vendor] {
         return []
     }
     

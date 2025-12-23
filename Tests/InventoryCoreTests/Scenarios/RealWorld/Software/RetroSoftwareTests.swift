@@ -1,14 +1,14 @@
 import XCTest
 import InventoryCore
-@testable import InventoryCoreTests
+import InventoryTypes
 
 final class RetroSoftwareTests: XCTestCase {
 
-    var configurator: InventoryConfigurator!
+    var configurator: Configurator!
     
     override func setUp() {
         super.setUp()
-        configurator = MockInventoryConfigurator()
+        configurator = MockConfigurator()
     }
     
     func testKaratekaModel() {
@@ -41,7 +41,7 @@ final class RetroSoftwareTests: XCTestCase {
             classification: "Game",
             genre: "Fighting",
             releaseDate: Date(timeIntervalSince1970: 441763200), // ~1984
-            platform: "Apple II, C64, DOS, NES, Atari 8-bit" // Platform is string in protocol, array in ReferenceProduct specific?
+            platform: "Apple II, C64, DOS, NES, Atari 8-bit" // PlatformType is string in protocol, array in ReferenceProduct specific?
             // Protocol has 'platform: String?'. ReferenceProduct also has 'platforms: [String]?'.
             // Configurator only supports generic 'platform: String?'.
             // If ReferenceProduct has `platforms` [String], we might need specific handling or just stick to generic protocol config.
@@ -51,7 +51,7 @@ final class RetroSoftwareTests: XCTestCase {
         
         // Manually set manufacturer since it's a relationship, not a simple property in Configurator yet?
         // Or Configurator could support relationships?
-        // Protocol 'InventoryProduct' has 'manufacturer: (any InventoryManufacturer)? { get }' which implies we can't set it unless we use 'mutating func setManufacturer' or cast to concrete type.
+        // Protocol 'Product' has 'manufacturer: (any Manufacturer)? { get }' which implies we can't set it unless we use 'mutating func setManufacturer' or cast to concrete type.
         // MockReferenceProduct properties are vars now. So we can set it manually *after* configuration.
         // This is acceptable for unit tests.
         karateka.manufacturer = broderbund

@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 import InventoryCore
 
 /// Builder for creating Authority Records (Reference Products).
@@ -10,7 +11,7 @@ public class ReferenceProductBuilder {
     private var platform: String?
     private var publisher: String?
     private var releaseDate: Date?
-    private var manufacturer: (any InventoryManufacturer)?
+    private var manufacturer: (any Manufacturer)?
     
     // Identifiers & References
     private var identifiers: [any InventoryIdentifier] = []
@@ -36,7 +37,7 @@ public class ReferenceProductBuilder {
         return self
     }
     
-    public func setManufacturer(_ manufacturer: any InventoryManufacturer) -> Self {
+    public func setManufacturer(_ manufacturer: any Manufacturer) -> Self {
         self.manufacturer = manufacturer
         return self
     }
@@ -46,7 +47,7 @@ public class ReferenceProductBuilder {
         return self
     }
     
-    public func addIdentifier(type: InventoryIdentifierType, value: String) -> Self {
+    public func addIdentifier(type: IdentifierType, value: String) -> Self {
         // Simple internal mock struct for identifier until we have a public one or use MockIdentifier
         let id = SimpleIdentifier(type: type, value: value)
         self.identifiers.append(id)
@@ -74,7 +75,7 @@ public class ReferenceProductBuilder {
         return self
     }
     
-    public func build() throws -> any InventoryProduct {
+    public func build() throws -> any Product {
         if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             throw InventoryValidationError.missingRequiredField(field: "title", reason: "Product title cannot be empty.")
         }
@@ -102,13 +103,13 @@ public class ReferenceProductBuilder {
 
 // MARK: - Private Implementations
 
-private struct PrivateReferenceProductImpl: InventoryProduct {
+private struct PrivateReferenceProductImpl: Product {
     var id: UUID
     var title: String
     var description: String? = nil
-    var manufacturer: (any InventoryManufacturer)?
+    var manufacturer: (any Manufacturer)?
     var releaseDate: Date?
-    var dataSource: (any InventoryDataSource)? = nil
+    var dataSource: (any DataSource)? = nil
     var children: [any InventoryItem] = []
     var images: [any InventoryItem] = []
     
@@ -146,6 +147,6 @@ private struct PrivateSourceCodeImpl: InventorySourceCode, Hashable {
 }
 
 private struct SimpleIdentifier: InventoryIdentifier, Sendable {
-    var type: InventoryIdentifierType
+    var type: IdentifierType
     var value: String
 }

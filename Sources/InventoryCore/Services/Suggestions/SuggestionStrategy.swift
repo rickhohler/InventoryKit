@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// A suggestion for a correction or enhancement.
 public struct InventorySuggestion: Sendable, Equatable {

@@ -1,5 +1,6 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
 public struct MockWorkbenchItem: WorkbenchItem {
     public let id: UUID

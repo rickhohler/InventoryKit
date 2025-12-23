@@ -1,5 +1,6 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
 public struct MockReferenceManufacturer: ReferenceManufacturer, Sendable {
     public var id: UUID
@@ -28,10 +29,10 @@ public struct MockReferenceLibrary: ReferenceLibrary, Sendable {
     public var url: URL?
     public var transport: String?
     public var adapter: String?
-    public var type: InventoryDataSourceType
+    public var type: DataSourceType
     public var isVerified: Bool
     
-    public init(id: UUID = UUID(), name: String, url: URL? = nil, transport: String? = nil, adapter: String? = nil, type: InventoryDataSourceType = .archive, isVerified: Bool = true) {
+    public init(id: UUID = UUID(), name: String, url: URL? = nil, transport: String? = nil, adapter: String? = nil, type: DataSourceType = .archive, isVerified: Bool = true) {
         self.id = id
         self.name = name
         self.url = url
@@ -47,13 +48,13 @@ public struct MockReferenceProduct: ReferenceProduct, Sendable {
     public var id: UUID
     public var title: String
     public var description: String?
-    public var manufacturer: (any InventoryManufacturer)?
+    public var manufacturer: (any Manufacturer)?
     public var releaseDate: Date?
-    public var dataSource: (any InventoryDataSource)?
+    public var dataSource: (any DataSource)?
     public var children: [any InventoryItem]
     public var images: [any InventoryItem]
     
-    // InventoryProduct
+    // Product
     public var sku: String?
     public var productType: String?
     public var classification: String?
@@ -84,8 +85,8 @@ public struct MockReferenceProduct: ReferenceProduct, Sendable {
     public var manualUrls: [URL]?
     
     
-    // Protocol requirement for foreign key (override default to nil for authority)
-    public var referenceProductID: InventoryIdentifier? { nil }
+    // Protocol requirement for foreign key
+    public var referenceProductID: InventoryIdentifier? = nil
 
     public var sourceCode: (any InventorySourceCode)?
 
@@ -93,9 +94,9 @@ public struct MockReferenceProduct: ReferenceProduct, Sendable {
         id: UUID = UUID(),
         title: String,
         description: String? = nil,
-        manufacturer: (any InventoryManufacturer)? = nil,
+        manufacturer: (any Manufacturer)? = nil,
         releaseDate: Date? = nil,
-        dataSource: (any InventoryDataSource)? = nil,
+        dataSource: (any DataSource)? = nil,
         children: [any InventoryItem] = [],
         images: [any InventoryItem] = [],
         
@@ -194,6 +195,43 @@ public struct MockSystemRequirements: InventorySystemRequirements, Codable, Send
     }
 }
 
+public struct MockReferenceCollection: ReferenceCollection, Sendable {
+    public var id: UUID
+    public var title: String
+    public var description: String?
+    public var dataSourceID: UUID?
+    public var type: CollectionType
+    public var visibility: CollectionVisibility
+    public var category: CollectionCategoryType
+    public var items: [InventoryResourceName]
+    public var infoUrl: URL?
+    public var metadata: [String: String]
+    
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        description: String? = nil,
+        dataSourceID: UUID? = nil,
+        type: CollectionType = .public,
+        visibility: CollectionVisibility = .shared,
+        category: CollectionCategoryType = .unknown,
+        items: [InventoryResourceName] = [],
+        infoUrl: URL? = nil,
+        metadata: [String: String] = [:]
+    ) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.dataSourceID = dataSourceID
+        self.type = type
+        self.visibility = visibility
+        self.category = category
+        self.items = items
+        self.infoUrl = infoUrl
+        self.metadata = metadata
+    }
+}
+
 public struct MockSourceCode: InventorySourceCode, Codable, Sendable, Hashable {
     public var url: URL
     public var notes: String?
@@ -211,7 +249,7 @@ public struct MockSourceCode: InventorySourceCode, Codable, Sendable, Hashable {
     }
 }
 
-public struct MockAddress: InventoryAddress, Codable, Sendable {
+public struct MockAddress: Address, Codable, Sendable {
     public var id: UUID
     public var label: String?
     public var address: String
@@ -237,7 +275,7 @@ public struct MockAddress: InventoryAddress, Codable, Sendable {
     }
 }
 
-public struct MockContact: InventoryContact, Codable, Sendable {
+public struct MockContact: Contact, Codable, Sendable {
     public var id: UUID
     public var name: String
     public var title: String?

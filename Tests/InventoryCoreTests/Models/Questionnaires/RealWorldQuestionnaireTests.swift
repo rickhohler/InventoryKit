@@ -1,5 +1,6 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 import InventoryKit
 
 /// Real-world scenario tests for Questionnaires.
@@ -24,9 +25,9 @@ final class RealWorldQuestionnaireTests: XCTestCase {
         
         // 1. Verify Tags
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.cib.rawValue), "Should be Complete In Box")
-        XCTAssertFalse(tags.contains(InventoryTag.Condition.sealed.rawValue))
-        XCTAssertFalse(tags.contains(InventoryTag.Condition.loose.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.cib.rawValue), "Should be Complete In Box")
+        XCTAssertFalse(tags.contains(TagType.Condition.sealed.rawValue))
+        XCTAssertFalse(tags.contains(TagType.Condition.loose.rawValue))
         
         // 2. Verify Attributes
         let attrs = q.generateAttributes()
@@ -56,11 +57,11 @@ final class RealWorldQuestionnaireTests: XCTestCase {
         
         // 1. Verify Tags
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Format.fluxImage.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.DigitalState.originalDump.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.DigitalState.verifiedClean.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Format.fluxImage.rawValue))
+        XCTAssertTrue(tags.contains(TagType.DigitalState.originalDump.rawValue))
+        XCTAssertTrue(tags.contains(TagType.DigitalState.verifiedClean.rawValue))
         XCTAssertTrue(tags.contains("region:ntsc"))
-        XCTAssertFalse(tags.contains(InventoryTag.DigitalState.cracked.rawValue))
+        XCTAssertFalse(tags.contains(TagType.DigitalState.cracked.rawValue))
         
         // 2. Verify Attributes
         let attrs = q.generateAttributes()
@@ -90,9 +91,9 @@ final class RealWorldQuestionnaireTests: XCTestCase {
         
         // 1. Verify Tags
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.working.rawValue))
-        XCTAssertFalse(tags.contains(InventoryTag.Condition.boxed.rawValue))
-        XCTAssertFalse(tags.contains(InventoryTag.Condition.modded.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.working.rawValue))
+        XCTAssertFalse(tags.contains(TagType.Condition.boxed.rawValue))
+        XCTAssertFalse(tags.contains(TagType.Condition.modded.rawValue))
         
         // 2. Verify Attributes
         let attrs = q.generateAttributes()

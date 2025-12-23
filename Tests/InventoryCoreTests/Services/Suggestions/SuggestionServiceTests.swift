@@ -1,6 +1,6 @@
 import XCTest
 import InventoryCore
-@testable import InventoryCoreTests
+import InventoryTypes
 
 final class SuggestionServiceTests: XCTestCase {
     
@@ -22,12 +22,12 @@ final class SuggestionServiceTests: XCTestCase {
         let service = SuggestionService(context: context)
         
         // Input: "Apple"
-        var contact = MockContact(name: "Apple")
+        var manufacturer = MockReferenceManufacturer(slug: "apple", name: "Apple")
         
         // Action: Enrich
-        await service.enrichManufacturer(&contact)
+        await service.enrichManufacturer(&manufacturer)
         
         // Assert: Should auto-complete to "Apple Computer, Inc."
-        XCTAssertEqual(contact.name, "Apple Computer, Inc.")
+        XCTAssertEqual(manufacturer.name, "Apple Computer, Inc.")
     }
 }

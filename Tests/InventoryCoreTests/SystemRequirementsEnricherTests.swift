@@ -1,6 +1,6 @@
 import XCTest
 import InventoryCore
-@testable import InventoryCoreTests
+import InventoryTypes
 
 final class SystemRequirementsEnricherTests: XCTestCase {
     
@@ -11,7 +11,7 @@ final class SystemRequirementsEnricherTests: XCTestCase {
         
         // 1982
         let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 1982))
-        let product = MockProduct(title: "Test Product", releaseDate: date)
+        let product = MockReferenceProduct(title: "Test Product", releaseDate: date)
         
         let result = strategy.enrich(product: product)
         
@@ -25,7 +25,7 @@ final class SystemRequirementsEnricherTests: XCTestCase {
         
         // 1985
         let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 1985))
-        let product = MockProduct(title: "Test Product", releaseDate: date)
+        let product = MockReferenceProduct(title: "Test Product", releaseDate: date)
         
         let result = strategy.enrich(product: product)
         
@@ -39,7 +39,7 @@ final class SystemRequirementsEnricherTests: XCTestCase {
         
         // 1988
         let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 1988))
-        let product = MockProduct(title: "Test Product", releaseDate: date)
+        let product = MockReferenceProduct(title: "Test Product", releaseDate: date)
         
         let result = strategy.enrich(product: product)
         
@@ -51,7 +51,7 @@ final class SystemRequirementsEnricherTests: XCTestCase {
     func testEnricherPriority() {
         // Create a mock strategy that always returns specific reqs
         struct FixedStrategy: SystemRequirementsEnrichmentStrategy {
-            func enrich(product: any InventoryProduct) -> InventorySystemRequirements? {
+            func enrich(product: any Product) -> InventorySystemRequirements? {
                 return MockSystemRequirements(minMemory: 999)
             }
         }
@@ -62,7 +62,7 @@ final class SystemRequirementsEnricherTests: XCTestCase {
             AppleIIEnrichmentStrategy()
         ])
         
-        let product = MockProduct(title: "Test Product", releaseDate: Date())
+        let product = MockReferenceProduct(title: "Test Product", releaseDate: Date())
         
         let result = enricher.enrich(product: product)
         

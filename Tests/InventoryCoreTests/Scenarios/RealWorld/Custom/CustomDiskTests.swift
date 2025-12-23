@@ -1,7 +1,7 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 @testable import InventoryKit
-@testable import InventoryCoreTests
 
 final class CustomDiskTests: XCTestCase {
 
@@ -46,25 +46,27 @@ final class CustomDiskTests: XCTestCase {
             var size: Int64?
             var quantity: Int = 1
             var serialNumber: String?
-            var typeClassifier: InventoryItemClassifier
+            var typeClassifier: ItemClassifierType
             var identifiers: [any InventoryIdentifier] = []
             
             var sizeOrWeight: Int64? { size }
             var typeIdentifier: String { type ?? "unknown" }
             var fileHashes: [String : String]? = nil
-            var productID: (any InventoryIdentifier)? 
+            var productID: UUID? 
             var sourceCode: (any InventorySourceCode)? = nil
             
             // New Protocol Requirements
             var accessionNumber: String? = nil
-            var mediaFormat: InventoryMediaFormat? = nil
+            var mediaFormat: MediaFormatType? = nil
+            var container: (any ItemContainer)? = nil
+            var location: ItemLocationType? = nil
         }
         
-        let karatekaID = MockIdentifier(type: .libraryReferenceID, value: karateka.id.uuidString)
-        let lodeRunnerID = MockIdentifier(type: .libraryReferenceID, value: lodeRunner.id.uuidString)
+        _ = MockIdentifier(type: .libraryReferenceID, value: karateka.id.uuidString)
+        _ = MockIdentifier(type: .libraryReferenceID, value: lodeRunner.id.uuidString)
         
-        let file1 = LocalFile(name: "KARATEKA.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: karatekaID)
-        let file2 = LocalFile(name: "LODE.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: lodeRunnerID)
+        let file1 = LocalFile(name: "KARATEKA.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: karateka.id)
+        let file2 = LocalFile(name: "LODE.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: lodeRunner.id)
         
         // 3. Build Asset
         let builder = UserInventoryItemBuilder(name: "Compilation Disk A")
@@ -82,9 +84,9 @@ final class CustomDiskTests: XCTestCase {
         // Verify we can retrieve the product ID and it matches
         // Assumes we can read productID.value or resolved string
         let child1 = disk.children[0]
-        XCTAssertEqual(child1.productID?.value, karateka.id.uuidString)
+        XCTAssertEqual(child1.productID?.uuidString, karateka.id.uuidString)
         
         let child2 = disk.children[1]
-        XCTAssertEqual(child2.productID?.value, lodeRunner.id.uuidString)
+        XCTAssertEqual(child2.productID?.uuidString, lodeRunner.id.uuidString)
     }
 }

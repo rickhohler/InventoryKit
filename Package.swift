@@ -11,6 +11,10 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "InventoryTypes",
+            targets: ["InventoryTypes"]
+        ),
+        .library(
             name: "InventoryCore",
             targets: ["InventoryCore"]
         ),
@@ -25,8 +29,18 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "InventoryTypes",
+            dependencies: [
+                .product(name: "DesignAlgorithmsKit", package: "DesignAlgorithmsKit"),
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .target(
             name: "InventoryCore",
             dependencies: [
+                "InventoryTypes",
                 .product(name: "DesignAlgorithmsKit", package: "DesignAlgorithmsKit"),
             ]
         ),
@@ -34,17 +48,18 @@ let package = Package(
             name: "InventoryKit",
             dependencies: [
                 "InventoryCore",
+                "InventoryTypes",
                 .product(name: "Yams", package: "Yams"),
                 .product(name: "DesignAlgorithmsKit", package: "DesignAlgorithmsKit"),
             ]
         ),
         .testTarget(
             name: "InventoryKitTests",
-            dependencies: ["InventoryKit", "InventoryCore"]
+            dependencies: ["InventoryKit", "InventoryCore", "InventoryTypes"]
         ),
         .testTarget(
             name: "InventoryCoreTests",
-            dependencies: ["InventoryCore"]
+            dependencies: ["InventoryCore", "InventoryTypes"]
         ),
     ]
 )

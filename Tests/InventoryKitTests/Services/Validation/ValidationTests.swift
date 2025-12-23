@@ -1,6 +1,7 @@
 import XCTest
 import InventoryCore
 @testable import InventoryKit
+import InventoryTypes
 
 final class ValidationTests: XCTestCase {
     
@@ -49,7 +50,7 @@ final class ValidationTests: XCTestCase {
     }
     
     func testSuccessfulValidation() {
-        struct MockValidationManufacturer: InventoryManufacturer {
+        struct MockValidationManufacturer: Manufacturer {
             var id: UUID = UUID()
             var name: String = "Test Corp"
             var slug: String = "test-corp"
@@ -62,9 +63,9 @@ final class ValidationTests: XCTestCase {
             var alternativeSpellings: [String] = []
             var commonMisspellings: [String] = []
             var email: String? = nil
-            var addresses: [any InventoryAddress] = []
-            var associatedPeople: [any InventoryContact] = []
-            var developers: [any InventoryContact] = []
+            var addresses: [any Address] = []
+            var associatedPeople: [any Contact] = []
+            var developers: [any Contact] = []
             
             // Legacy/Private fields (optional but harmless)
             var country: String? = nil

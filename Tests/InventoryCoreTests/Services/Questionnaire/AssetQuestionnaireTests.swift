@@ -1,5 +1,6 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 
 final class AssetQuestionnaireTests: XCTestCase {
     
@@ -16,7 +17,7 @@ final class AssetQuestionnaireTests: XCTestCase {
         let tags = q.generateTags()
         let attrs = q.generateAttributes()
         
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.cib.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.cib.rawValue))
         XCTAssertEqual(attrs["condition_grade"], "Good")
         XCTAssertEqual(attrs["has_box"], "true")
     }
@@ -33,8 +34,8 @@ final class AssetQuestionnaireTests: XCTestCase {
         let tags = q.generateTags()
         let attrs = q.generateAttributes()
         
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.loose.rawValue))
-        XCTAssertFalse(tags.contains(InventoryTag.Condition.cib.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.loose.rawValue))
+        XCTAssertFalse(tags.contains(TagType.Condition.cib.rawValue))
         XCTAssertEqual(attrs["notes_damage"], "Label peeling")
     }
     
@@ -50,8 +51,8 @@ final class AssetQuestionnaireTests: XCTestCase {
         
         let tags = q.generateTags()
         
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.working.rawValue), "Should be marked Working")
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.boxed.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.working.rawValue), "Should be marked Working")
+        XCTAssertTrue(tags.contains(TagType.Condition.boxed.rawValue))
         // Mint condition doesn't generate a tag by default in my implementation (only Yellowed/PartsOnly)
         // But let's check attributes
         let attrs = q.generateAttributes()
@@ -66,8 +67,8 @@ final class AssetQuestionnaireTests: XCTestCase {
         )
         
         let tags = q.generateTags()
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.yellowed.rawValue))
-        XCTAssertTrue(tags.contains(InventoryTag.Condition.modded.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.yellowed.rawValue))
+        XCTAssertTrue(tags.contains(TagType.Condition.modded.rawValue))
         
         let attrs = q.generateAttributes()
         XCTAssertEqual(attrs["notes_mods"], "HDMI")

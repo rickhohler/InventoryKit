@@ -1,4 +1,5 @@
 import Foundation
+import InventoryTypes
 
 /// Service responsible for data hygiene and formatting.
 ///
@@ -13,15 +14,15 @@ import Foundation
 /// ```
 public struct FormattingService: Sendable {
     
-    private let context: InventoryContext
+    private let context: Context
     private let nameStrategy: any FormattingStrategy
     
     /// Creates a new formatting service.
     /// - Parameters:
-    ///   - context: The shared `InventoryContext` containing dependencies.
+    ///   - context: The shared `Context` containing dependencies.
     ///   - nameStrategy: The strategy to use for name cleaning. Defaults to `NameCorrectionStrategy`.
     public init(
-        context: InventoryContext,
+        context: Context,
         nameStrategy: any FormattingStrategy = InventoryFormattingStrategies.NameCorrectionStrategy()
     ) {
         self.context = context
@@ -32,7 +33,7 @@ public struct FormattingService: Sendable {
     
     /// Formats and corrects a Manufacturer's data.
     /// - Parameter manufacturer: The manufacturer instance to format (inout).
-    public func format<T: InventoryManufacturer>(_ manufacturer: inout T) {
+    public func format<T: Manufacturer>(_ manufacturer: inout T) {
         // 1. Get current values
         let rawName = manufacturer.name
         
@@ -55,7 +56,7 @@ public struct FormattingService: Sendable {
     
     /// Formats a Contact (Person/Company).
     /// - Parameter contact: The contact instance to format (inout).
-    public func formatContact<T: InventoryContact>(_ contact: inout T) {
+    public func formatContact<T: Contact>(_ contact: inout T) {
         let rawName = contact.name
         let cleanedName = nameStrategy.format(rawName)
         

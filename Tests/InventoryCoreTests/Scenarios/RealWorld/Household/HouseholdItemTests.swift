@@ -1,12 +1,13 @@
 import XCTest
 import InventoryCore
+import InventoryTypes
 @testable import InventoryKit // Using Builder here
 
 final class HouseholdItemTests: XCTestCase {
 
     func testVintageLamp() {
         // Scenario: A generic vintage item (Lamp) tracked in inventory.
-        // It doesn't have a "Publisher" or "Platform", but has "Manufacturer" and "Condition".
+        // It doesn't have a "Publisher" or "PlatformType", but has "Manufacturer" and "Condition".
         
         let builder = UserInventoryItemBuilder(name: "Vintage Desk Lamp")
         

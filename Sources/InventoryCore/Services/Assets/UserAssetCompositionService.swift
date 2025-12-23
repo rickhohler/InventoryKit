@@ -1,12 +1,17 @@
 import Foundation
+import InventoryTypes
 import DesignAlgorithmsKit
 
 /// Service for composing new Private User Assets.
 /// Uses the DAK `Builder` pattern to construct the asset and persists it via the Context.
 public actor UserAssetCompositionService {
-    private let context: any InventoryContext
+    // MARK: - Properties
     
-    public init(context: any InventoryContext) {
+    private let context: any Context
+    
+    // MARK: - Initialization
+    
+    public init(context: any Context) {
         self.context = context
     }
     
@@ -47,7 +52,8 @@ public actor UserAssetCompositionService {
             finalMetadata.merge(q.generateAttributes()) { (_, new) in new }
         }
         
-        let asset = try context.assetFactory.createAsset(
+        // Use the repository from storage
+        let asset = try context.storage.assetRepository.createAsset(
             id: assetID,
             name: request.name,
             provenance: request.provenance,

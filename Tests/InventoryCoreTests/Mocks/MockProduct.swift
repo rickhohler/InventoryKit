@@ -1,7 +1,8 @@
 import Foundation
 import InventoryCore
+import InventoryTypes
 
-public struct MockProduct: InventoryProduct, Sendable {
+public struct MockProduct: Product, Sendable {
     public var id: UUID
     public var sku: String?
     public var title: String
@@ -10,7 +11,7 @@ public struct MockProduct: InventoryProduct, Sendable {
     public var classification: String?
     public var genre: String?
     
-    public var manufacturer: (any InventoryManufacturer)?
+    public var manufacturer: (any Manufacturer)?
     public var publisher: String?
     public var developer: String?
     public var creator: String?
@@ -22,16 +23,16 @@ public struct MockProduct: InventoryProduct, Sendable {
     public var systemRequirements: (any InventorySystemRequirements)?
     public var version: String?
     
-    public let identifiers: [any InventoryIdentifier]
+    public var identifiers: [any InventoryIdentifier]
     
-    public let instanceIDs: [UUID]
-    public let artworkIDs: [UUID]
-    public let screenshotIDs: [UUID]
-    public let instructionIDs: [UUID]
-    public let collectionIDs: [UUID]
+    public var instanceIDs: [UUID]
+    public var artworkIDs: [UUID]
+    public var screenshotIDs: [UUID]
+    public var instructionIDs: [UUID]
+    public var collectionIDs: [UUID]
     
-    public let references: [String: String]
-    public let metadata: [String: String]
+    public var references: [String: String]
+    public var metadata: [String: String]
     public var sourceCode: (any InventorySourceCode)? // Protocol Requirement
     
     public var referenceProductID: (any InventoryIdentifier)? // Protocol Requirement
@@ -48,7 +49,7 @@ public struct MockProduct: InventoryProduct, Sendable {
         productType: String? = nil,
         classification: String? = nil,
         genre: String? = nil,
-        manufacturer: (any InventoryManufacturer)? = nil,
+        manufacturer: (any Manufacturer)? = nil,
         publisher: String? = nil,
         developer: String? = nil,
         creator: String? = nil,
