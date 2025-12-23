@@ -27,6 +27,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2025-12-23
+
+### Added
+- **Hierarchical Location System**:
+  - `InventoryBuilding`: Represents physical buildings.
+  - `InventoryRoom`: Represents rooms within buildings.
+  - `DigitalVolume`: Represents digital storage volumes (renamed from generic Volume).
+- **Container Types**:
+  - `ItemContainerPhysical`: Concrete type for physical containers (boxes, bins).
+  - `ItemContainerDigital`: Concrete type for digital folders/archives.
+- **Location Service**:
+  - `DefaultLocationService`: Robust implementation for location management.
+  - **Smart Move**: `reconcileLocation` support for moving items between physical and digital spaces.
+  - **Geolocation**: `resolveGeoLocation` for inferring physical coordinates.
+- **Models**:
+  - `IdentifierModel`: Concrete `Codable` implementation of `InventoryIdentifier`.
+
 ## [2.3.0] - 2025-12-22
 
 ### Added

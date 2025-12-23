@@ -5,7 +5,7 @@ import Foundation
 /// e.g. "The Gold Monkey disk image having SHA1: abc..."
 public protocol ReferenceItem: InventoryItem {
     /// The Product this item belongs to.
-    var productID: InventoryIdentifier? { get }
+    var productID: UUID? { get }
     
     /// The expected checksums for verification.
     var expectedChecksums: [String: String]? { get }

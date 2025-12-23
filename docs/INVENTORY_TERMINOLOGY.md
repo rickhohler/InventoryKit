@@ -329,7 +329,7 @@ The application unifies Private and Public data using these abstract base defini
 *   **Conforming Types**:
     *   **`InventoryBuilding`**: Top-level physical structure (e.g. "Main House", "Warehouse").
     *   **`InventoryRoom`**: A specific area within a building (e.g. "Retro Lab", "Basement").
-    *   **`InventoryVolume`**: A digital storage unit (e.g. "Macintosh HD", "Cloud Drive").
+    *   **`DigitalVolume`**: A digital storage unit (e.g. "Macintosh HD", "Cloud Drive").
 
 ### ItemContainer ("The Box")
 *   **Definition**: A concrete object that holds `InventoryItems`.
