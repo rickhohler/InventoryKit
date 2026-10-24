@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-10-24
+
+### Added
+- `InMemoryTagRegistry` (InventoryCore): the default `InventoryTagRegistry` implementation (successor of 1.x `DefaultTagRegistry`); tags and domains are case-insensitive.
+- Value types in InventoryTypes whose JSON matches what 1.x clients stored: `ComponentLinkModel`, `CopyrightInfoModel` (with `extract(from:)` and `createTags()`), and `RawIdentifier` (free-form `type`; `identifierType` maps known kinds and legacy `serialNumber`).
+- `IdentifierType.uuid` (raw value `uuid`).
+
+### Changed
+- `LinkedAsset` is `Hashable` and its properties are mutable.
+
+### Fixed
+- Copyright extraction takes the holder from the matched text: `extract(from: "© 1983 Broderbund Software")` yields holder `Broderbund Software` (1.x yielded `roderbund Software`).
+
 ### Changed
 - README rewritten to match the 2.x code (removed 1.x APIs such as `InventoryService.bootstrap`, `InventoryCatalog`, `DefaultTagRegistry` and YAML transformers).
 - `docs/INVENTORY_TERMINOLOGY.md` rewritten as a glossary of implemented types (it also contained unresolved merge-conflict markers).

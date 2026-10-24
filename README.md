@@ -15,11 +15,12 @@ InventoryKit (2.x) is a general, domain-agnostic, **persistence-agnostic** Swift
 Capabilities:
 
 - **schema-versioning**: semver `SchemaVersion`, major-version compatibility, string Codable form.
-- **inventory-identifiers**: `IdentifierType` / `IdentifierModel`, Inventory Resource Names (`inventory:<partition>:<service>:<namespace>:<type>:<id>`), deterministic UUIDv5 reference IDs, `InventoryULID`.
+- **inventory-identifiers**: `IdentifierType` (including `uuid`) / `IdentifierModel`, `RawIdentifier` (any kind as a string, legacy `serialNumber` mapped), Inventory Resource Names (`inventory:<partition>:<service>:<namespace>:<type>:<id>`), deterministic UUIDv5 reference IDs, `InventoryULID`.
 - **item-classification**: classifier categories, media formats, package contents, platforms, relationship and collection categories.
-- **tag-taxonomy**: namespaced tag vocabulary (`condition:`, `format:`, `state:`, `region:`, ...) and the `InventoryTagRegistry` contract.
+- **tag-taxonomy**: namespaced tag vocabulary (`condition:`, `format:`, `state:`, `region:`, ...) the `InventoryTagRegistry` contract and its default implementation, `InMemoryTagRegistry`.
 - **localization**: client override first, then the bundled en/es/fr tables.
 - **locations-and-containers**: building/room/volume models, containers, geolocation resolution, move inference.
+- **inventory-model-values**: Codable value types clients can persist directly: `ComponentLinkModel`, `LinkedAsset`, `CopyrightInfoModel` (with `extract(from:)` for notices like "© 1983 Broderbund Software" and `createTags()`), `RawIdentifier`.
 - **storage-contracts**: the protocols a client implements and their default behavior.
 - **asset-builders**: fluent builders, validation strategies, `StandardAssetRepository`.
 - **questionnaires**: answers to tags and attributes.
@@ -27,7 +28,7 @@ Capabilities:
 - **asset-relationships**: compliance evaluation, link/unlink, candidate search.
 - **inventory-entry-point**: `InventoryKit`, the services facade, ingest/import/composition services.
 
-InventoryKit does **not** ship: a persistence layer or storage provider, a catalog/paging API, YAML or JSON document transformers (only the `InventoryDataTransformer` protocol and `AnyInventoryDataTransformer`), or a tag registry implementation. Earlier README text describing `InventoryService.bootstrap`, `InventoryCatalog`, `InventoryConfiguration` and `DefaultTagRegistry` referred to 1.x APIs that no longer exist.
+InventoryKit does **not** ship: a persistence layer or storage provider, a catalog/paging API, YAML or JSON document transformers (only the `InventoryDataTransformer` protocol and `AnyInventoryDataTransformer`),. Earlier README text describing `InventoryService.bootstrap`, `InventoryCatalog`, `InventoryConfiguration` and `DefaultTagRegistry` referred to 1.x APIs that no longer exist.
 
 ## Quick start
 
