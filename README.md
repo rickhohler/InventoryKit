@@ -17,7 +17,7 @@ Capabilities:
 - **schema-versioning**: semver `SchemaVersion`, major-version compatibility, string Codable form.
 - **inventory-identifiers**: `IdentifierType` (including `uuid`) / `IdentifierModel`, `RawIdentifier` (any kind as a string, legacy `serialNumber` mapped), Inventory Resource Names (`inventory:<partition>:<service>:<namespace>:<type>:<id>`), deterministic UUIDv5 reference IDs, `InventoryULID`.
 - **item-classification**: classifier categories, media formats, package contents, platforms, relationship and collection categories.
-- **tag-taxonomy**: namespaced tag vocabulary (`condition:`, `format:`, `state:`, `region:`, ...) the `InventoryTagRegistry` contract and its default implementation, `InMemoryTagRegistry`.
+- **tag-taxonomy**: namespaced tag vocabulary (`condition:`, `format:`, `state:`, `region:`, ...) the `InventoryTagRegistry` contract, its default implementation `InMemoryTagRegistry`, and `TagHandlerDispatcher` for running handlers per tag.
 - **localization**: client override first, then the bundled en/es/fr tables.
 - **locations-and-containers**: building/room/volume models, containers, geolocation resolution, move inference.
 - **inventory-model-values**: Codable value types clients can persist directly: `ComponentLinkModel`, `LinkedAsset`, `CopyrightInfoModel` (with `extract(from:)` for notices like "© 1983 Broderbund Software" and `createTags()`), `RawIdentifier`.
@@ -95,7 +95,7 @@ Tests: `InventoryCoreTests` (unit tests for InventoryTypes/InventoryCore, depend
 
 ## Versioning
 
-Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 2.4.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
+Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 2.6.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
 
 ## More
 
