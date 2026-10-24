@@ -29,7 +29,7 @@ import InventoryTypes
 /// }
 /// ```
 ///
-/// - SeeAlso: ``DefaultTagRegistry`` for default implementation
+/// - SeeAlso: ``InMemoryTagRegistry`` for the default implementation
 /// - SeeAlso: ``InventoryService`` for service integration
 /// - SeeAlso: ``InventoryAsset`` for asset tags
 public protocol InventoryTagRegistry: Sendable {
