@@ -30,3 +30,6 @@ playground.xcworkspace
 # .swiftpm
 
 .build/
+
+# Xcode/xcodebuild output (never commit)
+/build/

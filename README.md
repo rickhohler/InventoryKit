@@ -1,258 +1,102 @@
 # InventoryKit
 
-InventoryKit is a Swift Package Manager (SPM) library for modeling, validating, and persisting complex asset inventories (e.g., vintage computers, automotive parts). It provides a YAML/JSON-backed schema, relationship modeling, high-volume catalog indexing, pagination, and pluggable storage so apps can manage hundreds of thousands of assets safely.
+InventoryKit (2.x) is a general, domain-agnostic, **persistence-agnostic** Swift library for modeling inventories of physical and digital items: assets, reference products and manufacturers, collections, locations and containers, identifiers and tags. It provides protocols, small value types and stateless services; the client owns the concrete model types and their storage and plugs them in through a `Configurator` and a `StorageProvider`. Clients can also use only the protocols and value types and keep their own persistence. It depends only on DesignAlgorithmsKit.
 
-## Features
+## Products and modules
 
-- **Protocol-First Architecture**: Core definitions (`InventoryCore`) are separated from concrete implementations (`InventoryKit`), enabling a flexible, modular design.
-- **Rich Models**: Schema-versioned `InventoryDocument` with assets, lifecycle, MRO, health, embedded components, and relationship requirements.
-- **Relationship + Compatibility Checks**: Define relationships via `InventoryRelationshipRequirementProtocol` and evaluate compliance (e.g., peripherals required for a computer).
-- **Storage Abstractions**: Use `InventoryStorageProvider` to plug in any backend (CloudKit, Databases, FileSystemKit).
-- **Transformers**: Default YAML/JSON transformers built on Yams + JSONEncoder.
-- **High-Volume Catalog**: `InventoryCatalog` actor indexes assets, supports identifier lookup, and paginated queries.
-- **Tag Registry System**: Domain-based tag registration with code execution support.
-- **SDK Entry Point**: `InventoryService` bootstraps provider + catalog with configurable logging.
-- **CI + Tests**: Validated with >90% code coverage.
+| Product / target | Contents |
+| :--- | :--- |
+| `InventoryTypes` | Model protocols (`InventoryAsset`, `InventoryItem`, `Product`, `Manufacturer`, `Collection`, `Space`, `ItemContainer`, ...), value types (`SchemaVersion`, `IdentifierModel`, `InventoryResourceName`, `InventoryBuilding`, `InventoryRoom`, `InventoryDigitalVolume`, `ItemContainerPhysical`/`Digital`), enums (`IdentifierType`, `ItemClassifierType`, `MediaFormatType`, `PackageContentsType`, `TagType`, `PlatformType`), localization (`InventoryLocalizedString`, en/es/fr tables) |
+| `InventoryCore` | Storage contracts (`StorageProvider`, repositories, `Transaction`, `StorageQuery`, `InventoryStorageProvider`), service protocols (`TransactionService`, `RelationshipService`, `InventoryLocationService`, `InventoryTagRegistry`, `ReferenceSyncService`), stateless services (questionnaires, formatting, suggestions, validation, pipeline stages, system-requirements enrichment, `InventoryIDGenerator`, `UserAssetCompositionService`), `InventoryError` |
+| `InventoryKit` | Entry point `InventoryKit(storage:configurator:)` and its `InventoryServices` facade, builders (`UserInventoryItemBuilder`, `ReferenceProductBuilder`, `ReferenceManufacturerBuilder`), `InventoryTransactionService`, `InventoryRelationshipService`, `DefaultLocationService`, `InventoryImportService`, `StandardAssetRepository`, standard validators |
 
-## Platform Support
+## What it does (and does not do)
 
-InventoryKit targets Swift 6 toolchains and is validated on:
+Capabilities:
 
-- **macOS** (Xcode toolchain, macOS 13+)
-- **Linux** (swift.org toolchains, Ubuntu 22.04+ via CI)
+- **schema-versioning**: semver `SchemaVersion`, major-version compatibility, string Codable form.
+- **inventory-identifiers**: `IdentifierType` / `IdentifierModel`, Inventory Resource Names (`inventory:<partition>:<service>:<namespace>:<type>:<id>`), deterministic UUIDv5 reference IDs, `InventoryULID`.
+- **item-classification**: classifier categories, media formats, package contents, platforms, relationship and collection categories.
+- **tag-taxonomy**: namespaced tag vocabulary (`condition:`, `format:`, `state:`, `region:`, ...) and the `InventoryTagRegistry` contract.
+- **localization**: client override first, then the bundled en/es/fr tables.
+- **locations-and-containers**: building/room/volume models, containers, geolocation resolution, move inference.
+- **storage-contracts**: the protocols a client implements and their default behavior.
+- **asset-builders**: fluent builders, validation strategies, `StandardAssetRepository`.
+- **questionnaires**: answers to tags and attributes.
+- **data-quality-services**: formatting, suggestions, validators, pipeline stages, enrichment.
+- **asset-relationships**: compliance evaluation, link/unlink, candidate search.
+- **inventory-entry-point**: `InventoryKit`, the services facade, ingest/import/composition services.
 
-Because the package only depends on Foundation and Yams, it can be embedded in server-side Swift services or Apple-platform apps alike.
+InventoryKit does **not** ship: a persistence layer or storage provider, a catalog/paging API, YAML or JSON document transformers (only the `InventoryDataTransformer` protocol and `AnyInventoryDataTransformer`), or a tag registry implementation. Earlier README text describing `InventoryService.bootstrap`, `InventoryCatalog`, `InventoryConfiguration` and `DefaultTagRegistry` referred to 1.x APIs that no longer exist.
 
-## Quick Start
+## Quick start
 
 ```swift
+import InventoryTypes
+import InventoryCore
 import InventoryKit
 
-// Implement a storage provider (e.g., using FileSystemKit for file operations)
-struct MyStorageProvider: InventoryStorageProvider {
-    let identifier = "my-provider"
-    let transformer = InventoryKit.transformer(for: .yaml)
-    
-    // Vendor support is optional, defaults to nil/unsupported
-    
-    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> any InventoryDocumentProtocol {
-        // Use FileSystemKit to read file data
-        let data = try await FileSystemKit.readData(from: self.url)
-        return try transformer.decode(data, validatingAgainst: version)
-    }
-    
-    func saveInventory(_ document: any InventoryDocumentProtocol) async throws {
-        // Use FileSystemKit to write file data
-        let data = try transformer.encode(document)
-        try await FileSystemKit.writeData(data, to: self.url)
-    }
-}
+// Your app supplies these: a StorageProvider (repositories, stores, transactions)
+// and a Configurator that writes values into your concrete model types.
+let kit = InventoryKit(storage: myStorage, configurator: myConfigurator)
 
-let provider = MyStorageProvider()
-let configuration = InventoryConfiguration(
-    provider: provider,
-    schemaVersion: .current,
-    logLevel: .info
+// Ingest through the facade (runs inside storage.performTransaction).
+let id = try await kit.services.transactions.ingestAsset(
+    AssetImportData(name: "Apple IIe", manufacturerName: "Apple Computer", type: "computer")
 )
 
-let service = try await InventoryService.bootstrap(configuration: configuration)
-
-let newAsset = AnyInventoryAsset(name: "IBM PC/AT")
-await service.catalog.upsert(newAsset)
-try await service.persistChanges()
-
-let page = await service.listAssets(page: InventoryPageRequest(offset: 0, limit: 20))
-print("Loaded \(page.items.count) assets (total \(page.total))")
+// Or build an opaque asset value directly.
+let asset = try UserInventoryItemBuilder(name: "Karateka (boxed)")
+    .setType("software")
+    .applyQuestionnaire(PhysicalSoftwareQuestionnaire(hasBox: true, hasManual: true))
+    .build()
 ```
 
-### Integrating a Custom Storage Provider
+See `Tests/InventoryCoreTests/Scenarios/ClientIntegrationScenarioTests.swift` for a complete client integration (concrete types, Configurator, deterministic IDs).
 
-Implement the `InventoryStorageProvider` protocol inside your app or backend. For example, a CloudKit provider would:
+## Platforms
 
-1. Fetch CloudKit records and build an `InventoryDocument`.
-2. Use `transformer.decode/encode` for YAML/JSON serialization if storing blobs.
-3. Return its identifier and transformer so InventoryKit can log and encode consistently.
+macOS 12, iOS 15, tvOS 15, watchOS 8 (from `Package.swift`), Swift tools 6.0. CI runs `swift build` and `swift test` on macOS only; Linux is not verified.
 
-```swift
-struct CloudKitInventoryProvider: InventoryStorageProvider {
-    let identifier = "cloudkit-provider"
-    let transformer = InventoryKit.transformer(for: .json)
+## Dependencies
 
-    func loadInventory(validatingAgainst version: InventorySchemaVersion) async throws -> any InventoryDocumentProtocol {
-        let data = try await fetchDataFromCloudKit()
-        return try transformer.decode(data, validatingAgainst: version)
-    }
+| Dependency | How referenced | Used by |
+| :--- | :--- | :--- |
+| DesignAlgorithmsKit | URL `https://github.com/rickhohler/DesignAlgorithmsKit.git`, `from: "1.10.0"` | all targets (`ThreadSafeSingleton`, `Facade`, `AsyncDataPipelineStage`, `UUIDv5Generator`, `ULID`) |
+| Yams | URL `https://github.com/jpsim/Yams.git`, `from: "5.1.2"` | linked into `InventoryKit` but not imported anywhere (to be removed) |
 
-    func saveInventory(_ document: any InventoryDocumentProtocol) async throws {
-        let data = try transformer.encode(document)
-        try await saveDataToCloudKit(data)
-    }
+Resolved tree (`swift package show-dependencies`):
 
-    func replaceInventory(with document: any InventoryDocumentProtocol) async throws {
-        try await saveInventory(document)
-    }
-}
+```
+InventoryKit
+├── Yams 5.4.0
+└── DesignAlgorithmsKit 1.10.0
 ```
 
-Pass your provider into `InventoryConfiguration` to bootstrap `InventoryService`.
+There are no `path:` dependencies, so this package builds on its own; sibling checkouts are not required. Consumers that reference InventoryKit by path and by URL at the same time get SwiftPM "Conflicting identity" warnings.
 
-## Tag Registry System
+## Build and test
 
-InventoryKit provides a tag registry system that enables domain-specific tag resolution through code execution handlers. This allows clients to register custom tags that execute code when encountered, enabling powerful tag-based processing workflows.
-
-### Basic Usage
-
-```swift
-import InventoryKit
-
-// Create a service (tag registry is automatically created if not provided)
-let service = try await InventoryService.bootstrap(configuration: configuration)
-
-// Access the tag registry
-let registry = service.tagRegistry
-
-// Register a tag with a code execution handler
-try await registry.register(tag: "dsk", domain: "retroboxfs") { tag in
-    return "AppleDiskImage" // Returns type identifier
-}
-
-// Check if a tag is registered
-let isRegistered = try await registry.isRegistered(tag: "dsk", domain: "retroboxfs")
-print(isRegistered) // true
-
-// Execute handler when tag is encountered
-if let result = try await registry.execute(tag: "dsk", domain: "retroboxfs") {
-    print("Resolved type: \(result)") // "AppleDiskImage"
-}
-
-// Get all tags for a domain
-let tags = try await registry.tags(for: "retroboxfs")
-print(tags) // ["dsk", "woz", "a2r", ...]
-
-// Resolve tag to domain
-if let domain = try await registry.domain(for: "dsk") {
-    print("Domain: \(domain)") // "retroboxfs"
-}
-```
-
-### Domain Organization
-
-Tags are organized by domain, allowing multiple clients to register tags without conflicts:
-
-```swift
-// Register tags for different domains
-try await registry.register(tag: "dsk", domain: "retroboxfs") { _ in "AppleDiskImage" }
-try await registry.register(tag: "verified", domain: "acme") { _ in "true" }
-
-// Tags with the same name can exist in different domains
-let retroboxfsTags = try await registry.tags(for: "retroboxfs")
-let acmeTags = try await registry.tags(for: "acme")
-```
-
-### Custom Tag Registry
-
-You can provide a custom tag registry implementation:
-
-```swift
-struct CustomTagRegistry: InventoryTagRegistry {
-    // Implement protocol methods
-    // ...
-}
-
-let customRegistry = CustomTagRegistry()
-let configuration = InventoryConfiguration(
-    provider: provider,
-    tagRegistry: customRegistry
-)
-let service = try await InventoryService.bootstrap(configuration: configuration)
-```
-
-### Integration with RetroboxFS
-
-The tag registry system is designed to work with RetroboxFS for disk image type resolution:
-
-```swift
-// RetroboxFS registers tags during disk image processing
-// Tags are stored in InventoryAsset.tags
-
-// Later, RetroboxFS can resolve tags to internal types
-let asset = await service.asset(identifierType: .uuid, value: assetID)
-if let asset = asset {
-    for tag in asset.tags {
-        if let resolvedType = try await registry.execute(tag: tag, domain: "retroboxfs") {
-            print("Tag \(tag) resolved to: \(resolvedType)")
-        }
-    }
-}
-```
-
-### Thread Safety
-
-The default `DefaultTagRegistry` implementation uses Swift actors for thread-safe operations. All tag registry operations are safe for concurrent access.
-
-## Testing
-
-Run the full suite via:
-
-```bash
+```sh
+swift build
 swift test
 ```
 
-CI enforces the same command on GitHub Actions (macOS runners) for every push and pull request to `main`.
+Tests: `InventoryCoreTests` (unit tests for InventoryTypes/InventoryCore, depends only on those two modules) and `InventoryKitTests` (InventoryKit services, builders and scenarios).
 
-## Versioning Strategy
+## Known issues
 
-InventoryKit follows **Semantic Versioning (SemVer)** for the library API:
+- Yams is linked into `InventoryKit` but not used; it will be removed.
+- `link`/`unlink` and ingest do not write back or `save()`; compliance status mapping is incomplete.
+- Questionnaire and enrichment semantics: `needsRecap` emits `condition:recapped`, `condition:parts_only` is undefined, one prompt key is wrong, contact formatting clears title/email/notes, and some strings skip the client localization override.
+- `InventoryRoom.building` traps on foreign types; `StandardAssetRepository` adds a `Created via Repository` tag; the `System` singleton is unsynchronized and unused by the library; the version constant is stale.
+- Some retro-computing content (Apple II enrichment, name tables, `PlatformType`) is more specific than this library's scope and is planned to move to the packages that use it.
 
-- **MAJOR**: breaking API changes.
-+- **MINOR**: backwards-compatible feature additions.
-- **PATCH**: backwards-compatible bug fixes.
+## Versioning
 
-Schema evolution is tracked separately via `InventorySchemaVersion`. Each release documents both the package version and the current schema version. When introducing schema changes:
+Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 2.4.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
 
-1. Bump `InventorySchemaVersion.current`.
-2. Provide migration helpers or validation logic.
-3. Publish release notes explaining schema compatibility expectations.
+## More
 
-Recommended release workflow:
-
-1. Update `Package.swift` (if needed) and documentation for the new version.
-2. Tag the commit `vMAJOR.MINOR.PATCH`.
-3. Publish release notes summarizing API + schema changes.
-
-
-## Client Integration
-
-**IMPORTANT:** Client applications must NOT use internal services or actors directly. Always use the public Facade API.
-
-- [Client Integration Guide](docs/CLIENT_INTEGRATION.md) - Detailed guide on using the Facade API.
-
-### Accessing the API
-
-```swift
-let services = InventoryKit.shared.services
-
-// Use services.transactions, services.locations, etc.
-```
-
-## Localization
-
-InventoryKit supports client-side localization overrides. Define keys in your main app bundle's `Localizable.strings` to override default text.
-
-## Documentation
-
-The `docs/` directory contains detailed guides for architecture and usage:
-
-- **[Terminology](docs/INVENTORY_TERMINOLOGY.md)**: Definitions of core concepts (Asset, Product, Relationship).
-- **[Services](docs/SERVICES.md)**: Guide to the service layer (Import, Enrichment, Relationship).
-- **[Client Integration](docs/CLIENT_INTEGRATION.md)**: How to integrate InventoryKit into an app.
-- **[Standards](docs/STANDARDS.md)**: Code standards and implementation patterns.
-- **[Contribution Design](docs/SUBMISSION_DESIGN.md)**: Workflow for user submissions to the public catalog.
-
-## Roadmap
-
-- Ship additional storage providers (CloudKit, SQLite).
-- Publish DocC documentation with schema samples.
-- Bundle JSON/YAML schema definitions for validation tooling.
-
-Contributions and feedback are welcome—please open issues or pull requests!
+- [docs/INVENTORY_TERMINOLOGY.md](docs/INVENTORY_TERMINOLOGY.md): glossary of the model.
+- Localization: define the package's keys (for example `condition.mint`) in your app's `Localizable.strings` to override labels.

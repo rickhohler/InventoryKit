@@ -1,6 +1,15 @@
 {
-  "originHash" : "18b94e6c4ff0972e1ff24dde5ff71a8f86523d18f813e7d57f9555d422a939be",
+  "originHash" : "8f853838c94b8a5169b3942ece8247a8235176813fd8107addc83321ec24af64",
   "pins" : [
+    {
+      "identity" : "designalgorithmskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rickhohler/DesignAlgorithmsKit.git",
+      "state" : {
+        "revision" : "2b6beac83ae6da5af2a138e11cf9641d4fde7581",
+        "version" : "1.10.0"
+      }
+    },
     {
       "identity" : "yams",
       "kind" : "remoteSourceControl",

@@ -1,7 +1,6 @@
 import XCTest
 import InventoryCore
 import InventoryTypes
-@testable import InventoryKit
 
 final class QuestionnaireCoverageTests: XCTestCase {
     
