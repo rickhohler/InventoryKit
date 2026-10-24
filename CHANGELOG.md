@@ -5,6 +5,17 @@ All notable changes to InventoryKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- README rewritten to match the 2.x code (removed 1.x APIs such as `InventoryService.bootstrap`, `InventoryCatalog`, `DefaultTagRegistry` and YAML transformers).
+- `docs/INVENTORY_TERMINOLOGY.md` rewritten as a glossary of implemented types (it also contained unresolved merge-conflict markers).
+- Tests that use the `InventoryKit` module moved from `InventoryCoreTests` to `InventoryKitTests`, so `swift test` links with the default Swift Build backend; unused `import InventoryKit` lines removed from `InventoryCoreTests`.
+- `Package.resolved` refreshed to pin DesignAlgorithmsKit 1.10.0.
+
+### Removed
+- Committed Xcode build output (`build/`), now git-ignored.
+
 ## [2.1.0] - 2025-12-20
 
 ### Changed
@@ -14,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Concrete helpers (e.g., `InventoryDocumentInfo`) are now internal implementation details.
 - **Service Builders**:
   - Added `UserInventoryItemBuilder` for creating private/user-owned assets.
-  - Added `LibraryItemBuilder` for creating public catalog items.
+  - Added `LibraryItemBuilder` for creating public catalog items (replaced by `ReferenceProductBuilder` and `ReferenceManufacturerBuilder` in 2.2.0).
   - Builders return opaque protocol types, enforcing the facade pattern.
 - **Protocol Renaming & Organization**:
   - Renamed protocols to remove the `Protocol` suffix for idiomatic Swift usage (e.g., `InventoryAssetProtocol` -> `InventoryAsset`).
@@ -24,8 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Removed monolithic `InventoryService.swift` in favor of specialized, composable services.
 - Removed `ConcreteInventoryModels.swift` from public API.
-
-## [Unreleased]
 
 ## [2.4.0] - 2025-12-23
 
@@ -39,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ItemContainerDigital`: Concrete type for digital folders/archives.
 - **Location Service**:
   - `DefaultLocationService`: Robust implementation for location management.
-  - **Smart Move**: `reconcileLocation` support for moving items between physical and digital spaces.
+  - **Smart Move**: `reconcileLocation` infers a likely move to another room from the rooms of nearby physical containers.
   - **Geolocation**: `resolveGeoLocation` for inferring physical coordinates.
 - **Models**:
   - `IdentifierModel`: Concrete `Codable` implementation of `InventoryIdentifier`.
@@ -47,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.3.0] - 2025-12-22
 
 ### Added
-- **InventoryImportService**: New high-level service for handling file imports, scanning directory structures, and creating asset candidates.
+- **InventoryImportService**: New service that forwards asset and product imports to a `TransactionService` (it does not scan files or directories). Note: the `v2.3.0` tag does not contain this service or `InventoryRelationshipService`; both first appear in the `v2.4.0` tag.
 - **InventoryRelationshipService**: Dedicated service for managing asset links (`link`, `unlink`) and evaluating requirement compliance.
 - **Documentation**:
   - Updated `INVENTORY_TERMINOLOGY.md` with new service definitions.
@@ -62,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Compilation**: Resolved all compiler warnings (unused variables, immutability, Sendable conformance).
-- **Architecture**: Removed redundant `INVENTORY_KIT_ARCHITECTURE.md` (consolidated/archived).
+- **Architecture**: Archived older architecture notes under `docs/archive/` (`INVENTORY_KIT_ARCHITECTURE.md` itself remained until the Unreleased docs cleanup).
 
 ## [2.2.0] - 2025-12-22
 

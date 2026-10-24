@@ -1,4 +1,0 @@
-module InventoryKit {
-header "InventoryKit-Swift.h"
-export *
-}

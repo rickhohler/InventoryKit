@@ -6,12 +6,9 @@ import InventoryTypes
 final class CustomDiskTests: XCTestCase {
 
     func testCustomHomebrewDisk() {
-        let homebrew = MockReferenceManufacturer(
-            id: UUID(),
-            slug: "homebrew-soft",
-            name: "Homebrew Soft",
-            description: "Local user group"
-        )
+        let homebrew = try! ReferenceManufacturerBuilder(name: "Homebrew Soft")
+            .setDescription("Local user group")
+            .build()
         
         let builder = UserInventoryItemBuilder(name: "My Game 1.0")
         
@@ -34,9 +31,9 @@ final class CustomDiskTests: XCTestCase {
     
     func testDiskWithIdentifiedPrograms() {
         // 1. Setup Reference Products
-        let broderbund = MockReferenceManufacturer(id: UUID(), slug: "broderbund", name: "Broderbund")
-        let karateka = MockReferenceProduct(id: UUID(), title: "Karateka", manufacturer: broderbund)
-        let lodeRunner = MockReferenceProduct(id: UUID(), title: "Lode Runner", manufacturer: broderbund)
+        let broderbund = try! ReferenceManufacturerBuilder(name: "Broderbund").build()
+        let karateka = try! ReferenceProductBuilder(title: "Karateka").setManufacturer(broderbund).build()
+        let lodeRunner = try! ReferenceProductBuilder(title: "Lode Runner").setManufacturer(broderbund).build()
         
         // 2. Define LocalFile mocking InventoryItem
         struct LocalFile: InventoryItem {
@@ -62,8 +59,8 @@ final class CustomDiskTests: XCTestCase {
             var location: ItemLocationType? = nil
         }
         
-        _ = MockIdentifier(type: .libraryReferenceID, value: karateka.id.uuidString)
-        _ = MockIdentifier(type: .libraryReferenceID, value: lodeRunner.id.uuidString)
+        _ = IdentifierModel(type: .libraryReferenceID, value: karateka.id.uuidString)
+        _ = IdentifierModel(type: .libraryReferenceID, value: lodeRunner.id.uuidString)
         
         let file1 = LocalFile(name: "KARATEKA.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: karateka.id)
         let file2 = LocalFile(name: "LODE.BIN", type: "BIN", typeClassifier: .physicalSoftware, productID: lodeRunner.id)
