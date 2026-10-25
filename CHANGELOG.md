@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.1] - 2026-10-24
+
+### Changed
+- Depends on DesignAlgorithmsKit `from: "1.12.0"` at the canonical URL `https://github.com/nibbleware/DesignAlgorithmsKit.git` (was the `rickhohler` URL), so consumers resolve one DesignAlgorithmsKit identity.
+
 ## [2.6.0] - 2026-10-24
 
 ### Added
