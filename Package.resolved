@@ -1,13 +1,13 @@
 {
-  "originHash" : "8f853838c94b8a5169b3942ece8247a8235176813fd8107addc83321ec24af64",
+  "originHash" : "5a371764bfe806147c3c26dbdcb8b9760977d4b6aec4f59aff9a3d9d57c49605",
   "pins" : [
     {
       "identity" : "designalgorithmskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/rickhohler/DesignAlgorithmsKit.git",
+      "location" : "https://github.com/nibbleware/DesignAlgorithmsKit.git",
       "state" : {
-        "revision" : "2b6beac83ae6da5af2a138e11cf9641d4fde7581",
-        "version" : "1.10.0"
+        "revision" : "95c8ad3f7c96b0ea510431e19eacd7f609dd47e0",
+        "version" : "1.12.0"
       }
     },
     {
