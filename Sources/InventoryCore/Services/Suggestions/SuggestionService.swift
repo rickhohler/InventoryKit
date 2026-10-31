@@ -20,7 +20,7 @@ public struct SuggestionService: Sendable {
     /// Creates a new suggestion service.
     /// - Parameters:
     ///   - context: The shared `Context`.
-    ///   - manufacturerStrategy: Strategy for looking up manufacturers. Defaults to `ReferenceManufacturerLookupStrategy`.
+    ///   - manufacturerStrategy: Strategy for looking up manufacturers. Defaults to an empty `ReferenceManufacturerLookupStrategy`, which suggests nothing; pass `ReferenceManufacturerLookupStrategy(knownManufacturers:)`.
     public init(
         context: Context,
         manufacturerStrategy: any SuggestionStrategy = ReferenceManufacturerLookupStrategy()

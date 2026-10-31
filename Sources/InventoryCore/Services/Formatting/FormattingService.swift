@@ -20,10 +20,11 @@ public struct FormattingService: Sendable {
     /// Creates a new formatting service.
     /// - Parameters:
     ///   - context: The shared `Context` containing dependencies.
-    ///   - nameStrategy: The strategy to use for name cleaning. Defaults to `NameCorrectionStrategy`.
+    ///   - nameStrategy: The strategy to use for name cleaning. Defaults to `BasicCleanupStrategy`;
+    ///     pass a `NameCorrectionStrategy(corrections:)` to correct known names.
     public init(
         context: Context,
-        nameStrategy: any FormattingStrategy = InventoryFormattingStrategies.NameCorrectionStrategy()
+        nameStrategy: any FormattingStrategy = InventoryFormattingStrategies.BasicCleanupStrategy()
     ) {
         self.context = context
         self.nameStrategy = nameStrategy

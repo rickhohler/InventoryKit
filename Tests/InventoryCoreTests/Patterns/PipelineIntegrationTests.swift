@@ -8,8 +8,8 @@ final class PipelineIntegrationTests: XCTestCase {
     func testFullPipeline_Apple() async throws {
         // Setup
         let context = MockContext()
-        let formattingService = FormattingService(context: context)
-        let suggestionService = SuggestionService(context: context)
+        let formattingService = TestNameTables.formatting(context)
+        let suggestionService = TestNameTables.suggestions(context)
         
         // Build Pipeline: Format -> Enrich
         let pipeline = AsyncDataPipeline<MockContact, MockContact> { input in
@@ -32,8 +32,8 @@ final class PipelineIntegrationTests: XCTestCase {
     
     func testFullPipeline_Broderbund() async throws {
         let context = MockContext()
-        let formattingService = FormattingService(context: context)
-        let suggestionService = SuggestionService(context: context)
+        let formattingService = TestNameTables.formatting(context)
+        let suggestionService = TestNameTables.suggestions(context)
         
         let pipeline = AsyncDataPipeline<MockContact, MockContact> { $0 }
             .appending(FormattingStage(service: formattingService))

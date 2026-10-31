@@ -6,7 +6,7 @@ final class SuggestionServiceTests: XCTestCase {
     
     func testManufacturerSuggestion() async {
         let context = MockContext()
-        let service = SuggestionService(context: context)
+        let service = TestNameTables.suggestions(context)
         
         // Input: "Apple"
         let suggestions = await service.suggestManufacturers(for: "Apple")
@@ -19,7 +19,7 @@ final class SuggestionServiceTests: XCTestCase {
     
     func testManufacturerEnrichment() async {
         let context = MockContext()
-        let service = SuggestionService(context: context)
+        let service = TestNameTables.suggestions(context)
         
         // Input: "Apple"
         var manufacturer = MockReferenceManufacturer(slug: "apple", name: "Apple")

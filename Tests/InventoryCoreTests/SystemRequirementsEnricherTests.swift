@@ -2,71 +2,31 @@ import XCTest
 import InventoryCore
 import InventoryTypes
 
-@available(*, deprecated, message: "Covers the deprecated AppleIIEnrichmentStrategy until it moves in 3.0")
+/// `SystemRequirementsEnricher` asks its strategies in order. (Platform heuristics such as the
+/// Apple II one live in the platform packages; RetroStorageApple tests theirs.)
 final class SystemRequirementsEnricherTests: XCTestCase {
-    
-    // Using MockProduct from InventoryCoreTests module
-    
-    func testHeuristicStrategy_Pre1983() {
-        let strategy = AppleIIEnrichmentStrategy()
-        
-        // 1982
-        let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 1982))
-        let product = MockReferenceProduct(title: "Test Product", releaseDate: date)
-        
-        let result = strategy.enrich(product: product)
-        
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.minMemory, 48 * 1024)
-        XCTAssertEqual(result?.cpuFamily, "6502")
-    }
-    
-    func testHeuristicStrategy_1985() {
-        let strategy = AppleIIEnrichmentStrategy()
-        
-        // 1985
-        let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 1985))
-        let product = MockReferenceProduct(title: "Test Product", releaseDate: date)
-        
-        let result = strategy.enrich(product: product)
-        
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.minMemory, 64 * 1024)
-        XCTAssertEqual(result?.cpuFamily, "65C02")
-    }
-    
-    func testHeuristicStrategy_1988() {
-        let strategy = AppleIIEnrichmentStrategy()
-        
-        // 1988
-        let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: 1988))
-        let product = MockReferenceProduct(title: "Test Product", releaseDate: date)
-        
-        let result = strategy.enrich(product: product)
-        
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result?.minMemory, 256 * 1024)
-        XCTAssertEqual(result?.cpuFamily, "65816")
-    }
-    
-    func testEnricherPriority() {
-        // Create a mock strategy that always returns specific reqs
-        struct FixedStrategy: SystemRequirementsEnrichmentStrategy {
-            func enrich(product: any Product) -> InventorySystemRequirements? {
-                return MockSystemRequirements(minMemory: 999)
-            }
+
+    private struct FixedStrategy: SystemRequirementsEnrichmentStrategy {
+        let memory: Int64?
+        func enrich(product: any Product) -> InventorySystemRequirements? {
+            memory.map { MockSystemRequirements(minMemory: $0) }
         }
-        
-        // Strategy 1 (Fixed) should win over Strategy 2 (Heuristic)
-        let enricher = SystemRequirementsEnricher(strategies: [
-            FixedStrategy(),
-            AppleIIEnrichmentStrategy()
-        ])
-        
-        let product = MockReferenceProduct(title: "Test Product", releaseDate: Date())
-        
-        let result = enricher.enrich(product: product)
-        
-        XCTAssertEqual(result?.minMemory, 999)
+    }
+
+    private let product = MockReferenceProduct(title: "Test Product", releaseDate: Date())
+
+    func testFirstNonNilResultWins() {
+        let enricher = SystemRequirementsEnricher(strategies: [FixedStrategy(memory: 999), FixedStrategy(memory: 1)])
+        XCTAssertEqual(enricher.enrich(product: product)?.minMemory, 999)
+    }
+
+    func testStrategiesThatDeclineAreSkipped() {
+        let enricher = SystemRequirementsEnricher(strategies: [FixedStrategy(memory: nil), FixedStrategy(memory: 64)])
+        XCTAssertEqual(enricher.enrich(product: product)?.minMemory, 64)
+    }
+
+    func testNoStrategyNoRequirements() {
+        XCTAssertNil(SystemRequirementsEnricher(strategies: []).enrich(product: product))
+        XCTAssertNil(SystemRequirementsEnricher(strategies: [FixedStrategy(memory: nil)]).enrich(product: product))
     }
 }

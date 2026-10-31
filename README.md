@@ -6,7 +6,7 @@ InventoryKit (2.x) is a general, domain-agnostic, **persistence-agnostic** Swift
 
 | Product / target | Contents |
 | :--- | :--- |
-| `InventoryTypes` | Model protocols (`InventoryAsset`, `InventoryItem`, `Product`, `Manufacturer`, `Collection`, `Space`, `ItemContainer`, ...), value types (`SchemaVersion`, `IdentifierModel`, `InventoryResourceName`, `InventoryBuilding`, `InventoryRoom`, `InventoryDigitalVolume`, `ItemContainerPhysical`/`Digital`), enums (`IdentifierType`, `ItemClassifierType`, `MediaFormatType`, `PackageContentsType`, `TagType`, `PlatformType`), localization (`InventoryLocalizedString`, en/es/fr tables) |
+| `InventoryTypes` | Model protocols (`InventoryAsset`, `InventoryItem`, `Product`, `Manufacturer`, `Collection`, `Space`, `ItemContainer`, ...), value types (`SchemaVersion`, `IdentifierModel`, `InventoryResourceName`, `InventoryBuilding`, `InventoryRoom`, `InventoryDigitalVolume`, `ItemContainerPhysical`/`Digital`), enums (`IdentifierType`, `ItemClassifierType`, `MediaFormatType`, `PackageContentsType`, `TagType`), localization (`InventoryLocalizedString`, en/es/fr tables) |
 | `InventoryCore` | Storage contracts (`StorageProvider`, repositories, `Transaction`, `StorageQuery`, `InventoryStorageProvider`), service protocols (`TransactionService`, `RelationshipService`, `InventoryLocationService`, `InventoryTagRegistry`, `ReferenceSyncService`), stateless services (questionnaires, formatting, suggestions, validation, pipeline stages, system-requirements enrichment, `InventoryIDGenerator`, `UserAssetCompositionService`), `InventoryError` |
 | `InventoryKit` | Entry point `InventoryKit(storage:configurator:)` and its `InventoryServices` facade, builders (`UserInventoryItemBuilder`, `ReferenceProductBuilder`, `ReferenceManufacturerBuilder`), `InventoryTransactionService`, `InventoryRelationshipService`, `DefaultLocationService`, `InventoryImportService`, `StandardAssetRepository`, standard validators |
 
@@ -87,12 +87,11 @@ Tests: `InventoryCoreTests` (unit tests for InventoryTypes/InventoryCore, depend
 
 ## Known issues
 
-- `System` (deprecated) and `InventoryCoreInfo.version` (deprecated, not maintained) remain until 3.0.
-- Some retro-computing content (Apple II enrichment, name tables, `PlatformType`) is more specific than this library's scope and is planned to move to the packages that use it.
+None tracked. Since 3.0 the library holds no retro-computing content: platform identifiers are RetroCore's `RetroPlatformID`, Apple II system requirements are RetroStorageApple's `AppleIISystemRequirementsStrategy`, and retro name tables are RetroData's `RetroDataNameTables` (pass them to `NameCorrectionStrategy(corrections:)` and `ReferenceManufacturerLookupStrategy(knownManufacturers:)`).
 
 ## Versioning
 
-Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 2.7.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
+Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 3.0.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
 
 ## More
 
