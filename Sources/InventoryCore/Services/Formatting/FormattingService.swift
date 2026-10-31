@@ -65,9 +65,9 @@ public struct FormattingService: Sendable {
                 &contact,
                 id: nil, // Keep existing
                 name: cleanedName, // Update
-                title: nil,
-                email: nil,
-                notes: nil,
+                title: contact.title,
+                email: contact.email,
+                notes: contact.notes,
                 socialMedia: contact.socialMedia // Keep existing
             )
         }

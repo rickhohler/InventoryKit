@@ -6,18 +6,13 @@ public struct InventoryRoom: Room, Codable, Sendable {
     public var name: String
     public var geoLocation: InventoryGeoLocation?
     public var level: Int
-    /// The building this room belongs to. Note: Stored as concrete struct for Codable support?
-    /// Protocol 'Room' defines 'var building: any Building'.
-    /// Codable structs usually require concrete types.
-    /// We can store `InventoryBuilding`.
+    /// The building this room belongs to. It is stored as an `InventoryBuilding` (for `Codable`);
+    /// any other `Building` assigned is copied into one (id, name, geo location, address).
     public var building: any Building {
         get { _building }
         set {
-            guard let valid = newValue as? InventoryBuilding else {
-                // For now, enforce concrete type.
-                fatalError("InventoryRoom requires InventoryBuilding")
-            }
-            _building = valid
+            _building = newValue as? InventoryBuilding
+                ?? InventoryBuilding(id: newValue.id, name: newValue.name, geoLocation: newValue.geoLocation, address: newValue.address)
         }
     }
     private var _building: InventoryBuilding

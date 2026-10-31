@@ -30,25 +30,31 @@ public enum MediaFormatType: String, Codable, Sendable, CaseIterable {
     case digital // Pure digital file (no physical carrier)
     case other   // Ambiguous or other
     
-    /// Returns a human-readable label for the format.
+    /// Returns a human-readable label for the format, looked up with `InventoryLocalizedString`
+    /// under `media_format.<rawValue>` so a client app's strings table can override it.
     public var label: String {
+        InventoryLocalizedString("media_format.\(rawValue)", value: englishLabel, comment: "Media format label")
+    }
+
+    /// The English label, used when no table has the key.
+    private var englishLabel: String {
         switch self {
-        case .cassette: return NSLocalizedString("Compact Cassette", bundle: .module, comment: "Media Format: Cassette")
-        case .datTape: return NSLocalizedString("DAT Tape", bundle: .module, comment: "Media Format: DAT Tape")
-        case .reelToReel: return NSLocalizedString("Reel-to-Reel Tape", bundle: .module, comment: "Media Format: Reel-to-Reel")
-        case .floppy525: return NSLocalizedString("5.25\" Floppy Disk", bundle: .module, comment: "Media Format: 5.25 Inch Floppy")
-        case .floppy35: return NSLocalizedString("3.5\" Floppy Disk", bundle: .module, comment: "Media Format: 3.5 Inch Floppy")
-        case .floppy8: return NSLocalizedString("8\" Floppy Disk", bundle: .module, comment: "Media Format: 8 Inch Floppy")
-        case .cdRom: return NSLocalizedString("CD-ROM", bundle: .module, comment: "Media Format: CD-ROM")
-        case .dvdRom: return NSLocalizedString("DVD-ROM", bundle: .module, comment: "Media Format: DVD-ROM")
-        case .laserDisc: return NSLocalizedString("LaserDisc", bundle: .module, comment: "Media Format: LaserDisc")
-        case .cartridge: return NSLocalizedString("Cartridge", bundle: .module, comment: "Media Format: Cartridge")
-        case .sdCard: return NSLocalizedString("SD Card", bundle: .module, comment: "Media Format: SD Card")
-        case .compactFlash: return NSLocalizedString("CompactFlash", bundle: .module, comment: "Media Format: CompactFlash")
-        case .pcmcia: return NSLocalizedString("PCMCIA Card", bundle: .module, comment: "Media Format: PCMCIA")
-        case .usbDrive: return NSLocalizedString("USB Flash Drive", bundle: .module, comment: "Media Format: USB Drive")
-        case .digital: return NSLocalizedString("Digital Download", bundle: .module, comment: "Media Format: Digital Download")
-        case .other: return NSLocalizedString("Other", bundle: .module, comment: "Media Format: Other")
+        case .cassette: return "Compact Cassette"
+        case .datTape: return "DAT Tape"
+        case .reelToReel: return "Reel-to-Reel Tape"
+        case .floppy525: return "5.25\" Floppy Disk"
+        case .floppy35: return "3.5\" Floppy Disk"
+        case .floppy8: return "8\" Floppy Disk"
+        case .cdRom: return "CD-ROM"
+        case .dvdRom: return "DVD-ROM"
+        case .laserDisc: return "LaserDisc"
+        case .cartridge: return "Cartridge"
+        case .sdCard: return "SD Card"
+        case .compactFlash: return "CompactFlash"
+        case .pcmcia: return "PCMCIA Card"
+        case .usbDrive: return "USB Flash Drive"
+        case .digital: return "Digital Download"
+        case .other: return "Other"
         }
     }
     

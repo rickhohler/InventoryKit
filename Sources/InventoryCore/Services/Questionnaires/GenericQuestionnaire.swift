@@ -25,8 +25,8 @@ public struct GenericQuestionnaire: InventoryQuestionnaire {
     
     public var localizedQuestions: [String: String] {
         return [
-            "notes": NSLocalizedString("question.genericNotes", bundle: .inventoryKit, value: "Description / Notes:", comment: "Question: Notes"),
-            "manualTags": NSLocalizedString("question.manualTags", bundle: .inventoryKit, value: "Custom Tags (comma separated):", comment: "Question: Tags")
+            "notes": InventoryLocalizedString("question.genericNotes", value: "Description / Notes:", comment: "Question: Notes"),
+            "manualTags": InventoryLocalizedString("question.manualTags", value: "Custom Tags (comma separated):", comment: "Question: Tags")
         ]
     }
 }

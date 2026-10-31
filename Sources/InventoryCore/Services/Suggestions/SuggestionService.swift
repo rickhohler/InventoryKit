@@ -68,9 +68,9 @@ public struct SuggestionService: Sendable {
                     &contact,
                     id: nil,
                     name: bestMatch.suggestedValue,
-                    title: nil,
-                    email: nil,
-                    notes: nil,
+                    title: contact.title,
+                    email: contact.email,
+                    notes: contact.notes,
                     socialMedia: contact.socialMedia
                 )
             }

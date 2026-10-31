@@ -64,11 +64,15 @@ final class TransactionServiceTests: XCTestCase {
         func fetchVendors(matching query: StorageQuery) async throws -> [any Vendor] { [] }
         func retrieveVendor(id: UUID) async throws -> (any Vendor)? { nil }
         func delete(_ object: any PersistentModel) async throws {}
-        func save() async throws {}
+        private(set) var saveCount = 0
+        func save() async throws { saveCount += 1 }
     }
     
     final class MockStorage: StorageProvider, @unchecked Sendable {
         let tx = MockTx()
+        let assets = RecordingAssetRepository()
+        let products = RecordingReferenceProductRepository()
+        let manufacturers = RecordingReferenceManufacturerRepository()
         
         func performTransaction<R>(_ block: @escaping @Sendable (any Transaction) async throws -> R) async throws -> R {
             try await block(tx)
@@ -79,9 +83,9 @@ final class TransactionServiceTests: XCTestCase {
         var referenceMetadata: any ReferenceMetadataStore { fatalError() }
         var userData: any UserDataStore { fatalError() }
         var referenceData: any ReferenceDataStore { fatalError() }
-        var assetRepository: any AssetRepository { fatalError() }
-        var referenceProductRepository: any ReferenceProductRepository { fatalError() }
-        var referenceManufacturerRepository: any ReferenceManufacturerRepository { fatalError() }
+        var assetRepository: any AssetRepository { assets }
+        var referenceProductRepository: any ReferenceProductRepository { products }
+        var referenceManufacturerRepository: any ReferenceManufacturerRepository { manufacturers }
         var referenceCollectionRepository: any ReferenceCollectionRepository { fatalError() }
         var contactRepository: any ContactRepository { fatalError() }
         var addressRepository: any AddressRepository { fatalError() }
@@ -299,6 +303,12 @@ final class TransactionServiceTests: XCTestCase {
         XCTAssertEqual(storage.tx.createdAssets.first?.id, assetID)
         XCTAssertEqual(storage.tx.createdAssets.first?.name, "My Retro CF")
         XCTAssertEqual(storage.tx.createdManufacturers.first?.name, "RetroWidgets")
+        // The configured asset and the new manufacturer are persisted, then committed.
+        XCTAssertEqual(storage.assets.updatedIDs, [assetID])
+        XCTAssertEqual(storage.assets.stored[assetID]?.name, "My Retro CF")
+        XCTAssertNotNil(storage.assets.stored[assetID]?.manufacturer)
+        XCTAssertEqual(storage.manufacturers.updated.first?.name, "RetroWidgets")
+        XCTAssertEqual(storage.tx.saveCount, 1)
     }
     
     func testIngestAsset_ExistingManufacturer() async throws {
@@ -347,6 +357,9 @@ final class TransactionServiceTests: XCTestCase {
         XCTAssertEqual(storage.tx.createdProducts.count, 1)
         XCTAssertEqual(storage.tx.createdProducts.first?.id, productID)
         XCTAssertNotNil(storage.tx.createdProducts.first?.manufacturer)
+        XCTAssertEqual(storage.products.updated.map(\.id), [productID])
+        XCTAssertEqual(storage.products.updated.first?.title, "Super Game")
+        XCTAssertEqual(storage.tx.saveCount, 1)
     }
     
     func testIngestProductWithExistingMfg() async throws {

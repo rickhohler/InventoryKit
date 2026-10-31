@@ -47,6 +47,22 @@ final class LocationModelTests: XCTestCase {
         XCTAssertEqual((room.building as? InventoryBuilding)?.name, "B")
     }
     
+    func testInventoryRoom_SetterCopiesOtherBuildingTypes() {
+        struct ClientBuilding: Building {
+            var id = UUID()
+            var name = "Annex"
+            var geoLocation: InventoryGeoLocation? = nil
+            var address: String? = "1 Main St"
+        }
+        var room = InventoryRoom(name: "Lab", building: InventoryBuilding(name: "Main"))
+        let client = ClientBuilding()
+        room.building = client
+        let stored = room.building as? InventoryBuilding
+        XCTAssertEqual(stored?.id, client.id)
+        XCTAssertEqual(stored?.name, "Annex")
+        XCTAssertEqual(stored?.address, "1 Main St")
+    }
+
     func testInventoryRoom_Codable() throws {
         let building = InventoryBuilding(name: "Office")
         let room = InventoryRoom(name: "Meeting Room", building: building)

@@ -6,7 +6,12 @@ public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable 
     case unreadableFile(URL)
     case unsupportedDataEncoding
     case schemaIncompatible(expected: SchemaVersion, actual: SchemaVersion)
+    /// Decoding inventory data failed. (No YAML transformer ships since 2.1.0; the name is kept
+    /// for source compatibility.)
+    @available(*, deprecated, message: "InventoryKit has no YAML transformer; report decoding failures with storageError.")
     case yamlDecodingFailed(String)
+    /// Encoding inventory data failed.
+    @available(*, deprecated, message: "InventoryKit has no YAML transformer; report encoding failures with storageError.")
     case yamlEncodingFailed(String)
     case storageError(String)
     case vendorOperationNotSupported(String)
@@ -15,15 +20,15 @@ public enum InventoryError: Error, Equatable, CustomStringConvertible, Sendable 
     public var description: String {
         switch self {
         case let .unreadableFile(url):
-            return "Unable to read inventory YAML at \(url.path)."
+            return "Unable to read inventory data at \(url.path)."
         case .unsupportedDataEncoding:
             return "Inventory data must be UTF-8 encoded."
         case let .schemaIncompatible(expected, actual):
             return "Schema \(actual) is not compatible with expected major version \(expected.major)."
         case let .yamlDecodingFailed(message):
-            return "Failed to decode inventory YAML: \(message)"
+            return "Failed to decode inventory data: \(message)"
         case let .yamlEncodingFailed(message):
-            return "Failed to encode inventory YAML: \(message)"
+            return "Failed to encode inventory data: \(message)"
         case let .storageError(message):
             return "Storage error: \(message)"
         case let .vendorOperationNotSupported(message):

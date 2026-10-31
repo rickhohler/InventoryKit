@@ -129,6 +129,9 @@ final class QuestionnaireCoverageTests: XCTestCase {
         XCTAssertTrue(tags.contains("compat:mac"))
         
         XCTAssertFalse(qCustom.localizedQuestions.isEmpty)
+        // Prompts are keyed by property name.
+        XCTAssertNotNil(qCustom.localizedQuestions["compatibility"])
+        XCTAssertNil(qCustom.localizedQuestions["job_compatibility"])
     }
     
     // MARK: - Physical Item Questionnaire

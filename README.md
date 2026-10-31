@@ -63,15 +63,15 @@ macOS 12, iOS 15, tvOS 15, watchOS 8 (from `Package.swift`), Swift tools 6.0. CI
 
 | Dependency | How referenced | Used by |
 | :--- | :--- | :--- |
-| DesignAlgorithmsKit | URL `https://github.com/rickhohler/DesignAlgorithmsKit.git`, `from: "1.10.0"` | all targets (`ThreadSafeSingleton`, `Facade`, `AsyncDataPipelineStage`, `UUIDv5Generator`, `ULID`) |
-| Yams | URL `https://github.com/jpsim/Yams.git`, `from: "5.1.2"` | linked into `InventoryKit` but not imported anywhere (to be removed) |
+| DesignAlgorithmsKit | URL `https://github.com/nibbleware/DesignAlgorithmsKit.git`, `from: "1.12.0"` | all targets (`ThreadSafeSingleton`, `Facade`, `AsyncDataPipelineStage`, `UUIDv5Generator`, `ULID`) |
+
+DesignAlgorithmsKit is the only dependency; `Package.resolved` pins it by version.
 
 Resolved tree (`swift package show-dependencies`):
 
 ```
 InventoryKit
-├── Yams 5.4.0
-└── DesignAlgorithmsKit 1.10.0
+└── DesignAlgorithmsKit 1.12.0
 ```
 
 There are no `path:` dependencies, so this package builds on its own; sibling checkouts are not required. Consumers that reference InventoryKit by path and by URL at the same time get SwiftPM "Conflicting identity" warnings.
@@ -87,15 +87,12 @@ Tests: `InventoryCoreTests` (unit tests for InventoryTypes/InventoryCore, depend
 
 ## Known issues
 
-- Yams is linked into `InventoryKit` but not used; it will be removed.
-- `link`/`unlink` and ingest do not write back or `save()`; compliance status mapping is incomplete.
-- Questionnaire and enrichment semantics: `needsRecap` emits `condition:recapped`, `condition:parts_only` is undefined, one prompt key is wrong, contact formatting clears title/email/notes, and some strings skip the client localization override.
-- `InventoryRoom.building` traps on foreign types; `StandardAssetRepository` adds a `Created via Repository` tag; the `System` singleton is unsynchronized and unused by the library; the version constant is stale.
+- `System` (deprecated) and `InventoryCoreInfo.version` (deprecated, not maintained) remain until 3.0.
 - Some retro-computing content (Apple II enrichment, name tables, `PlatformType`) is more specific than this library's scope and is planned to move to the packages that use it.
 
 ## Versioning
 
-Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 2.6.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
+Semantic Versioning for the library API (tags `vMAJOR.MINOR.PATCH`; latest 2.7.0). The inventory document schema is versioned separately by `SchemaVersion.current` (1.0.0). See [CHANGELOG.md](CHANGELOG.md).
 
 ## More
 

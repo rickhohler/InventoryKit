@@ -123,6 +123,6 @@ public final class DefaultLocationService: InventoryLocationService {
         // Assume digital location simple update
         asset.location = ItemLocationType.digital(url: newUri, volumeID: nil) // Volume ID lookup skipped for now
         
-        try await storage.assetRepository.save(asset)
+        try await storage.assetRepository.update(asset)
     }
 }

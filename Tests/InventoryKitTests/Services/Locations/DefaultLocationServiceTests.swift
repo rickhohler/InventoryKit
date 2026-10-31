@@ -87,7 +87,7 @@ final class DefaultLocationServiceTests: XCTestCase {
     
     struct MockStorage: StorageProvider {
         let spaceRepo = MockSpaceRepo()
-        let assetRepo = MockAssetRepo()
+        let assetRepo = RecordingAssetRepository()
         
         var spaceRepository: any SpaceRepository { spaceRepo }
         var assetRepository: any AssetRepository { assetRepo }
@@ -111,6 +111,22 @@ final class DefaultLocationServiceTests: XCTestCase {
 
     // MARK: - Tests
     
+    func testUpdateDigitalLocationUpdatesTheExistingAsset() async throws {
+        let storage = MockStorage()
+        let asset = RelationshipScenarioTests.MockValueAsset(id: UUID(), name: "Disk", tags: [])
+        storage.assetRepo.put(asset)
+        let url = URL(fileURLWithPath: "/Volumes/Archive/disk.dsk")
+
+        try await DefaultLocationService(storage: storage).updateDigitalLocation(item: asset, newUri: url)
+
+        XCTAssertEqual(storage.assetRepo.updatedIDs, [asset.id])
+        XCTAssertTrue(storage.assetRepo.savedIDs.isEmpty, "An existing asset is updated, not saved as new")
+        guard case .digital(let stored, _)? = storage.assetRepo.stored[asset.id]?.location else {
+            return XCTFail("Expected a digital location")
+        }
+        XCTAssertEqual(stored, url)
+    }
+
     func testResolveGeoLocation() async {
         let storage = MockStorage()
         let service = DefaultLocationService(storage: storage)
