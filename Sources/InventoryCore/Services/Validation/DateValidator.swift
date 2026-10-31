@@ -3,11 +3,17 @@ import InventoryTypes
 
 public extension InventoryAppLogicValidators {
     
-    /// Validates that a date's year is within a reasonable range (1950 - Current+1).
+    /// Validates that a date's year is within a reasonable range: a failure after next year, a
+    /// warning before `earliestPlausibleYear` (1950 by default).
     struct DateValidator: InventoryValidator {
         public typealias Input = Date
+
+        /// Years before this one produce a warning.
+        public let earliestPlausibleYear: Int
         
-        public init() {}
+        public init(earliestPlausibleYear: Int = 1950) {
+            self.earliestPlausibleYear = earliestPlausibleYear
+        }
         
         public func validate(_ input: Date) -> ValidationResult {
             let year = Calendar.current.component(.year, from: input)
@@ -17,7 +23,7 @@ public extension InventoryAppLogicValidators {
                 return .failure(["Date is too far in the future: \(year)"])
             }
             
-            if year < 1950 {
+            if year < earliestPlausibleYear {
                 return .warning(["Date is suspiciously early: \(year)"])
             }
             

@@ -1,12 +1,17 @@
 import Foundation
 import InventoryTypes
 
-/// Strategy to suggest manufacturers from a reference list (Simulated).
-/// In a real app, this would query Core Data or a web API.
+/// Strategy to suggest manufacturers from a list of known names.
+///
+/// `init()` uses a built-in list of six vintage-computing manufacturers, which moves to RetroData
+/// in InventoryKit 3.0, when the default becomes an empty list. Pass your own list with
+/// `init(knownManufacturers:)`.
 public struct ReferenceManufacturerLookupStrategy: SuggestionStrategy {
     
-    // Simulated Database
-    private let knownManufacturers = [
+    private let knownManufacturers: [String]
+
+    /// The built-in list used by `init()` in 2.x.
+    static let builtInManufacturers = [
         "Apple Computer, Inc.",
         "Commodore Business Machines",
         "Atari Corporation",
@@ -15,7 +20,15 @@ public struct ReferenceManufacturerLookupStrategy: SuggestionStrategy {
         "Electronic Arts"
     ]
     
-    public init() {}
+    /// Uses the built-in list (2.x behavior; empty in 3.0).
+    public init() {
+        self.knownManufacturers = Self.builtInManufacturers
+    }
+
+    /// Suggests from `knownManufacturers`.
+    public init(knownManufacturers: [String]) {
+        self.knownManufacturers = knownManufacturers
+    }
     
     public func suggest(for query: String) async -> [InventorySuggestion] {
         let normalizedQuery = query.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
