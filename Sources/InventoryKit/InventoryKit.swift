@@ -30,9 +30,6 @@ public final class InventoryKit: Sendable {
         let ctx = DefaultInventoryContext(storage: storage, configurator: configurator)
         self.context = ctx
         self.services = InventoryServiceFacade(storage: storage, configurator: configurator, context: ctx)
-        
-        // Configure the global system singleton
-        System.shared.record(storage)
     }
 }
 

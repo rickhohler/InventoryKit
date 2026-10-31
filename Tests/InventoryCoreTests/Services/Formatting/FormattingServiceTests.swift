@@ -7,7 +7,7 @@ final class FormattingServiceTests: XCTestCase {
     func testNameCorrection() {
         // Setup
         let context = MockContext()
-        let service = FormattingService(context: context)
+        let service = TestNameTables.formatting(context)
         
         // Input: "broderbund" (lowercase, wrong special char)
         var contact = MockContact(name: "broderbund")
@@ -22,14 +22,14 @@ final class FormattingServiceTests: XCTestCase {
     func testRenameKeepsOtherContactFields() async {
         let context = MockContext(configurator: MockConfigurator(assignsContactFieldsVerbatim: true))
         var contact = MockContact(name: "broderbund", title: "Publisher", email: "info@example.com", notes: "Founded 1980")
-        FormattingService(context: context).formatContact(&contact)
+        TestNameTables.formatting(context).formatContact(&contact)
         XCTAssertEqual(contact.name, "Brøderbund")
         XCTAssertEqual(contact.title, "Publisher")
         XCTAssertEqual(contact.email, "info@example.com")
         XCTAssertEqual(contact.notes, "Founded 1980")
 
         var other = MockContact(name: "atari", title: "Maker", email: "a@example.com", notes: "Sunnyvale")
-        await SuggestionService(context: context).enrichContact(&other)
+        await TestNameTables.suggestions(context).enrichContact(&other)
         XCTAssertEqual(other.name, "Atari Corporation")
         XCTAssertEqual(other.title, "Maker")
         XCTAssertEqual(other.email, "a@example.com")
@@ -38,7 +38,7 @@ final class FormattingServiceTests: XCTestCase {
 
     func testNoChangeNeeded() {
         let context = MockContext()
-        let service = FormattingService(context: context)
+        let service = TestNameTables.formatting(context)
         
         var contact = MockContact(name: "Apple Computer")
         service.formatContact(&contact)
@@ -49,7 +49,7 @@ final class FormattingServiceTests: XCTestCase {
     func testTrimming() {
         // Our strategy does trimming too
         let context = MockContext()
-        let service = FormattingService(context: context)
+        let service = TestNameTables.formatting(context)
         
         var contact = MockContact(name: "  electronic arts  ")
         service.formatContact(&contact)
@@ -59,7 +59,7 @@ final class FormattingServiceTests: XCTestCase {
     
     func testEmptyString() {
         let context = MockContext()
-        let service = FormattingService(context: context)
+        let service = TestNameTables.formatting(context)
         var contact = MockContact(name: "")
         service.formatContact(&contact)
         XCTAssertEqual(contact.name, "")
@@ -67,7 +67,7 @@ final class FormattingServiceTests: XCTestCase {
     
     func testSpecialCharacters() {
         let context = MockContext()
-        let service = FormattingService(context: context)
+        let service = TestNameTables.formatting(context)
         // Ensure standard characters are preserved unless they map to something else
         var contact = MockContact(name: "A.C.E.")
         service.formatContact(&contact)
@@ -114,7 +114,7 @@ final class FormattingServiceTests: XCTestCase {
     
     func testFormatManufacturer_NoChange() {
         let context = MockContext()
-        let service = FormattingService(context: context)
+        let service = TestNameTables.formatting(context)
         
         var mfg = LocalMockManufacturer(name: "Sierra")
         service.format(&mfg)

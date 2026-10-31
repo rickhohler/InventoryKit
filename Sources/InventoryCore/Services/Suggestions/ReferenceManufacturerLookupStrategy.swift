@@ -1,28 +1,15 @@
 import Foundation
 import InventoryTypes
 
-/// Strategy to suggest manufacturers from a list of known names.
-///
-/// `init()` uses a built-in list of six vintage-computing manufacturers, which moves to RetroData
-/// in InventoryKit 3.0, when the default becomes an empty list. Pass your own list with
-/// `init(knownManufacturers:)`.
+/// Strategy to suggest manufacturers from a list of known names supplied by the client (for
+/// retro computing, RetroData's `RetroDataNameTables.manufacturers`).
 public struct ReferenceManufacturerLookupStrategy: SuggestionStrategy {
     
     private let knownManufacturers: [String]
 
-    /// The built-in list used by `init()` in 2.x.
-    static let builtInManufacturers = [
-        "Apple Computer, Inc.",
-        "Commodore Business Machines",
-        "Atari Corporation",
-        "Sinclair Research Ltd.",
-        "Brøderbund Software, Inc.",
-        "Electronic Arts"
-    ]
-    
-    /// Uses the built-in list (2.x behavior; empty in 3.0).
+    /// An empty list: nothing is suggested.
     public init() {
-        self.knownManufacturers = Self.builtInManufacturers
+        self.knownManufacturers = []
     }
 
     /// Suggests from `knownManufacturers`.

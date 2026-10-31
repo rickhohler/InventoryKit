@@ -13,42 +13,6 @@ final class MiscCoverageTests: XCTestCase {
         // Bundle ID might vary in test environment vs app, just ensuring it doesn't crash
     }
     
-    // MARK: - System Singleton
-    
-    @available(*, deprecated, message: "Exercises the deprecated System singleton")
-    func testSystemConfiguration() {
-        let system = System.shared
-        XCTAssertNotNil(system)
-        
-        struct MockStorageProvider: StorageProvider {
-            var assetRepository: any AssetRepository { fatalError() }
-            var productRepository: any ReferenceProductRepository { fatalError() }
-            var manufacturerRepository: any ReferenceManufacturerRepository { fatalError() }
-            var referenceProductRepository: any ReferenceProductRepository { fatalError() }
-            var referenceManufacturerRepository: any ReferenceManufacturerRepository { fatalError() }
-            var referenceCollectionRepository: any ReferenceCollectionRepository { fatalError() }
-            var collectionRepository: any ReferenceCollectionRepository { fatalError() }
-            var spaceRepository: any SpaceRepository { fatalError() }
-            var vendorRepository: any VendorRepository { fatalError() }
-            var contactRepository: any ContactRepository { fatalError() }
-            var addressRepository: any AddressRepository { fatalError() }
-            
-            var userMetadata: any UserMetadataStore { fatalError() }
-            var referenceMetadata: any ReferenceMetadataStore { fatalError() }
-            var userData: any UserDataStore { fatalError() }
-            var referenceData: any ReferenceDataStore { fatalError() }
-            
-            func performTransaction<R>(_ block: @escaping @Sendable (any Transaction) async throws -> R) async throws -> R {
-                fatalError()
-            }
-        }
-        
-        let mock = MockStorageProvider()
-        system.configure(with: mock)
-        
-        XCTAssertNotNil(system.storageConfigurator)
-    }
-    
     // MARK: - InventoryKit Initialization
     
     func testInventoryKitInit() {

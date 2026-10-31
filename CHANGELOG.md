@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-10-30
+
+Breaking release: retro-computing content leaves the general library (`relocate-retro-domain-content`), and the APIs deprecated in 2.7.0 are removed.
+
+### Removed
+- `PlatformType`: use RetroCore's `RetroPlatformID` (same raw values).
+- `AppleIIEnrichmentStrategy`: use RetroStorageApple's `AppleIISystemRequirementsStrategy`.
+- The built-in retro name table of `NameCorrectionStrategy` and manufacturer list of `ReferenceManufacturerLookupStrategy`: pass RetroData's `RetroDataNameTables.nameCorrections` / `.manufacturers` (or your own) to `init(corrections:)` / `init(knownManufacturers:)`.
+- `System` and `InventoryKit.init`'s recording of its storage there.
+- `InventoryCoreInfo` (its only member was the unmaintained `version`).
+- `InventoryError.yamlDecodingFailed` and `.yamlEncodingFailed`.
+
+### Changed
+- `NameCorrectionStrategy()` and `ReferenceManufacturerLookupStrategy()` start empty.
+- `FormattingService`'s default name strategy is `BasicCleanupStrategy`; `SuggestionService` suggests nothing unless given a manufacturer list.
+
 ## [2.7.0] - 2026-10-30
 
 ### Added

@@ -9,7 +9,8 @@ final class InjectableTablesTests: XCTestCase {
         let strategy = InventoryFormattingStrategies.NameCorrectionStrategy(corrections: ["  ACME Corp ": "Acme Corporation"])
         XCTAssertEqual(strategy.format("acme corp"), "Acme Corporation")
         XCTAssertEqual(strategy.format("broderbund"), "broderbund", "the built-in table is not used")
-        XCTAssertEqual(InventoryFormattingStrategies.NameCorrectionStrategy().format("broderbund"), "Brøderbund")
+        // 3.0: no built-in table.
+        XCTAssertEqual(InventoryFormattingStrategies.NameCorrectionStrategy().format("broderbund"), "broderbund")
     }
 
     func testManufacturerLookupWithClientList() async {
@@ -18,6 +19,15 @@ final class InjectableTablesTests: XCTestCase {
         XCTAssertEqual(suggestions.map(\.suggestedValue), ["Acme Corporation"])
         let empty = await ReferenceManufacturerLookupStrategy(knownManufacturers: []).suggest(for: "apple")
         XCTAssertTrue(empty.isEmpty)
+    }
+
+    func testNeutralDefaults() async {
+        let context = MockContext()
+        var contact = MockContact(name: "broderbund")
+        FormattingService(context: context).formatContact(&contact)
+        XCTAssertEqual(contact.name, "broderbund", "the default strategy only cleans up")
+        let suggestions = await SuggestionService(context: context).suggestManufacturers(for: "apple")
+        XCTAssertTrue(suggestions.isEmpty)
     }
 
     func testDateValidatorFloor() {
