@@ -62,7 +62,7 @@ public struct PeripheralQuestionnaire: InventoryQuestionnaire {
             "interface": InventoryLocalizedString("question.interface", value: "Connection Interface:", comment: "Question: Interface"),
             "requiresDrivers": InventoryLocalizedString("question.requiresDrivers", value: "Does it require drivers?", comment: "Question: Drivers"),
             "isWireless": InventoryLocalizedString("question.isWireless", value: "Is it wireless?", comment: "Question: Wireless"),
-            "job_compatibility": InventoryLocalizedString("question.compatibility", value: "Compatible Systems (comma separated):", comment: "Question: Compatibility"),
+            "compatibility": InventoryLocalizedString("question.compatibility", value: "Compatible Systems (comma separated):", comment: "Question: Compatibility"),
             "condition": InventoryLocalizedString("question.condition", value: "Physical Condition:", comment: "Question: Condition"),
             "isFunctional": InventoryLocalizedString("question.isFunctional", value: "Is it currently functional?", comment: "Question: Functional")
         ]

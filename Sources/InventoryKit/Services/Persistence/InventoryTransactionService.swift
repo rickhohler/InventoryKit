@@ -20,6 +20,7 @@ public actor InventoryTransactionService: TransactionService {
     
     /// Ingests a new Asset, automatically handling Manufacturer creation/lookup.
     public func ingestAsset(_ input: AssetImportData) async throws -> UUID {
+        let storage = self.storage
         return try await storage.performTransaction { tx in
             
             // 1. Resolve Manufacturer
@@ -42,6 +43,7 @@ public actor InventoryTransactionService: TransactionService {
                                             description: nil,
                                             metadata: [:],
                                             aliases: [])
+                try await storage.referenceManufacturerRepository.update(newMfg)
                 manufacturer = newMfg
             }
             
@@ -63,7 +65,9 @@ public actor InventoryTransactionService: TransactionService {
             // 4. Link Relationships
             asset.manufacturer = manufacturer
             
-            // 5. Save/Commit handled by transaction scope
+            // 5. Persist the configured copy (assets may be value types) and commit.
+            try await storage.assetRepository.update(asset)
+            try await tx.save()
             return asset.id
         }
     }
@@ -71,6 +75,7 @@ public actor InventoryTransactionService: TransactionService {
     // MARK: - Product Ingestion (Reference)
     
     public func ingestProduct(_ input: ProductImportData) async throws -> UUID {
+        let storage = self.storage
         return try await storage.performTransaction { tx in
             
             // 1. Resolve Manufacturer
@@ -88,6 +93,7 @@ public actor InventoryTransactionService: TransactionService {
                                             description: nil,
                                             metadata: [:],
                                             aliases: [])
+                try await storage.referenceManufacturerRepository.update(newMfg)
                 manufacturer = newMfg
             }
             
@@ -109,6 +115,9 @@ public actor InventoryTransactionService: TransactionService {
             // 4. Link
             product.manufacturer = manufacturer
             
+            // 5. Persist the configured copy and commit.
+            try await storage.referenceProductRepository.update(product)
+            try await tx.save()
             return product.id
         }
     }

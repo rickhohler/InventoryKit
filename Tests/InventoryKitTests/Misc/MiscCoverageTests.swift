@@ -15,6 +15,7 @@ final class MiscCoverageTests: XCTestCase {
     
     // MARK: - System Singleton
     
+    @available(*, deprecated, message: "Exercises the deprecated System singleton")
     func testSystemConfiguration() {
         let system = System.shared
         XCTAssertNotNil(system)

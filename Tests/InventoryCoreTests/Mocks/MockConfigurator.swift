@@ -5,7 +5,13 @@ import InventoryTypes
 /// A mock configurator for use in unit tests.
 public final class MockConfigurator: Configurator, @unchecked Sendable {
     
-    public init() {}
+    /// When true, contact fields are assigned exactly as received, nil included, as a
+    /// configurator writing into a client type would.
+    public let assignsContactFieldsVerbatim: Bool
+
+    public init(assignsContactFieldsVerbatim: Bool = false) {
+        self.assignsContactFieldsVerbatim = assignsContactFieldsVerbatim
+    }
     
     // MARK: - Systems & Logic
     
@@ -67,9 +73,15 @@ public final class MockConfigurator: Configurator, @unchecked Sendable {
     ) {
         if let id { instance.id = id }
         instance.name = name
-        if let title { instance.title = title }
-        if let email { instance.email = email }
-        if let notes { instance.notes = notes }
+        if assignsContactFieldsVerbatim {
+            instance.title = title
+            instance.email = email
+            instance.notes = notes
+        } else {
+            if let title { instance.title = title }
+            if let email { instance.email = email }
+            if let notes { instance.notes = notes }
+        }
         instance.socialMedia = socialMedia
     }
     

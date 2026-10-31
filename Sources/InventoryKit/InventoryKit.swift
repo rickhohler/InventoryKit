@@ -32,7 +32,7 @@ public final class InventoryKit: Sendable {
         self.services = InventoryServiceFacade(storage: storage, configurator: configurator, context: ctx)
         
         // Configure the global system singleton
-        System.shared.configure(with: storage)
+        System.shared.record(storage)
     }
 }
 

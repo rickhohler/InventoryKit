@@ -33,7 +33,6 @@ public struct StandardAssetRepository: AssetRepository {
         if let provenance {
             _ = builder.setProvenance(provenance)
         }
-        _ = builder.addTag("Created via Repository")
         for tag in tags {
              _ = builder.addTag(tag)
         }

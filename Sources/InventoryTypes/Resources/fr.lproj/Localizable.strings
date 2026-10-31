@@ -23,6 +23,7 @@
 "condition.cib" = "Complet en Boîte";
 "condition.loose" = "En Vrac / Sans Boîte";
 "condition.boxed" = "En Boîte";
+"condition.needsRecap" = "Recap nécessaire";
 "condition.recapped" = "Recapé (Condensateurs)";
 "condition.modded" = "Modifié";
 "condition.yellowed" = "Jauni / Décoloré";
@@ -175,3 +176,25 @@
 // MARK: - Media Formats (Constants)
 "Compact Cassette" = "Cassette Compacte";
 "DAT Tape" = "Bande DAT";
+
+// MARK: - Media Formats (media_format.<rawValue>, used by MediaFormatType.label)
+"media_format.cassette" = "Cassette Compacte";
+"media_format.dat_tape" = "Cassette DAT";
+"media_format.reel_to_reel" = "Bande Magnétique (Bobine)";
+"media_format.floppy_5_25" = "Disquette 5,25\"";
+"media_format.floppy_3_5" = "Disquette 3,5\"";
+"media_format.floppy_8" = "Disquette 8\"";
+"media_format.cd_rom" = "CD-ROM";
+"media_format.dvd_rom" = "DVD-ROM";
+"media_format.laser_disc" = "LaserDisc";
+"media_format.cartridge" = "Cartouche";
+"media_format.sdCard" = "Carte SD";
+"media_format.compactFlash" = "CompactFlash";
+"media_format.pcmcia" = "Carte PCMCIA";
+"media_format.usbDrive" = "Clé USB";
+"media_format.digital" = "Téléchargement Numérique";
+"media_format.other" = "Autre";
+
+// MARK: - Generic Questionnaire
+"question.genericNotes" = "Description / Notes :";
+"question.manualTags" = "Étiquettes personnalisées (séparées par des virgules) :";

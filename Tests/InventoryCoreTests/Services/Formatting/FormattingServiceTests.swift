@@ -19,6 +19,23 @@ final class FormattingServiceTests: XCTestCase {
         XCTAssertEqual(contact.name, "Brøderbund")
     }
     
+    func testRenameKeepsOtherContactFields() async {
+        let context = MockContext(configurator: MockConfigurator(assignsContactFieldsVerbatim: true))
+        var contact = MockContact(name: "broderbund", title: "Publisher", email: "info@example.com", notes: "Founded 1980")
+        FormattingService(context: context).formatContact(&contact)
+        XCTAssertEqual(contact.name, "Brøderbund")
+        XCTAssertEqual(contact.title, "Publisher")
+        XCTAssertEqual(contact.email, "info@example.com")
+        XCTAssertEqual(contact.notes, "Founded 1980")
+
+        var other = MockContact(name: "atari", title: "Maker", email: "a@example.com", notes: "Sunnyvale")
+        await SuggestionService(context: context).enrichContact(&other)
+        XCTAssertEqual(other.name, "Atari Corporation")
+        XCTAssertEqual(other.title, "Maker")
+        XCTAssertEqual(other.email, "a@example.com")
+        XCTAssertEqual(other.notes, "Sunnyvale")
+    }
+
     func testNoChangeNeeded() {
         let context = MockContext()
         let service = FormattingService(context: context)

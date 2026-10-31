@@ -31,6 +31,8 @@ public actor InventoryRelationshipService: RelationshipService {
             // 2. Verify compliance of the linked assets
             var isSatisfied = false
             var failureReasons: [String] = []
+            var foundTargets = 0
+            var idMismatch = false
             
             for link in links {
                 // Fetch the actual target asset
@@ -42,6 +44,7 @@ public actor InventoryRelationshipService: RelationshipService {
                     failureReasons.append("Linked asset \(link.assetID) not found in storage.")
                     continue
                 }
+                foundTargets += 1
                 
                 // Check ID Constraints
                 if !req.compatibleAssetIDs.isEmpty {
@@ -49,6 +52,8 @@ public actor InventoryRelationshipService: RelationshipService {
                         isSatisfied = true
                         break
                     }
+                    // Only an ID list: the target isn't one of the allowed assets.
+                    if req.requiredTags.isEmpty { idMismatch = true }
                 }
                 
                 // Check TagType Constraints
@@ -74,6 +79,19 @@ public actor InventoryRelationshipService: RelationshipService {
             
             if isSatisfied {
                 results.append(RelationshipEvaluation(requirement: req, status: .satisfied, message: "Relationship satisfied."))
+            } else if foundTargets == 0 {
+                // Every linked asset is gone: the relationship is effectively missing.
+                results.append(RelationshipEvaluation(
+                    requirement: req,
+                    status: req.required ? .missingRequired : .missingOptional,
+                    message: "Linked assets for '\(req.name)' not found: \(failureReasons.joined(separator: "; "))"
+                ))
+            } else if idMismatch {
+                results.append(RelationshipEvaluation(
+                    requirement: req,
+                    status: .incompatible,
+                    message: "Linked assets for '\(req.name)' are not among its compatible assets: \(failureReasons.joined(separator: "; "))"
+                ))
             } else {
                 results.append(RelationshipEvaluation(
                     requirement: req,
@@ -87,6 +105,7 @@ public actor InventoryRelationshipService: RelationshipService {
     }
     
     public func link(sourceID: UUID, targetID: UUID, typeID: String, note: String?) async throws {
+        let storage = self.storage
         try await storage.performTransaction { tx in
             // 1. Fetch Source
             guard var source = try await tx.retrieveAsset(id: sourceID) else {
@@ -106,18 +125,22 @@ public actor InventoryRelationshipService: RelationshipService {
                 source.linkedAssets.append(link)
             }
             
-            // 4. Persistence is handled by the transaction block if the object is managed/reference, 
-            // or if the provider logic auto-saves modified retrievals.
+            // 4. Persist: assets may be value types, so the changed copy is written back.
+            try await storage.assetRepository.update(source)
+            try await tx.save()
         }
     }
     
     public func unlink(sourceID: UUID, targetID: UUID) async throws {
+        let storage = self.storage
         try await storage.performTransaction { tx in
             guard var source = try await tx.retrieveAsset(id: sourceID) else {
                  throw RelationshipError.assetNotFound(sourceID)
             }
             
             source.linkedAssets.removeAll { $0.assetID == targetID }
+            try await storage.assetRepository.update(source)
+            try await tx.save()
         }
     }
     

@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-10-30
+
+### Removed
+- The unused Yams dependency; DesignAlgorithmsKit is the only one.
+
+### Fixed
+- `InventoryRoom.building` copies any `Building` into an `InventoryBuilding` instead of trapping.
+- `StandardAssetRepository.createAsset` no longer adds a `Created via Repository` tag.
+- `InventoryError` descriptions say "inventory data" instead of "inventory YAML".
+- `HardwareQuestionnaire` emits `condition:needs_recap` (new `TagType.Condition.needsRecap`) for `needsRecap` and `condition:for_parts` for parts-only items; it emitted `condition:recapped` and the undefined `condition:parts_only`.
+- `PeripheralQuestionnaire` keys its compatibility prompt `compatibility` (was `job_compatibility`).
+- `FormattingService.formatContact` and `SuggestionService.enrichContact` pass the contact's title, email and notes to the configurator instead of nil.
+- `MediaFormatType.label` (keys `media_format.<rawValue>`) and `GenericQuestionnaire` resolve strings through `InventoryLocalizedString`, so client overrides apply; en/es/fr tables have the keys.
+- `InventoryRelationshipService.link` / `unlink` write the changed source through `assetRepository.update` and call the transaction's `save()`, so value-type assets keep their links.
+- `evaluateCompliance` reports links whose targets are all gone as missing, targets outside `compatibleAssetIDs` as `.incompatible`, and only tag failures as `.nonCompliantTags`.
+- `InventoryTransactionService.ingestAsset` / `ingestProduct` persist the created entity (and a newly created manufacturer) with `update` and call `save()`.
+- `DefaultLocationService.updateDigitalLocation` updates the existing asset with `update` (was `save`).
+
+### Deprecated
+- `System.storageConfigurator` and `System.configure(with:)` (nothing reads them; removed in 3.0). Access is now synchronized.
+- `InventoryCoreInfo.version` (never updated with releases).
+- `InventoryError.yamlDecodingFailed` / `.yamlEncodingFailed`.
+
 ## [2.6.1] - 2026-10-24
 
 ### Changed

@@ -50,6 +50,7 @@ public enum TagType {
         case loose = "condition:loose"             // Cartridge/Unit only
         case boxed = "condition:boxed"             // Has box but maybe not CIB
         case recapped = "condition:recapped"       // Maintenance performed
+        case needsRecap = "condition:needs_recap"  // Capacitors due for replacement
         case modded = "condition:modded"           // Modified hardware
         case yellowed = "condition:yellowed"       // UV damage (Retrobright candidate)
         case damaged = "condition:damaged"         // Physical damage (cracks, etc)
@@ -82,6 +83,7 @@ public enum TagType {
             case .loose: return InventoryLocalizedString("condition.loose", value: "Loose", comment: "Condition: Loose")
             case .boxed: return InventoryLocalizedString("condition.boxed", value: "Boxed", comment: "Condition: Boxed")
             case .recapped: return InventoryLocalizedString("condition.recapped", value: "Recapped", comment: "Condition: Recapped")
+            case .needsRecap: return InventoryLocalizedString("condition.needsRecap", value: "Needs Recap", comment: "Condition: Needs Recap")
             case .modded: return InventoryLocalizedString("condition.modded", value: "Modded", comment: "Condition: Modded")
             case .yellowed: return InventoryLocalizedString("condition.yellowed", value: "Yellowed / Discolored", comment: "Condition: Yellowed")
             case .damaged: return InventoryLocalizedString("condition.damaged", value: "Damaged", comment: "Condition: Damaged")

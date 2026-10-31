@@ -86,7 +86,11 @@ final class RelationshipServiceTests: XCTestCase {
         var userData: any UserDataStore { fatalError() }
         var referenceData: any ReferenceDataStore { fatalError() }
         
-        var assetRepository: any AssetRepository { fatalError() }
+        lazy var assetRepo = ClosureAssetRepository(
+            lookup: { [unowned self] id in self.assets[id] },
+            store: { [unowned self] asset in if let asset = asset as? MockAsset { self.assets[asset.id] = asset } }
+        )
+        var assetRepository: any AssetRepository { assetRepo }
         var referenceProductRepository: any ReferenceProductRepository { fatalError() }
         var referenceManufacturerRepository: any ReferenceManufacturerRepository { fatalError() }
         var referenceCollectionRepository: any ReferenceCollectionRepository { fatalError() }
@@ -131,7 +135,8 @@ final class RelationshipServiceTests: XCTestCase {
         func fetchVendors(matching query: StorageQuery) async throws -> [any Vendor] { [] }
         func retrieveVendor(id: UUID) async throws -> (any Vendor)? { nil }
         func delete(_ object: any PersistentModel) async throws {}
-        func save() async throws {}
+        private(set) var saveCount = 0
+        func save() async throws { saveCount += 1 }
     }
     
     // MARK: - Configurator (Unused for Relationships but required for types)
@@ -252,6 +257,8 @@ final class RelationshipServiceTests: XCTestCase {
         // Unlink
         try await service.unlink(sourceID: source.id, targetID: target.id)
         XCTAssertEqual(source.linkedAssets.count, 0)
+        // Each change is written through the repository and committed.
+        XCTAssertEqual(storage.assetRepo.writes, 2)
     }
     
     func testFindCandidates() async throws {

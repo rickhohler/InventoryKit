@@ -30,6 +30,14 @@ final class QuestionnaireTests: XCTestCase {
         XCTAssertTrue(tags.contains(TagType.Condition.boxed.rawValue), "Should be boxed")
         XCTAssertTrue(tags.contains(TagType.Condition.yellowed.rawValue), "Should be yellowed")
         XCTAssertTrue(tags.contains(TagType.Condition.notWorking.rawValue), "Should be not working")
+        XCTAssertTrue(tags.contains(TagType.Condition.needsRecap.rawValue), "Needs recap, not recapped")
+        XCTAssertFalse(tags.contains(TagType.Condition.recapped.rawValue))
+
+        // Parts only uses the vocabulary's for_parts tag.
+        var partsOnly = questionnaire
+        partsOnly.cosmeticCondition = .partsOnly
+        XCTAssertTrue(partsOnly.generateTags().contains(TagType.Condition.forParts.rawValue))
+        XCTAssertFalse(partsOnly.generateTags().contains("condition:parts_only"))
         
         // Verify Attributes for Metadata
         let attrs = questionnaire.generateAttributes()

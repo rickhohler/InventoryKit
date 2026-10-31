@@ -66,16 +66,12 @@ public struct HardwareQuestionnaire: InventoryQuestionnaire {
             tags.append(TagType.Condition.notWorking.rawValue)
         }
         
-        if needsRecap { tags.append(TagType.Condition.recapped.rawValue) } // Wait, needs recap isn't recapped.
-        // Actually, if it needs recap, maybe "condition:needs_recap"?
-        // My TagType.Condition doesn't have "needs_recap".
-        // Use "condition:untested" or add "condition:needs_recap" later.
-        // For now, let's just stick to the closest or skip if no tag matches.
+        if needsRecap { tags.append(TagType.Condition.needsRecap.rawValue) }
                 
         if hasBox { tags.append(TagType.Condition.boxed.rawValue) }
         
         if cosmeticCondition == .yellowed { tags.append(TagType.Condition.yellowed.rawValue) }
-        if cosmeticCondition == .partsOnly { tags.append("condition:parts_only") } // Literal valid if I missed it in Enum, but safer to use raw string or update enum.
+        if cosmeticCondition == .partsOnly { tags.append(TagType.Condition.forParts.rawValue) }
         
         if let mods = modNotes, !mods.isEmpty {
             tags.append(TagType.Condition.modded.rawValue)

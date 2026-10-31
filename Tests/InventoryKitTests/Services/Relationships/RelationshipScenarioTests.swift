@@ -24,7 +24,11 @@ final class RelationshipScenarioTests: XCTestCase {
         var transformer: AnyInventoryDataTransformer = AnyInventoryDataTransformer(MockTransformer())
         var vendor: (any Vendor)? = nil
         
-        var assetRepository: any AssetRepository { fatalError() }
+        lazy var assetRepo = ClosureAssetRepository(
+            lookup: { [unowned self] id in self.assets[id] },
+            store: { [unowned self] asset in self.assets[asset.id] = asset }
+        )
+        var assetRepository: any AssetRepository { assetRepo }
         var spaceRepository: any SpaceRepository { fatalError() }
         var referenceProductRepository: any ReferenceProductRepository { fatalError() }
         var referenceManufacturerRepository: any ReferenceManufacturerRepository { fatalError() }
@@ -165,8 +169,111 @@ final class RelationshipScenarioTests: XCTestCase {
         }
     }
     
+    /// The same asset as a value type: changes reach storage only when written back.
+    struct MockValueAsset: InventoryAsset, @unchecked Sendable {
+        var id: UUID
+        var name: String
+        // InventoryCompoundBase / InventoryItem / AssetIdentification requirements
+        var title: String = ""
+        var description: String? = nil
+        var releaseDate: Date? = nil
+        var dataSource: (any DataSource)? = nil
+        var children: [any InventoryItem] = []
+        var images: [any InventoryItem] = []
+        
+        var typeIdentifier: String = "item"
+        var location: ItemLocationType? = .digital(url: URL(string: "http://")!, volumeID: UUID())
+        var acquisitionSource: String? = nil
+        var acquisitionDate: Date? = nil
+        var cost: Decimal? = nil
+        var condition: String? = nil
+        var tags: [String]
+        var metadata: [String : String] = [:]
+        
+        // Missing requirements for InventoryAsset
+        var components: [any InventoryComponentLink] = []
+        var type: String? = nil
+        var custodyLocation: String? = nil
+        var forensicClassification: String? = nil
+        var relationshipType: AssetRelationshipType? = nil
+        
+        var source: (any InventorySource)? = nil
+        var lifecycle: (any InventoryLifecycle)? = nil
+        var health: (any InventoryHealth)? = nil
+        var mro: (any InventoryMROInfo)? = nil
+        var copyright: (any CopyrightInfo)? = nil
+        
+        var linkedAssets: [any InventoryLinkedAsset] = []
+        var relationshipRequirements: [any InventoryRelationshipRequirement] = []
+        
+        // Protocol conformances
+        var manufacturer: (any Manufacturer)? = nil
+        var product: (any Product)? = nil
+        var container: (any ItemContainer)? = nil
+        var collection: (any Collection)? = nil
+        // var resources: [any InventoryResource] = [] // Removed
+        var provenance: String? = nil
+        var sizeOrWeight: Int64? = nil
+        var accessionNumber: String? = nil
+        var fileHashes: [String : String]? = nil
+        var serialNumber: String? = nil
+        var typeClassifier: ItemClassifierType = .physicalItem // Fixed missing
+        var mediaFormat: MediaFormatType? = nil // Fixed missing
+        var sourceCode: (any InventorySourceCode)? = nil // Fixed missing
+        var identifiers: [any InventoryIdentifier] = [] // Fixed missing
+        var productID: UUID? = nil
+        
+        init(id: UUID, name: String, tags: [String]) {
+            self.id = id
+            self.name = name
+            self.tags = tags
+        }
+    }
+    
     // MARK: - Tests
     
+    // MARK: - Value-type persistence and compliance statuses
+
+    func testLinkPersistsValueTypeAsset() async throws {
+        let storage = MockScenarioStorage()
+        let service = InventoryRelationshipService(storage: storage)
+        let c64 = MockValueAsset(id: UUID(), name: "Commodore 64", tags: ["type:computer"])
+        let monitor = MockValueAsset(id: UUID(), name: "1702 Monitor", tags: ["type:monitor"])
+        storage.assets[c64.id] = c64
+        storage.assets[monitor.id] = monitor
+
+        try await service.link(sourceID: c64.id, targetID: monitor.id, typeID: "rel.display", note: "front")
+        XCTAssertEqual(storage.assets[c64.id]?.linkedAssets.first?.assetID, monitor.id)
+        XCTAssertEqual(storage.assets[c64.id]?.linkedAssets.first?.note, "front")
+
+        try await service.unlink(sourceID: c64.id, targetID: monitor.id)
+        XCTAssertEqual(storage.assets[c64.id]?.linkedAssets.count, 0)
+    }
+
+    func testDanglingLinkIsMissing() async throws {
+        let storage = MockScenarioStorage()
+        let service = InventoryRelationshipService(storage: storage)
+        var c64 = MockValueAsset(id: UUID(), name: "Commodore 64", tags: [])
+        c64.relationshipRequirements = [MockRequirement(name: "Display", typeID: "rel.display", required: true,
+                                                        compatibleAssetIDs: [], requiredTags: [])]
+        c64.linkedAssets = [LinkedAsset(assetID: UUID(), typeID: "rel.display")]
+        let report = try await service.evaluateCompliance(for: c64)
+        XCTAssertEqual(report.first?.status, .missingRequired)
+    }
+
+    func testLinkOutsideCompatibleIDsIsIncompatible() async throws {
+        let storage = MockScenarioStorage()
+        let service = InventoryRelationshipService(storage: storage)
+        let other = MockValueAsset(id: UUID(), name: "Other Monitor", tags: [])
+        storage.assets[other.id] = other
+        var c64 = MockValueAsset(id: UUID(), name: "Commodore 64", tags: [])
+        c64.relationshipRequirements = [MockRequirement(name: "Display", typeID: "rel.display", required: true,
+                                                        compatibleAssetIDs: [UUID()], requiredTags: [])]
+        c64.linkedAssets = [LinkedAsset(assetID: other.id, typeID: "rel.display")]
+        let report = try await service.evaluateCompliance(for: c64)
+        XCTAssertEqual(report.first?.status, .incompatible)
+    }
+
     func testComputerWithMonitor() async throws {
         let storage = MockScenarioStorage()
         let service = InventoryRelationshipService(storage: storage)

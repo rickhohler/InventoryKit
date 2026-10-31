@@ -20,7 +20,7 @@ final class StandardAssetRepositoryTests: XCTestCase {
         XCTAssertEqual(asset.name, name)
         XCTAssertEqual(asset.provenance, provenance)
         XCTAssertTrue(asset.tags.contains("Tag1"))
-        XCTAssertTrue(asset.tags.contains("Created via Repository"))
+        XCTAssertFalse(asset.tags.contains("Created via Repository"), "The repository adds no tags of its own")
     }
     
     func testCreateAsset_WithValidator_Failure() {
