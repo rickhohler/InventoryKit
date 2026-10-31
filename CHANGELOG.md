@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.7.0] - 2026-10-30
 
+### Added
+- `NameCorrectionStrategy(corrections:)` and `ReferenceManufacturerLookupStrategy(knownManufacturers:)` take the client's table; `init()` keeps the built-in retro tables in 2.x.
+- `DateValidator(earliestPlausibleYear:)` (default 1950).
+
 ### Removed
 - The unused Yams dependency; DesignAlgorithmsKit is the only one.
 
@@ -29,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `System.storageConfigurator` and `System.configure(with:)` (nothing reads them; removed in 3.0). Access is now synchronized.
 - `InventoryCoreInfo.version` (never updated with releases).
 - `InventoryError.yamlDecodingFailed` / `.yamlEncodingFailed`.
+- `PlatformType` (moves to RetroCore's `RetroPlatform`) and `AppleIIEnrichmentStrategy` (moves to RetroStorageApple); both are removed in 3.0, when the built-in name and manufacturer tables also leave (`relocate-retro-domain-content`).
 
 ## [2.6.1] - 2026-10-24
 

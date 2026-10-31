@@ -2,6 +2,7 @@ import XCTest
 import InventoryCore
 import InventoryTypes
 
+@available(*, deprecated, message: "Covers the deprecated AppleIIEnrichmentStrategy until it moves in 3.0")
 final class SystemRequirementsEnricherTests: XCTestCase {
     
     // Using MockProduct from InventoryCoreTests module

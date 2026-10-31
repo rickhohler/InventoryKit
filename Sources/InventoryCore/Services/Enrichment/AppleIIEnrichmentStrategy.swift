@@ -2,6 +2,7 @@ import Foundation
 import InventoryTypes
 
 /// A strategy that infers system requirements specifically for the Apple II platform based on release year.
+@available(*, deprecated, message: "Moves to RetroStorageApple (AppleIISystemRequirementsStrategy); removed in InventoryKit 3.0.")
 public struct AppleIIEnrichmentStrategy: SystemRequirementsEnrichmentStrategy {
     
     public init() {}

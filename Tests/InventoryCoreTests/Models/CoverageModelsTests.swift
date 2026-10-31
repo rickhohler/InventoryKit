@@ -4,6 +4,7 @@ import InventoryTypes
 
 final class CoverageModelsTests: XCTestCase {
     
+    @available(*, deprecated, message: "Covers the deprecated PlatformType")
     func testPlatforms() {
         for p in PlatformType.allCases {
             XCTAssertFalse(p.displayName.isEmpty)

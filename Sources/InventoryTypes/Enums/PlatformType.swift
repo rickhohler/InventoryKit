@@ -2,6 +2,7 @@ import Foundation
 
 /// Standardized PlatformType Identifiers for the Retro Ecosystem.
 /// Used to bucket software and hardware into ecosystem-compatible groups.
+@available(*, deprecated, message: "Retro platform identifiers move to RetroCore (RetroPlatform, which maps these raw values); removed in InventoryKit 3.0.")
 public enum PlatformType: String, Codable, CaseIterable, Sendable {
     
     // MARK: - Apple
